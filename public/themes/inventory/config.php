@@ -69,12 +69,12 @@ return array(
             // });
 
             //css
-            $theme->asset()->usePath()->add('bootstrap-css','vendor/bootstrap/css/bootstrap.min.css');
-            $theme->asset()->usePath()->add('font-awesome-css', 'vendor/font-awesome/css/font-awesome.min.css');
-            $theme->asset()->usePath()->add('sb-admin-css', 'vendor/sb-admin/css/sb-admin.css');
+            $theme->asset()->usePath()->add('bootstrap-css','vendors/bootstrap/css/bootstrap.min.css');
+            $theme->asset()->usePath()->add('font-awesome-css', 'vendors/font-awesome/css/font-awesome.min.css');
+            $theme->asset()->usePath()->add('sb-admin-css', 'vendors/sb-admin/css/sb-admin.css');
             //scripts
-            $theme->asset()->usePath()->add('jquery','vendor/jquery/jquery.min.js');
-            $theme->asset()->usePath()->add('bootstrap-js', 'vendor/bootstrap/js/bootstrap.min.js',array('jquery'));
+            $theme->asset()->usePath()->add('jquery','vendors/jquery/jquery.min.js');
+            $theme->asset()->usePath()->add('bootstrap-js', 'vendors/bootstrap/js/bootstrap.min.js',array('jquery'));
 
 
         },
