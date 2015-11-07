@@ -70,7 +70,8 @@ return array(
 
             //css
             $theme->asset()->usePath()->add('bootstrap-css','vendor/bootstrap/css/bootstrap.min.css');
-            $theme->asset()->usePath()->add('layout-css', 'css/layout.css');
+            $theme->asset()->usePath()->add('font-awesome-css', 'vendor/font-awesome/css/font-awesome.min.css');
+            $theme->asset()->usePath()->add('sb-admin-css', 'vendor/sb-admin/css/sb-admin.css');
             //scripts
             $theme->asset()->usePath()->add('jquery','vendor/jquery/jquery.min.js');
             $theme->asset()->usePath()->add('bootstrap-js', 'vendor/bootstrap/js/bootstrap.min.js',array('jquery'));

@@ -12,7 +12,6 @@ class BaseController extends Controller {
     protected function setupLayout()
     {
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
-        $this->theme->set();
     }
 
 
