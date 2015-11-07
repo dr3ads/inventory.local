@@ -12,8 +12,10 @@
     </head>
     <body>
         <div id="wrapper">
-            <?php echo Theme::partial('sidebar'); ?>
-            <?php echo Theme::partial('header'); ?>
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <?php echo Theme::partial('header'); ?>
+                <?php echo Theme::partial('sidebar'); ?>
+
 
             <div class="container">
                 <?php echo Theme::content(); ?>
