@@ -6,7 +6,10 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+        "bestmomo/scafold": "dev-master",
+        "zizaco/entrust": "dev-laravel-5",
+        "teepluss/theme": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -16,10 +19,12 @@
     },
     "autoload": {
         "classmap": [
-            "database"
+            "database",
+            "App/Models"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Lib\\" : "lib/src/"
         }
     },
     "autoload-dev": {

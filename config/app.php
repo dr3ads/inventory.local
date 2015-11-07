@@ -145,6 +145,14 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * Vendor Service Providers
+         */
+
+        Bestmomo\Scafold\ScafoldServiceProvider::class,
+        'Zizaco\Entrust\EntrustServiceProvider',
+        'Teepluss\Theme\ThemeServiceProvider',
+
     ],
 
     /*
@@ -194,6 +202,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        /**
+         * Vendor Aliases
+         */
+        'Entrust' => 'Zizaco\Entrust\EntrustFacade',
+        'Theme' => 'Teepluss\Theme\Facades\Theme',
     ],
 
 ];
