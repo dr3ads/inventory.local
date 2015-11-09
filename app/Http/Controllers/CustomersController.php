@@ -7,6 +7,7 @@ use App\Http\Requests;
 use Lib\Customers\CustomerRepository;
 use App\Http\Controllers\BaseController;
 use Theme;
+use Validator;
 
 
 class CustomersController extends BaseController
@@ -27,7 +28,9 @@ class CustomersController extends BaseController
      */
     public function index()
     {
-        print_r($this->customerRepository->all()->toArray());
+        $data = array();
+        $data['customers'] = $this->customerRepository->all();
+        return $this->theme->scope('customers.index', $data)->render();
     }
 
     /**
@@ -49,7 +52,29 @@ class CustomersController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'fname' => 'required|max:255',
+            'lname' => 'required|max:255',
+            'age' => 'required|numeric|min:18',
+            'phone' => "required_without:mobile",
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('customers/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $data = array(
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'age' => $request->age,
+            'phone' => $request->phone,
+            'mobile' => $request->mobile,
+        );
+        $this->customerRepository->create($data);
+
+        $request->session()->flash('alert-success', 'Customer was successfully added!');
+        return redirect()->route("customers.index");
     }
 
     /**

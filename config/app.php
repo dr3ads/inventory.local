@@ -152,6 +152,7 @@ return [
         Bestmomo\Scafold\ScafoldServiceProvider::class,
         'Zizaco\Entrust\EntrustServiceProvider',
         'Teepluss\Theme\ThemeServiceProvider',
+        'Collective\Html\HtmlServiceProvider',
 
     ],
 
@@ -207,6 +208,9 @@ return [
          */
         'Entrust' => 'Zizaco\Entrust\EntrustFacade',
         'Theme' => 'Teepluss\Theme\Facades\Theme',
+        'Form' => 'Collective\Html\FormFacade',
+        'Html' => 'Collective\Html\HtmlFacade',
+
     ],
 
 ];

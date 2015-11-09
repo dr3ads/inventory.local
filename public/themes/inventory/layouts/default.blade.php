@@ -12,17 +12,22 @@
     </head>
     <body>
         <div id="wrapper">
-            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-                <?php echo Theme::partial('header'); ?>
-                <?php echo Theme::partial('sidebar'); ?>
-            </nav>
-
-            <div class="container">
-                <?php echo Theme::content(); ?>
+            <div class="header-wrap container">
+                <nav class="navbar navbar-default navbar-static-top" role="navigation">
+                    <?php echo Theme::partial('header'); ?>
+                </nav>
             </div>
-
-            <?php echo Theme::partial('footer'); ?>
-
+            <div class="container">
+                <div class="row">
+                    <div class="sidebar-wrap col-md-3"><?php echo Theme::partial('sidebar'); ?></div>
+                    <div id="main-content" class="col-md-9">
+                        <?php echo Theme::content(); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <?php echo Theme::partial('footer'); ?>
+            </div>
             <?php echo Theme::asset()->container('footer')->scripts(); ?>
         </div>
     </body>

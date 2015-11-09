@@ -9,6 +9,11 @@ class BaseController extends Controller {
     var $theme_name = 'inventory';
     var $data = array();
 
+    public function __construct()
+    {
+        $this->middleware = 'auth';
+    }
+
     protected function setupLayout()
     {
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);

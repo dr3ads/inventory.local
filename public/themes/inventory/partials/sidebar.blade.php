@@ -12,10 +12,10 @@
                 </div>
             </li> -->
             <li>
-                <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Customer</a>
+                <a href="{!! url('customers') !!}"><i class="fa fa-dashboard fa-fw"></i> Customers</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Transaction<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Transactions<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="flot.html">New</a>
@@ -23,11 +23,18 @@
                     <li>
                         <a href="morris.html">Sell</a>
                     </li>
+                    <li>
+                        <a href="morris.html">Miscellaneous</a>
+                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
-
-
+            <li>
+                <a href="{!! url('inventory') !!}"><i class="fa fa-dashboard fa-fw"></i> Inventory</a>
+            </li>
+            <li>
+                <a href="{!! url('inventory') !!}"><i class="fa fa-dashboard fa-fw"></i> Reports</a>
+            </li>
         </ul>
     </div>
     <!-- /.sidebar-collapse -->
