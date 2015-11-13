@@ -11,12 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'TransactionsController@index');
 
 Route::resource('customers', 'CustomersController');
 Route::resource('transactions', 'TransactionsController');
+Route::resource('items', 'ItemsController');
 
 
 // Authentication routes...

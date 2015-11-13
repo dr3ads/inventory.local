@@ -153,6 +153,7 @@ return [
         'Zizaco\Entrust\EntrustServiceProvider',
         'Teepluss\Theme\ThemeServiceProvider',
         'Collective\Html\HtmlServiceProvider',
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 

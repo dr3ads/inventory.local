@@ -3,24 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Http\Requests;
-use Lib\Customers\CustomerRepository;
-use App\Http\Controllers\BaseController;
-use Theme;
-use Validator;
+use App\Http\Controllers\Controller;
 
-
-class CustomersController extends BaseController
+class ItemsController extends Controller
 {
-    protected $customerRepository;
-
-    public function __construct(CustomerRepository $customerRepository)
-    {
-        $this->customerRepository = $customerRepository;
-        $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +16,7 @@ class CustomersController extends BaseController
      */
     public function index()
     {
-        $data = array();
-        $data['customers'] = $this->customerRepository->all();
-        return $this->theme->scope('customers.index', $data)->render();
+        //
     }
 
     /**
@@ -40,8 +26,7 @@ class CustomersController extends BaseController
      */
     public function create()
     {
-        $data = array();
-        return $this->theme->scope('customers.create', $data)->render();
+        //
     }
 
     /**
@@ -52,23 +37,7 @@ class CustomersController extends BaseController
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'fname' => 'required|max:255',
-            'lname' => 'required|max:255',
-            'age' => 'required|numeric|min:18',
-            'phone' => "required_without:mobile",
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('customers/create')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $this->customerRepository->create($request->all());
-
-        $request->session()->flash('alert-success', 'Customer was successfully added!');
-        return redirect()->route("customers.index");
+        //
     }
 
     /**

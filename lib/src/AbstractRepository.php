@@ -18,7 +18,7 @@ abstract class AbstractRepository implements RepositoryInterface {
      * @return mixed
      */
     public function all($columns = array('*')) {
-        return $this->model->get($columns);
+        return $this->model->all();
     }
 
     /**
@@ -75,5 +75,38 @@ abstract class AbstractRepository implements RepositoryInterface {
         return $this->model->where($attribute, '=', $value)->first($columns);
     }
 
+    /**
+     * Method to retrieve a key value pair
+     *
+     * @param $column
+     * @param string $key_column
+     * @return array
+     */
+    public function getValueByKey($column, $key_column = '')
+    {
+        if (!$key_column) {
+            $key_column = $this->model->getKeyName();
+        }
 
+        $list = $this->model->all();
+
+        $data = [];
+
+        foreach($list as $row) {
+            $data[$row->{$key_column}] = $row->{$column};
+        }
+
+        return $data;
+    }
+
+    public function getMutatedValueByKey($column, $key_column = 'id')
+    {
+        $data = $this->model->all(array($column, $key_column));
+        $return = array();
+        foreach($data as $item){
+            $return[$item[$key_column]] = $item[$column];
+        }
+
+        return $return;
+    }
 }
