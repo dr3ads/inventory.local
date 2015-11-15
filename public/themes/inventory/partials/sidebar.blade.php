@@ -15,7 +15,15 @@
                 <a href="{!! url('customers') !!}"><i class="fa fa-dashboard fa-fw"></i> Customers</a>
             </li>
             <li>
-                <a href="{!! url('transactions') !!}"><i class="fa fa-dashboard fa-fw"></i> Transactions</a>
+                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Transactions</a>
+                <ul class="nav nav-second-level collapse in" aria-expanded="true">
+                    <li>
+                        <a href="{!! url('transactions/new') !!}">New</a>
+                    </li>
+                    <li>
+                        <a href="{!! url('transacions') !!}">Active</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="{!! url('inventory') !!}"><i class="fa fa-dashboard fa-fw"></i> Inventory</a>

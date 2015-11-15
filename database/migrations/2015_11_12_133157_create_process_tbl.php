@@ -23,8 +23,8 @@ class CreateProcessTbl extends Migration
             $table->timestamps();
 
             //foreign keys
-            //$table->foreign('item_id')->references('id')->on('items');
-            //$table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('customer_id')->references('id')->on('customers');
         });
     }
 
@@ -35,6 +35,8 @@ class CreateProcessTbl extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::drop('processes');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

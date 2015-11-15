@@ -9,4 +9,12 @@ class ProcessRepository extends AbstractRepository
     {
         $this->model = $transaction;
     }
+
+    public function allExpired() {
+        return $this->model->expired();
+    }
+
+    public function allRenewed() {
+        return $this->model->renewed();
+    }
 }

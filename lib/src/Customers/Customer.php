@@ -15,4 +15,9 @@ class Customer extends Model
     {
         return $this->fname.' '.$this->lname;
     }
+
+    public function transactions()
+    {
+        return $this->BelongsToMany('Lib\Processes\Process');
+    }
 }

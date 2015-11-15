@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SaveTransactionRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Lib\Items\ItemRepository;
 use Lib\Processes\ProcessRepository;
 use Lib\Customers\CustomerRepository;
 use App\Http\Controllers\BaseController;
@@ -21,6 +22,8 @@ class TransactionsController extends BaseController
         $this->middleware('auth');
         $this->processRepository = $processRepository;
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
+
+        $this->theme->asset()->container('footer')->usePath()->add('transactions','js/transactions.js',array('jquery'));
     }
 
     /**
@@ -28,10 +31,24 @@ class TransactionsController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
         $data = array();
+        switch($request->status){
+            case 'default':
+                $data['transactions'] = $this->processRepository->all();
+                break;
+            case 'renewed':
+                $data['transactions'] = $this->processRepository->allRenewed();
+                break;
+            case 'expired':
+                $data['transactions'] = $this->processRepository->allExpired();
+                break;
+            default:
+                $data['transactions'] = $this->processRepository->all();
+                break;
+        }
+        $data['status'] = $request->status;
 
         return $this->theme->scope('transactions.index', $data)->render();
     }
@@ -55,9 +72,22 @@ class TransactionsController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaveTransactionRequest $request)
+    public function store(SaveTransactionRequest $request, ItemRepository $itemRepository)
     {
-        dd($request);
+        $itemData = array(
+            'name' => $request->item_name,
+            'description' => $request->item_desc,
+            'value' => $request->item_value,
+        );
+
+        $processData = array(
+            'customer_id' => $request->customer_id,
+            'pawn_amount' => $request->pawn_amount,
+        );
+
+        $item = $itemRepository->create($itemData);
+        $item->transaction()->create($processData);
+        return redirect('transactions')->with('success_msg', 'Transaction Saved');
     }
 
     /**
@@ -77,10 +107,17 @@ class TransactionsController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, $action)
     {
-        //
+        switch($action){
+            case 'repawn':
+
+                break;
+            default:
+                break;
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
