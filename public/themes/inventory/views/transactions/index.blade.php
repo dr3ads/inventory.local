@@ -31,7 +31,7 @@
         <thead>
             <td>Control Number</td>
             <td>Customer</td>
-            <td>Transaction Date</td>
+            <td>Pawn Date</td>
             <td>Pawn Amount</td>
             <td>Renewal Date</td>
             <td>Expiry Date</td>
@@ -39,15 +39,15 @@
         </thead>
         @foreach($transactions as $transaction)
             <tr>
-                <td>{!! $transaction->ctrl_number !!}</td>
-                <td>{!! $transaction->customer->full_name !!}</td>
-                <td>{!! $transaction->pawned_at !!}</td>
-                <td>P{!! $transaction->pawn_amount !!}</td>
-                <td>{!! $transaction->renewed_at !!}</td>
-                <td>{!! $transaction->expired_at !!}</td>
-                <td><a href="{!! url('transactions/show/'.$transaction->id) !!}">View Details</a></td>
-                <td><a href="{!! url('transactions/repawn/'.$transaction->id) !!}">RePawn</a></td>
-                <td><a href="{!! url('transactions/renew/'.$transaction->id) !!}">Renew</a></td>
+                <td>{!! $transaction['parent']->ctrl_number !!}</td>
+                <td>{!! $transaction['parent']->customer->full_name !!}</td>
+                <td>{!! date('Y-m-d', strtotime($transaction['lastChild']->pawned_at)) !!}</td>
+                <td>P{!! $transaction['totalPawnAmount'] !!}</td>
+                <td>{!! $transaction['parent']->renewed_at !!}</td>
+                <td>{!! date('Y-m-d', strtotime($transaction['lastChild']->expired_at)) !!}</td>
+                <td><a href="{!! url('transactions/show/'.$transaction['parent']->id) !!}">View Details</a></td>
+                <td><a href="{!! url('transactions/repawn/'.$transaction['parent']->id) !!}">RePawn</a></td>
+                <td><a href="{!! url('transactions/renew/'.$transaction['parent']->id) !!}">Renew</a></td>
             </tr>
         @endforeach
     </table>

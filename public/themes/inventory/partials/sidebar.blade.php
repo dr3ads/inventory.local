@@ -21,7 +21,7 @@
                         <a href="{!! url('transactions/new') !!}">New</a>
                     </li>
                     <li>
-                        <a href="{!! url('transacions') !!}">Active</a>
+                        <a href="{!! url('transactions') !!}">Active</a>
                     </li>
                 </ul>
             </li>

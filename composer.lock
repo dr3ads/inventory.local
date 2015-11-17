@@ -1242,16 +1242,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.6.0",
+            "version": "v0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "cab3aa3750d451c6e8d002433af583d88fd64862"
+                "reference": "0f04df0b23663799a8941fae13cd8e6299bde3ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/cab3aa3750d451c6e8d002433af583d88fd64862",
-                "reference": "cab3aa3750d451c6e8d002433af583d88fd64862",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/0f04df0b23663799a8941fae13cd8e6299bde3ed",
+                "reference": "0f04df0b23663799a8941fae13cd8e6299bde3ed",
                 "shasum": ""
             },
             "require": {
@@ -1310,7 +1310,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2015-11-08 22:24:35"
+            "time": "2015-11-12 16:18:56"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2049,12 +2049,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/teepluss/laravel-theme.git",
-                "reference": "1f8594d75763a53b0e9972cb674d839f99dce5ff"
+                "reference": "7eba5032584bb15ef640950faf7360c738bcc380"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teepluss/laravel-theme/zipball/1f8594d75763a53b0e9972cb674d839f99dce5ff",
-                "reference": "1f8594d75763a53b0e9972cb674d839f99dce5ff",
+                "url": "https://api.github.com/repos/teepluss/laravel-theme/zipball/7eba5032584bb15ef640950faf7360c738bcc380",
+                "reference": "7eba5032584bb15ef640950faf7360c738bcc380",
                 "shasum": ""
             },
             "require": {
@@ -2096,7 +2096,7 @@
                 "twig",
                 "widget"
             ],
-            "time": "2015-09-03 08:51:41"
+            "time": "2015-11-13 05:24:05"
         },
         {
             "name": "twig/twig",
@@ -2211,12 +2211,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Zizaco/entrust.git",
-                "reference": "3a768eb52300ec4efe9d6a6685b9bf0db6a50ffd"
+                "reference": "be28aa634c44551ae5187894c903094a8ce8baee"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Zizaco/entrust/zipball/be28aa634c44551ae5187894c903094a8ce8baee",
-                "reference": "3a768eb52300ec4efe9d6a6685b9bf0db6a50ffd",
+                "reference": "be28aa634c44551ae5187894c903094a8ce8baee",
                 "shasum": ""
             },
             "require": {
@@ -2270,7 +2270,7 @@
                 "permission",
                 "roles"
             ],
-            "time": "2015-07-09 16:32:53"
+            "time": "2015-11-12 17:38:37"
         }
     ],
     "packages-dev": [

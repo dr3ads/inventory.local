@@ -17,6 +17,12 @@ Route::resource('customers', 'CustomersController');
 Route::resource('transactions', 'TransactionsController');
 Route::resource('items', 'ItemsController');
 
+Route::get('transactions/repawn/{id}','TransactionsController@repawn');
+Route::post('transactions/repawn','TransactionsController@storeRepawn');
+Route::get('transactions/renew/{id}','TransactionsController@reNew');
+Route::post('transactions/renew','TransactionsController@storeReNew');
+
+
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

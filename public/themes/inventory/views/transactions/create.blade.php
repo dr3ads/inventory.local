@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 {!! Form::label('pawn_amount', 'Pawn Amount') !!}
-                {!! Form::text('pawn_amount') !!}
+                {!! Form::number('pawn_amount',0,array('min' => 0, 'step' => 'any')) !!}
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('item_value','Item Value') !!}
-                        {!! Form::text('item_value') !!}
+                        {!! Form::number('item_value',0,array('min' => 0, 'step' => 'any')) !!}
                     </div>
                 </div>
             </div>

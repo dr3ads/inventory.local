@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveAdditionalTransactionRequest;
 use App\Http\Requests\SaveTransactionRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Lib\Items\ItemRepository;
@@ -34,20 +36,27 @@ class TransactionsController extends BaseController
     public function index(Request $request)
     {
         $data = array();
+        $transactions = array();
         switch($request->status){
             case 'default':
-                $data['transactions'] = $this->processRepository->all();
+                $transactions = $this->processRepository->allParents();
                 break;
             case 'renewed':
-                $data['transactions'] = $this->processRepository->allRenewed();
+                $transactions = $this->processRepository->allRenewed();
                 break;
             case 'expired':
-                $data['transactions'] = $this->processRepository->allExpired();
+
+                $transactions = $this->processRepository->allExpired();
                 break;
             default:
-                $data['transactions'] = $this->processRepository->all();
+                $transactions = $this->processRepository->allParents();
                 break;
         }
+
+        foreach($transactions as $transaction){
+            $data['transactions'][] = $this->processRepository->getProcessTree($transaction->id);
+        }
+
         $data['status'] = $request->status;
 
         return $this->theme->scope('transactions.index', $data)->render();
@@ -83,6 +92,7 @@ class TransactionsController extends BaseController
         $processData = array(
             'customer_id' => $request->customer_id,
             'pawn_amount' => $request->pawn_amount,
+            'expired_at' => Carbon::now()->addDays(getenv('EXPIRY_COUNT')),
         );
 
         $item = $itemRepository->create($itemData);
@@ -111,13 +121,40 @@ class TransactionsController extends BaseController
     {
         switch($action){
             case 'repawn':
-
+                return $this->theme->scope('transactions.repawn', $data)->render();
                 break;
             default:
                 break;
         }
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function repawn($id, CustomerRepository $customersRepository)
+    {
+        $data = array();
+        $data['transaction'] = $this->processRepository->find($id);
+        $data['customers'] = $customersRepository->getValueByKey('full_name');
+        return $this->theme->scope('transactions.repawn', $data)->render();
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function renew($id, CustomerRepository $customersRepository)
+    {
+        $data = array();
+        $data['transaction'] = $this->processRepository->find($id);
+        $data['customers'] = $customersRepository->getValueByKey('full_name');
+        return $this->theme->scope('transactions.repawn', $data)->render();
+    }
 
     /**
      * Update the specified resource in storage.
@@ -128,7 +165,41 @@ class TransactionsController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'pawn_amount' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('transactions')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $item = $itemRepository->create($itemData);
+        $item->transaction()->create($processData);
+        return redirect('transactions')->with('success_msg', 'Transaction Saved');
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function storeRepawn(SaveAdditionalTransactionRequest $request)
+    {
+        $data = array(
+            'parent_id' => $request->parent_id,
+            'customer_id' => $request->customer_id,
+            'item_id' => $request->item_id,
+            'pawn_amount' => $request->pawn_amount,
+            'expired_at' => Carbon::now()->addDays(getenv('EXPIRY_COUNT')),
+        );
+
+        $this->processRepository->create($data);
+        return redirect('transactions')->with('success_msg', 'Additional Transaction Saved');
     }
 
     /**

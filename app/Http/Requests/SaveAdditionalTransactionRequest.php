@@ -5,12 +5,11 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Auth\Guard;
 
-class SaveTransactionRequest extends Request
+class SaveAdditionalTransactionRequest extends Request
 {
     /**
-     *  Determine if the user is authorized to make this request.
+     * Determine if the user is authorized to make this request.
      *
-     * @param Guard $auth
      * @return bool
      */
     public function authorize(Guard $auth)
@@ -21,16 +20,15 @@ class SaveTransactionRequest extends Request
     /**
      * Get the validation rules that apply to the request.
      *
-     * TODO::validate pawn amount should not be greater than item value
      * @return array
      */
     public function rules()
     {
         return [
-            'customer_id' => 'required|exists:customers,id',
+            'parent_id' => 'required|exists:processes,id',
+            'customer_id' => 'required|exists:processes,customer_id',
+            'item_id' => 'required|exists:processes,item_id',
             'pawn_amount' => 'required|numeric',
-            'item_name' => 'required|min:3',
-            'item_value' => 'required|numeric'
         ];
     }
 }

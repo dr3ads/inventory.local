@@ -1,18 +1,18 @@
 <?php namespace Lib\Processes;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Process extends Model
 {
     protected $table = 'processes';
     protected $dates = ['renewed_at','expired_at','pawned_at','claimed_at'];
-    protected $fillable = ['customer_id','item_id','pawn_amount','pawned_at'];
+    protected $fillable = ['customer_id','item_id','pawn_amount','pawned_at', 'parent_id','expired_at'];
 
+    public function scopeInitial($query)
+    {
+        $query->where('parent_id', '==', 0);
 
-    /*public function setPawnedAtAttribute( $date ){
-        $this->attributes['pawned_at'] = Carbon::crea;
-    }*/
+    }
 
     public function scopeExpired($query)
     {
@@ -27,6 +27,11 @@ class Process extends Model
     protected function customer()
     {
         return $this->BelongsTo('Lib\Customers\Customer');
+    }
+
+    public function item()
+    {
+        return $this->BelongsTo('Lib\Items\Item');
     }
 
     static public function boot(){
