@@ -1,16 +1,6 @@
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
-            <!--<li class="sidebar-search">
-                <div class="input-group custom-search-form">
-                    <input type="text" class="form-control" placeholder="Search...">
-                            <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                </div>
-            </li> -->
             <li>
                 <a href="{!! url('customers') !!}"><i class="fa fa-dashboard fa-fw"></i> Customers</a>
             </li>
@@ -18,7 +8,7 @@
                 <a href="#"><i class="fa fa-dashboard fa-fw"></i> Transactions</a>
                 <ul class="nav nav-second-level collapse in" aria-expanded="true">
                     <li>
-                        <a href="{!! url('transactions/new') !!}">New</a>
+                        <a href="{!! url('transactions/create') !!}">New</a>
                     </li>
                     <li>
                         <a href="{!! url('transactions') !!}">Active</a>
@@ -26,10 +16,38 @@
                 </ul>
             </li>
             <li>
-                <a href="{!! url('inventory') !!}"><i class="fa fa-dashboard fa-fw"></i> Inventory</a>
+                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Inventory</a>
+                <ul class="nav nav-second-level collapse in" aria-expanded="true">
+                    <li>
+                        <a href="{!! url('inventory?on_hand=1') !!}"><i class="fa fa-dashboard fa-fw"></i> On Hand</a>
+                    </li>
+                    <li>
+                        <a href="{!! url('inventory?on_hand=0') !!}"><i class="fa fa-dashboard fa-fw"></i> Track</a>
+                    </li>
+                    <li>
+                        <a href="{!! url('inventory/buy') !!}"><i class="fa fa-dashboard fa-fw"></i> Buy Item</a>
+                    </li>
+                    <li>
+                        <a href="{!! url('inventory/buy') !!}"><i class="fa fa-dashboard fa-fw"></i> Sell Item</a>
+                    </li>
+                </ul>
+            <li>
+                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Miscellaneous</a>
+                <ul class="nav nav-second-level collapse in" aria-expanded="true">
+                    <li>
+                        <a href="{!! url('misc') !!}">List</a>
+                    </li>
+                    <li>
+                        <a href="{!! url('misc/spend') !!}">Cash Out</a>
+                    </li>
+                    <li>
+                        <a href="{!! url('misc/earn') !!}">Cash In</a>
+                    </li>
+                </ul>
+            </li>
             </li>
             <li>
-                <a href="{!! url('inventory') !!}"><i class="fa fa-dashboard fa-fw"></i> Reports</a>
+                <a href="{!! url('reports') !!}"><i class="fa fa-dashboard fa-fw"></i> Reports</a>
             </li>
         </ul>
     </div>

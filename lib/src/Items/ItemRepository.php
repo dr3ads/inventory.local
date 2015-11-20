@@ -9,4 +9,13 @@ class ItemRepository extends AbstractRepository
     {
         $this->model = $item;
     }
+
+    public function itemsOnhand()
+    {
+        return $this->model->isonhand()->get();
+    }
+    public function itemsOuthand()
+    {
+        return $this->model->isouthand()->get();
+    }
 }

@@ -15,14 +15,16 @@ Route::get('/', 'TransactionsController@index');
 
 Route::resource('customers', 'CustomersController');
 Route::resource('transactions', 'TransactionsController');
-Route::resource('items', 'ItemsController');
+Route::resource('inventory', 'ItemsController');
 
-Route::get('transactions/repawn/{id}','TransactionsController@repawn');
-Route::post('transactions/repawn','TransactionsController@storeRepawn');
-Route::get('transactions/renew/{id}','TransactionsController@reNew');
-Route::post('transactions/renew','TransactionsController@storeReNew');
-
-
+Route::get('transactions/repawn/{id}', 'TransactionsController@repawn');
+Route::post('transactions/repawn', 'TransactionsController@storeRepawn');
+Route::get('transactions/renew/{id}', 'TransactionsController@reNew');
+Route::post('transactions/renew', 'TransactionsController@storeReNew');
+Route::get('transactions/claim/{id}', 'TransactionsController@claim');
+Route::post('transactions/claim', 'TransactionsController@storeClaim');
+Route::get('transactions/show_all/{id}', 'TransactionsController@showAll');
+Route::get('transactions/show/{id}', 'TransactionsController@show');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

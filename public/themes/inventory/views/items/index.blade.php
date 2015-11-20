@@ -8,19 +8,23 @@
     <!-- Table -->
     <table class="table table-hover table-striped">
         <thead>
-        <td>First Name</td>
-        <td>Last Name</td>
-        <td>Age</td>
-        <td>Home Phone</td>
-        <td>Mobile</td>
+        <td>Item Name</td>
+        <td>Item Description</td>
+        <td>Item Value</td>
+        <td>Date Acquired</td>
+        <td>Actions</td>
         </thead>
-        @foreach($customers as $customer)
+        @foreach($items as $item)
             <tr>
-                <td>{!! $customer->fname !!}</td>
-                <td>{!! $customer->lname !!}</td>
-                <td>{!! $customer->age !!}</td>
-                <td>{!! $customer->phone !!}</td>
-                <td>{!! $customer->mobile !!}</td>
+                <td>{!! $item->name !!}</td>
+                <td>{!! $item->description !!}</td>
+                <td>{!! $item->value !!}</td>
+                <td>{!! $item->created_at !!}</td>
+                @if(isset($item->process->id))
+                    <td><a href="{!! url('/transactions/show/'.$item->process->id) !!}">View Transaction Details</a></td>
+                @else
+                    <td>N/A</td>
+                @endif
             </tr>
         @endforeach
     </table>

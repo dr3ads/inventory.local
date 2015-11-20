@@ -5,18 +5,38 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Lib\Items\ItemRepository;
+use Theme;
+use App\Http\Controllers\BaseController;
 
-class ItemsController extends Controller
+class ItemsController extends BaseController
 {
+    protected $itemRepository;
+
+    public function __construct(ItemRepository $itemRepository)
+    {
+        $this->middleware('auth');
+        $this->itemRepository = $itemRepository;
+        $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data = array();
+        if($request->get('on_hand')){
+            $data['items'] = $this->itemRepository->itemsOnhand();
+        }
+        else{
+            $data['items'] = $this->itemRepository->itemsOuthand();
+        }
+        //dd($data['items'][0]->process);
+        return $this->theme->scope('items.index', $data)->render();
+
     }
 
     /**
@@ -32,7 +52,7 @@ class ItemsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,7 +63,7 @@ class ItemsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -54,7 +74,7 @@ class ItemsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -65,8 +85,8 @@ class ItemsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,7 +97,7 @@ class ItemsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

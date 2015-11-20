@@ -13,16 +13,7 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-2"><a href="{!! url('transactions/create') !!}" >New Transaction</a></div>
-            <div class="col-md-2 col-md-offset-8">
-                <div id="form-filter-wrap">
-                    {!! Form::open(array('method' => 'GET','id' => 'form-filter')) !!}
-                        <div class="form-group">
-                            {!! Form::label('status','Status') !!}
-                            {!! Form::select('status', array('default' => 'Default', 'renewed' => 'Renewed', 'expired' => 'Expired'), $status) !!}
-                        </div>
-                    {!! Form::close() !!}
-                </div>
-            </div>
+
         </div>
     </div>
 
@@ -39,15 +30,16 @@
         </thead>
         @foreach($transactions as $transaction)
             <tr>
-                <td>{!! $transaction['parent']->ctrl_number !!}</td>
+                <td><a href="{!! url('transactions/show/'.$transaction['parent']->id) !!}">{!! $transaction['parent']->ctrl_number !!}</a></td>
                 <td>{!! $transaction['parent']->customer->full_name !!}</td>
                 <td>{!! date('Y-m-d', strtotime($transaction['lastChild']->pawned_at)) !!}</td>
                 <td>P{!! $transaction['totalPawnAmount'] !!}</td>
                 <td>{!! $transaction['parent']->renewed_at !!}</td>
                 <td>{!! date('Y-m-d', strtotime($transaction['lastChild']->expired_at)) !!}</td>
-                <td><a href="{!! url('transactions/show/'.$transaction['parent']->id) !!}">View Details</a></td>
+                <td><a href="{!! url('transactions/show_all/'.$transaction['parent']->id) !!}">View Details</a></td>
                 <td><a href="{!! url('transactions/repawn/'.$transaction['parent']->id) !!}">RePawn</a></td>
                 <td><a href="{!! url('transactions/renew/'.$transaction['parent']->id) !!}">Renew</a></td>
+                <td><a href="{!! url('transactions/claim/'.$transaction['parent']->id) !!}">Claim</a></td>
             </tr>
         @endforeach
     </table>

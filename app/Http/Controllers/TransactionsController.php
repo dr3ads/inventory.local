@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveAdditionalTransactionRequest;
+use App\Http\Requests\SaveRenewTransactionRequest;
 use App\Http\Requests\SaveTransactionRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,7 +26,8 @@ class TransactionsController extends BaseController
         $this->processRepository = $processRepository;
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
 
-        $this->theme->asset()->container('footer')->usePath()->add('transactions','js/transactions.js',array('jquery'));
+        $this->theme->asset()->container('footer')->usePath()->add('transactions', 'js/transactions.js',
+            array('jquery'));
     }
 
     /**
@@ -36,8 +38,7 @@ class TransactionsController extends BaseController
     public function index(Request $request)
     {
         $data = array();
-        $transactions = array();
-        switch($request->status){
+        switch ($request->status) {
             case 'default':
                 $transactions = $this->processRepository->allParents();
                 break;
@@ -53,7 +54,7 @@ class TransactionsController extends BaseController
                 break;
         }
 
-        foreach($transactions as $transaction){
+        foreach ($transactions as $transaction) {
             $data['transactions'][] = $this->processRepository->getProcessTree($transaction->id);
         }
 
@@ -78,7 +79,7 @@ class TransactionsController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(SaveTransactionRequest $request, ItemRepository $itemRepository)
@@ -96,30 +97,75 @@ class TransactionsController extends BaseController
         );
 
         $item = $itemRepository->create($itemData);
-        $item->transaction()->create($processData);
-        return redirect('transactions')->with('success_msg', 'Transaction Saved');
+        $process = $item->process()->create($processData);
+        return redirect('transactions/show/'.$process->id)->with('success_msg', 'Transaction Saved');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $data = array();
+        $data['process'] = $this->processRepository->find($id);
+        echo "Show the receipts of a certain transaction";
+        echo "<pre>";print_r($data);echo "</pre>";
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showAll($id)
+    {
+        $data = array();
+        $data['processTree'] = $this->processRepository->getProcessTree($id);
+        echo "Show the receipts of all transactions under this tree";
+        echo "<pre>";print_r($data);echo "</pre>";
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function renew($id, CustomerRepository $customersRepository)
+    {
+        $data = array();
+        $data['transaction'] = $this->processRepository->find($id);
+        $data['processTree'] = $this->processRepository->getProcessTree($id);
+        $data['totalPawnAmount'] = $this->processRepository->getTotalPawnAmount($id);
+        $data['customers'] = $customersRepository->getValueByKey('full_name');
+
+        return $this->theme->scope('transactions.renew', $data)->render();
+    }
+
+    public function claim($id, CustomerRepository $customersRepository)
+    {
+        $data = array();
+        $data['transaction'] = $this->processRepository->find($id);
+        $data['processTree'] = $this->processRepository->getProcessTree($id);
+        $data['totalPawnAmount'] = $this->processRepository->getTotalPawnAmount($id);
+        $data['customers'] = $customersRepository->getValueByKey('full_name');
+
+        return $this->theme->scope('transactions.claim', $data)->render();
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id, $action)
     {
-        switch($action){
+        switch ($action) {
             case 'repawn':
                 return $this->theme->scope('transactions.repawn', $data)->render();
                 break;
@@ -131,7 +177,7 @@ class TransactionsController extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function repawn($id, CustomerRepository $customersRepository)
@@ -143,24 +189,10 @@ class TransactionsController extends BaseController
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function renew($id, CustomerRepository $customersRepository)
-    {
-        $data = array();
-        $data['transaction'] = $this->processRepository->find($id);
-        $data['customers'] = $customersRepository->getValueByKey('full_name');
-        return $this->theme->scope('transactions.repawn', $data)->render();
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -184,8 +216,8 @@ class TransactionsController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function storeRepawn(SaveAdditionalTransactionRequest $request)
@@ -202,10 +234,42 @@ class TransactionsController extends BaseController
         return redirect('transactions')->with('success_msg', 'Additional Transaction Saved');
     }
 
+
+    public function storeRenew(SaveRenewTransactionRequest $request)
+    {
+        $processTree = $this->processRepository->getProcessTree($request->parent_id);
+        $data = array(
+            'parent_id' => $request->parent_id,
+            'customer_id' => $request->customer_id,
+            'item_id' => $request->item_id,
+            'expired_at' => Carbon::createFromTimestamp(strtotime($processTree['lastChild']->expired_at))
+                ->addDays(getenv('RENEW_COUNT')),
+        );
+
+        $this->processRepository->create($data);
+        return redirect('transactions')->with('success_msg', 'Renew Transaction Saved');
+    }
+
+
+    public function storeClaim(SaveRenewTransactionRequest $request)
+    {
+        $processTree = $this->processRepository->getProcessTree($request->parent_id);
+        $data = array(
+            'parent_id' => $request->parent_id,
+            'customer_id' => $request->customer_id,
+            'item_id' => $request->item_id,
+            'expired_at' => Carbon::createFromTimestamp(strtotime($processTree['lastChild']->expired_at))
+                ->addDays(getenv('RENEW_COUNT')),
+        );
+
+        $this->processRepository->create($data);
+        return redirect('transactions')->with('success_msg', 'Renew Transaction Saved');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

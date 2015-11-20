@@ -11,7 +11,7 @@
 @endif
 
 <div class="form-wrap">
-    {!! Form::open(['url' => 'transactions/renew']) !!}
+    {!! Form::open(['url' => 'transactions/repawn']) !!}
     {!! Form::hidden('parent_id', $transaction->id) !!}
     {!! Form::hidden('customer_id',$transaction->customer_id); !!}
     {!! Form::hidden('item_id',$transaction->item_id); !!}
@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 {!! Form::label('pawn_amount', 'Pawn Amount') !!}
-                {!! Form::text('pawn_amount',$totalPawnAmount,array('disabled' => 'disabled')) !!}
+                {!! Form::number('pawn_amount', ($transaction->item->value - $transaction->pawn_amount), array('min' => 1, 'step' => 'any', 'max' => ($transaction->item->value - $transaction->pawn_amount))) !!}
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            {!! Form::submit('Renew Transaction') !!}
+            {!! Form::submit('Create Transaction') !!}
         </div>
     </div>
     {!! Form::close() !!}

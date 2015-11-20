@@ -17,7 +17,7 @@ class CreateItemsTbl extends Migration
             $table->string('name',50);
             $table->text('description');
             $table->float('value');
-            $table->boolean('is_onhand')->default(1);
+            $table->boolean('is_onhand')->default(true);
             $table->timestamps();
         });
     }
