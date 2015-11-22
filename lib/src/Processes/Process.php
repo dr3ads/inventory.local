@@ -8,10 +8,14 @@ class Process extends Model
     protected $dates = ['renewed_at','expired_at','pawned_at','claimed_at'];
     protected $fillable = ['customer_id','item_id','pawn_amount','pawned_at', 'parent_id','expired_at'];
 
+    public function accounting()
+    {
+        return $this->morphMany('Lib\Accounting\Accounting','accountable');
+    }
+
     public function scopeInitial($query)
     {
         $query->where('parent_id', '==', 0);
-
     }
 
     public function scopeExpired($query)
@@ -39,7 +43,7 @@ class Process extends Model
             //$meal->meal_image_id = DB::table('media')->insertGetId(array());
             $process->ctrl_number = getenv('BRANCH_ID').$process->id;
             $process->update();
-        });
+       });
     }
 }
 

@@ -10,44 +10,62 @@
     </div>
 @endif
 
-<div class="form-wrap">
-    {!! Form::open(['url' => 'transactions/renew']) !!}
-    {!! Form::hidden('parent_id', $transaction->id) !!}
-    {!! Form::hidden('customer_id',$transaction->customer_id); !!}
-    {!! Form::hidden('item_id',$transaction->item_id); !!}
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                {!! Form::label('customer_id', 'Customer Id') !!}
-                {!! Form::select('customer',$customers,$transaction->customer_id,array('class' => 'form-control', 'readonly' => 'disabled') ) !!}
-                        <!--<p class="help-block">description for future use</p>-->
-            </div>
-            <div class="form-group">
-                {!! Form::label('pawn_amount', 'Pawn Amount') !!}
-                {!! Form::text('pawn_amount',$totalPawnAmount,array('disabled' => 'disabled')) !!}
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Item Details
+<div class="row">
+    <div class="col-md-7">
+        <div id="transaction-details">
+            <div class="details-wrap">
+                <h3>Transaction Details</h3>
+                <div class="item-wrap">
+                    <label>Customer: </label>
+                    <div class="customer">{!! $transaction->customer->full_name !!}</div>
                 </div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        {!! Form::label('item_name','Item Name') !!}
-                        {!! Form::text('item_name',$transaction->item->name,array('disabled' => 'disabled')) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('item_desc','Item Description') !!}
-                        {!! Form::textarea('item_desc',$transaction->item->description, array('disabled' => 'disabled')) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('item_value','Item Value') !!}
-                        {!! Form::text('item_value',$transaction->item->value, array('disabled' => 'disabled')) !!}
-                    </div>
+                <div class="item-wrap">
+                    <label>Pawned At: </label>
+                    <div class="date">{!! date('M d, Y', strtotime($transaction->pawned_at)) !!}</div>
+                </div>
+                <div class="item-wrap">
+                    <label>Total Pawn Amount: </label>
+                    <div class="amount">{!! money_format('P %i',$totalAmount) !!}</div>
+                </div>
+                <div class="item-wrap">
+                    <label>Expiry Date: </label>
+                    <div class="date">{!! date('M d, Y', strtotime($transaction->expired_at)) !!}</div>
                 </div>
             </div>
+            <div class="details-wrap">
+                <h3>Item Details</h3>
+                <div class="item-wrap">
+                    <label>Item Name: </label>
+                    <div class="name">{!! $transaction->item->name !!}</div>
+                </div>
+                <div class="item-wrap">
+                    <label>Item Description: </label>
+                    <div class="description">{!! $transaction->item->description !!}</div>
+                </div>
+                <div class="item-wrap">
+                    <label>Item Value: </label>
+                    <div class="value">{!! money_format('P %i', $transaction->item->value) !!}</div>
+                </div>
 
-            {!! Form::submit('Renew Transaction') !!}
+            </div>
         </div>
     </div>
-    {!! Form::close() !!}
+    <div class="col-md-5">
+        <div class="form-wrap">
+            {!! Form::open(['url' => 'transactions/renew']) !!}
+            {!! Form::hidden('parent_id', $transaction->id) !!}
+            {!! Form::hidden('customer_id',$transaction->customer_id); !!}
+            {!! Form::hidden('item_id',$transaction->item_id); !!}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {!! Form::label('pawn_amount', 'Renew Amount') !!}
+                        <div class="item">{!! money_format('P %i', $totalAmount * (getenv('INTEREST_RATE') / 100)) !!}</div>
+                    </div>
+                    {!! Form::submit('Renew Transaction') !!}
+                </div>
+            </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
 </div>

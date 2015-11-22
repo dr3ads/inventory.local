@@ -15,10 +15,11 @@ class UserTableSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('users')->truncate();
+        DB::table('role_user')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $userId = DB::table('users')->insertGetId(
-            ['email' => 'arnel.basiliote@gmail.com', 'password' => bcrypt('123qwerty')]
+            ['username' => 'arnz','email' => 'arnel.basiliote@gmail.com', 'password' => bcrypt('123qwerty')]
         );
 
         //add staff role

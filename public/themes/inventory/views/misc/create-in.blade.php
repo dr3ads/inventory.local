@@ -1,0 +1,34 @@
+<h1>Miscellaneous Cash In</h1>
+
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+<div class="form-wrap">
+    {!! Form::open(['url' => 'misc/store']) !!}
+    {!! Form::hidden('flow', 'in') !!}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('type', 'Type') !!}
+                {!! Form::select('type',array('water' => 'Water', 'electricity' => 'Electricity', 'rent' => 'Rent', 'etc' => 'e.t.c.')) !!}
+            </div>
+            <div class="form-group">
+                {!! Form::label('amount', 'Amount') !!}
+                {!! Form::number('amount','',array('min' => 1)) !!}
+            </div>
+            <div class="form-group">
+                {!! Form::label('description', 'Description') !!}
+                {!! Form::textarea('description') !!}
+            </div>
+
+            {!! Form::submit('Create Misc') !!}
+        </div>
+    </div>
+    {!! Form::close() !!}
+</div>

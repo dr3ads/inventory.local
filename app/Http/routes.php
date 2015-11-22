@@ -25,7 +25,10 @@ Route::get('transactions/claim/{id}', 'TransactionsController@claim');
 Route::post('transactions/claim', 'TransactionsController@storeClaim');
 Route::get('transactions/show_all/{id}', 'TransactionsController@showAll');
 Route::get('transactions/show/{id}', 'TransactionsController@show');
-
+Route::get('misc', 'MiscellaneousController@index');
+Route::get('misc/earn', 'MiscellaneousController@createIn');
+Route::get('misc/spend', 'MiscellaneousController@createOut');
+Route::post('misc/store','MiscellaneousController@store');
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');

@@ -24,7 +24,7 @@ class ProcessRepository extends AbstractRepository
 
     public function allParents()
     {
-        return $this->model->initial()->get();
+        return $this->model->initial()->paginate();
     }
 
     public function getProcessTree($parentId)
@@ -46,7 +46,33 @@ class ProcessRepository extends AbstractRepository
 
     public function getTotalPawnAmount($parentId)
     {
-        return $this->model->where('id','=',$parentId)->orWhere('parent_id', '=', $parentId)->sum('pawn_amount');
+        return $this->model->where('id', '=', $parentId)->orWhere('parent_id', '=', $parentId)->sum('pawn_amount');
+    }
+
+    public function getAllTree($parentId)
+    {
+        $children = $this->model->where('parent_id',$parentId);
+        foreach($children as $child){
+            $data['children'][] = $child;
+
+        }
+        $data['parent'] = $this->model->find($parentId);
+
+        return $data;
+    }
+
+    /**
+     * Set the status of the process and its child
+     * @param $processId
+     * @param string $status
+     * @return bool
+     */
+    public function setProcessStatus($processId, $status = 'claimed')
+    {
+        $this->model->update(array('status' => $status), $processId);
+        $this->model->update(array('status' => $status), $processId, 'parent_id');
+
+        return true;
     }
 
 }
