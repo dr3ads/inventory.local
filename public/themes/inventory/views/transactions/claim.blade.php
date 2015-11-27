@@ -52,15 +52,32 @@
     </div>
     <div class="col-md-5">
         <div class="form-wrap">
-            {!! Form::open(['url' => 'transactions/renew']) !!}
+            {!! Form::open(['url' => 'transactions/claim']) !!}
             {!! Form::hidden('parent_id', $transaction->id) !!}
             {!! Form::hidden('customer_id',$transaction->customer_id); !!}
             {!! Form::hidden('item_id',$transaction->item_id); !!}
             <div class="row">
                 <div class="col-md-6">
+                    <h3>Transactions</h3>
+                    <table>
+                        <thead>
+                            <td>Ctrl Number</td>
+                            <td>Amount</td>
+                            <td>Date</td>
+                        </thead>
+                        <tbody>
+                            @foreach($processTree as $item)
+                            <tr>
+                                <td>{!! $item->ctrl_number !!}</td>
+                                <td>{!! $item->pawn_amount !!}</td>
+                                <td>{!! $item->pawned_at !!}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                     <div class="form-group">
-                        {!! Form::label('pawn_amount', 'Renew Amount') !!}
-                        <div class="item">{!! money_format('P %i', $totalAmount * (getenv('INTEREST_RATE') / 100)) !!}</div>
+                        {!! Form::label('pawn_amount', 'Total Payable Amount') !!}
+                        <div class="item">{!! money_format('P %i', $totalAmount) !!}</div>
                     </div>
                     {!! Form::submit('Claim') !!}
                 </div>
@@ -68,10 +85,4 @@
             {!! Form::close() !!}
         </div>
     </div>
-</div>
-
-
-
-
- !!}
 </div>

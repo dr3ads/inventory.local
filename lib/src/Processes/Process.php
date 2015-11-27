@@ -18,14 +18,19 @@ class Process extends Model
         $query->where('parent_id', '==', 0);
     }
 
-    public function scopeExpired($query)
+    public function scopeActive($query)
     {
-        $query->where('expired_at', '!=', '');
+        $query->where('status','=','active');
     }
 
-    public function scopeRenewed($query)
+    public function scopeExpired($query)
     {
-        $query->where('expired_at', '=', '')->where('renewed_at','!=','');
+        $query->where('status', '=', 'expired');
+    }
+
+    public function scopeClaimed($query)
+    {
+        $query->where('status', '=', 'claimed');
     }
 
     protected function customer()

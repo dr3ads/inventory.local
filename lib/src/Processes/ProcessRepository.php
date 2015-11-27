@@ -2,6 +2,7 @@
 
 namespace Lib\Processes;
 
+use Carbon\Carbon;
 use Lib\AbstractRepository;
 use Lib\Processes\Process;
 
@@ -14,18 +15,19 @@ class ProcessRepository extends AbstractRepository
 
     public function allExpired()
     {
-        return $this->model->expired()->get();
+        return $this->model->initial()->expired()->paginate();
     }
 
-    public function allRenewed()
+    public function allClaimed()
     {
-        return $this->model->renewed()->get();
+        return $this->model->initial()->claimed()->paginate();
     }
 
     public function allParents()
     {
-        return $this->model->initial()->paginate();
+        return $this->model->initial()->active()->paginate();
     }
+
 
     public function getProcessTree($parentId)
     {
@@ -51,12 +53,14 @@ class ProcessRepository extends AbstractRepository
 
     public function getAllTree($parentId)
     {
-        $children = $this->model->where('parent_id',$parentId);
-        foreach($children as $child){
-            $data['children'][] = $child;
+        $data = array();
 
+        $data[] = $this->model->find($parentId);
+        $children = $this->model->where('parent_id','=', $parentId)->get();
+
+        foreach ($children as $child) {
+            $data[] = $child;
         }
-        $data['parent'] = $this->model->find($parentId);
 
         return $data;
     }
@@ -69,8 +73,8 @@ class ProcessRepository extends AbstractRepository
      */
     public function setProcessStatus($processId, $status = 'claimed')
     {
-        $this->model->update(array('status' => $status), $processId);
-        $this->model->update(array('status' => $status), $processId, 'parent_id');
+        $this->update(array('status' => $status, 'claimed_at' => Carbon::now()), $processId);
+        $this->update(array('status' => $status, 'claimed_at' => Carbon::now()), $processId, 'parent_id');
 
         return true;
     }

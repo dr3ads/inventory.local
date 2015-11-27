@@ -13,7 +13,7 @@
     <div class="panel-heading">Transactions</div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-2"><a href="{!! url('transactions/create') !!}" >New Transaction</a></div>
+            <div class="col-md-2"><a href="{{ url('transactions/create') }}" >New Transaction</a></div>
 
         </div>
     </div>
@@ -25,26 +25,28 @@
             <td>Customer</td>
             <td>Pawn Date</td>
             <td>Pawn Amount</td>
-            <td>Renewal Date</td>
             <td>Expiry Date</td>
             <td colspan="3" align="center">Actions</td>
         </thead>
+        @if(isset($transactions) && count($transactions) > 0)
         @foreach($transactions as $transaction)
             <tr>
-                <td><a href="{!! url('transactions/show/'.$transaction['parent']->id) !!}">{!! $transaction['parent']->ctrl_number !!}</a></td>
-                <td>{!! $transaction['parent']->customer->full_name !!}</td>
-                <td>{!! date('Y-m-d', strtotime($transaction['lastChild']->pawned_at)) !!}</td>
-                <td>P{!! $transaction['totalPawnAmount'] !!}</td>
-                <td>{!! $transaction['parent']->renewed_at !!}</td>
-                <td>{!! date('Y-m-d', strtotime($transaction['lastChild']->expired_at)) !!}</td>
-                <td><a href="{!! url('transactions/show_all/'.$transaction['parent']->id) !!}">View Details</a></td>
-                <td><a href="{!! url('transactions/repawn/'.$transaction['parent']->id) !!}">RePawn</a></td>
-                <td><a href="{!! url('transactions/renew/'.$transaction['parent']->id) !!}">Renew</a></td>
-                <td><a href="{!! url('transactions/claim/'.$transaction['parent']->id) !!}">Claim</a></td>
+                <td>{{ $transaction['parent']->ctrl_number }}</td>
+                <td>{{ $transaction['parent']->customer->full_name }}</td>
+                <td>{{ date('Y-m-d', strtotime($transaction['lastChild']->pawned_at)) }}</td>
+                <td>P{{ $transaction['totalPawnAmount'] }}</td>
+                <td>{{ date('Y-m-d', strtotime($transaction['lastChild']->expired_at)) }}</td>
+                <td><a href="{{ url('transactions/show_all/'.$transaction['parent']->id) }}">View Details</a></td>
+                <td>@if($transaction['parent']->item->value > $transaction['totalPawnAmount'])<a href="{{ url('transactions/repawn/'.$transaction['parent']->id) }}">RePawn</a>@else N/A @endif</td>
+                <td><a href="{{ url('transactions/renew/'.$transaction['parent']->id) }}">Renew</a></td>
+                <td><a href="{{ url('transactions/claim/'.$transaction['parent']->id) }}">Claim</a></td>
             </tr>
         @endforeach
+        @else
+            <h3>No transactions found</h3>
+        @endif
     </table>
-    {!! $paginator !!}
+    {{ $paginator }}
 </div>
 
 <div class="new-transaction">
@@ -53,7 +55,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    {!! Form::label('customer_id', 'Customer Id') !!}
+                    {!!  Form::label('customer_id', 'Customer Id') !!}
                     {!! Form::select('customer_id',$customers,array('class' => 'form-control')) !!}
                             <!--<p class="help-block">description for future use</p>-->
                 </div>

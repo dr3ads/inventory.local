@@ -11,7 +11,13 @@
                         <a href="{!! url('transactions/create') !!}">New</a>
                     </li>
                     <li>
-                        <a href="{!! url('transactions') !!}">Active</a>
+                        <a href="{!! url('transactions?status=default') !!}">Active</a>
+                    </li>
+                    <li>
+                        <a href="{!! url('transactions?status=claimed') !!}">Claimed</a>
+                    </li>
+                    <li>
+                        <a href="{!! url('transactions?status=expired') !!}">Expired</a>
                     </li>
                 </ul>
             </li>
