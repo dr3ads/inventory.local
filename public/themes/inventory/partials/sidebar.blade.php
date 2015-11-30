@@ -19,6 +19,9 @@
                     <li>
                         <a href="{!! url('transactions?status=expired') !!}">Expired</a>
                     </li>
+                    <li>
+                        <a href="{!! url('transactions?status=void') !!}">Void</a>
+                    </li>
                 </ul>
             </li>
             <li>

@@ -76,8 +76,13 @@
                         </tbody>
                     </table>
                     <div class="form-group">
-                        {!! Form::label('pawn_amount', 'Total Payable Amount') !!}
+                        {!! Form::label('pawn_amount', 'Principal Payable') !!}
                         <div class="item">{!! money_format('P %i', $totalAmount) !!}</div>
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('penalty', 'Penalty Amount') !!}
+                        {!! Form::number('penalty', number_format($totalAmount * ($transactionDetails['processPenalty'] / 100), 2)) !!}
                     </div>
                     {!! Form::submit('Claim') !!}
                 </div>

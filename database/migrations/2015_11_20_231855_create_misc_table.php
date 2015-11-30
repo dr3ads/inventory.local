@@ -14,7 +14,7 @@ class CreateMiscTable extends Migration
     {
         Schema::create('miscs', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type', array('water', 'electricity','rent', 'etc'));
+            $table->enum('type', array('water', 'electricity','rent', 'load','meal','other'));
             $table->enum('flow', array('in', 'out'));
             $table->float('amount');
             $table->text('description');

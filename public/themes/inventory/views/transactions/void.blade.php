@@ -38,8 +38,6 @@
                 <td>{{ date('Y-m-d', strtotime($transaction['lastChild']->expired_at)) }}</td>
                 <td><a href="{{ url('transactions/show_all/'.$transaction['parent']->id) }}">View Details</a></td>
                 <td><a href="{{ url('transactions/claim/'.$transaction['parent']->id) }}">Claim</a></td>
-                <td><a href="{{ url('transactions/claim/'.$transaction['parent']->id) }}">Hold</a></td>
-                <td><a href="{{ url('transactions/claim/'.$transaction['parent']->id) }}">Renew</a></td>
             </tr>
         @endforeach
             @endif

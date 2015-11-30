@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\File;
 use Lib\Customers\CustomerRepository;
 use App\Http\Controllers\BaseController;
 use Theme;
 use Validator;
+use Storage;
 
 
 class CustomersController extends BaseController
@@ -29,7 +31,7 @@ class CustomersController extends BaseController
     public function index()
     {
         $data = array();
-        $data['customers'] = $this->customerRepository->all();
+        $data['customers'] = $this->customerRepository->paginate();
         return $this->theme->scope('customers.index', $data)->render();
     }
 
@@ -52,11 +54,12 @@ class CustomersController extends BaseController
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'fname' => 'required|max:255',
             'lname' => 'required|max:255',
             'age' => 'required|numeric|min:18',
-            'phone' => "required_without:mobile",
+            'photo' => 'image',
         ]);
 
         if ($validator->fails()) {
@@ -65,7 +68,15 @@ class CustomersController extends BaseController
                 ->withInput();
         }
 
-        $this->customerRepository->create($request->all());
+        $photo = $request->file('photo');
+        $extension = $photo->getClientOriginalExtension();
+
+
+        $data = $request->all();
+        $data['photo'] = $photo->getFilename().'.'.$extension;
+        //dd($data);
+        $customer = $this->customerRepository->create($data);
+        Storage::disk('local')->put($customer->id.'-'.$photo->getFilename().'.'.$extension,  File::get($photo));
 
         $request->session()->flash('alert-success', 'Customer was successfully added!');
         return redirect()->route("customers.index");

@@ -13,7 +13,7 @@ class AlterProcessTblAddClaimedStatus extends Migration
     public function up()
     {
         Schema::table('processes', function ($table) {
-            $table->enum('status',['active','claimed','expired'])->after('ctrl_number');
+            $table->enum('status',['active','claimed','expired','void','hold'])->after('ctrl_number');
         });
     }
 

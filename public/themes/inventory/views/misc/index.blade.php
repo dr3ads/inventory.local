@@ -18,7 +18,7 @@
                 <td>{!! $misc->type !!}</td>
                 <td>{!! $misc->flow !!}</td>
                 <td>{!! $misc->description !!}</td>
-                <td>{!! $misc->created_at !!}</td>
+                <td>{!! date('M d, Y', strtotime($misc->created_at)) !!}</td>
             </tr>
         @endforeach
     </table>

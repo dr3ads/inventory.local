@@ -33,7 +33,15 @@
                         {!! Form::text('item_name') !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('item_desc','Item Description') !!}
+                        {!! Form::label('item_brand','Item Brand/Model') !!}
+                        {!! Form::text('item_brand') !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('item_serial','Item Serial Number') !!}
+                        {!! Form::text('item_serial') !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('item_desc','Item Accessories') !!}
                         {!! Form::textarea('item_desc') !!}
                     </div>
                     <div class="form-group">

@@ -8,7 +8,7 @@ use Lib\Processes\Process;
 class Item extends Model
 {
     protected $table = 'items';
-    protected $fillable = ['name','description','value','is_onhold'];
+    protected $fillable = ['name','description','value','is_onhold','serial','brand'];
 
     public function process()
     {

@@ -46,13 +46,14 @@ class TransactionsController extends BaseController
                 $transactions = $this->processRepository->allClaimed();
                 break;
             case 'expired':
-
                 $transactions = $this->processRepository->allExpired();
+                break;
+            case 'void':
+                $transactions = $this->processRepository->allVoid();
                 break;
             case 'default':
             default:
                 $transactions = $this->processRepository->allParents();
-
                 break;
         }
         $data['customers'] = $customersRepository->getValueByKey('full_name');
@@ -94,6 +95,8 @@ class TransactionsController extends BaseController
             'name' => $request->item_name,
             'description' => $request->item_desc,
             'value' => $request->item_value,
+            'serial' => $request->item_serial,
+            'brand' => $request->item_brand,
         );
 
         $processData = array(
@@ -141,10 +144,9 @@ class TransactionsController extends BaseController
     {
         $data = array();
         $data['process'] = $this->processRepository->find($id);
-        echo "Show the receipts of a certain transaction";
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
+
+        return $this->theme->scope('transactions.show', $data)->render();
+
     }
 
     /**
@@ -184,7 +186,9 @@ class TransactionsController extends BaseController
         $data = array();
         $data['transaction'] = $this->processRepository->find($id);
         $data['processTree'] = $this->processRepository->getAllTree($id);
+        $data['transactionDetails'] = $this->processRepository->transactionDetails($id);
         $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
+
         return $this->theme->scope('transactions.claim', $data)->render();
     }
 
@@ -307,17 +311,13 @@ class TransactionsController extends BaseController
 
     public function storeClaim(Request $request)
     {
-        //$processTree = $this->processRepository->getProcessTree($request->id);
-        $totalAmount = $this->processRepository->getTotalPawnAmount($request->parent_id);
         $input = $request->all();
 
-
-        //$process = $this->processRepository->update($data, $request->parent_id);
         $process = $this->processRepository->find($input['parent_id']);
         $this->processRepository->setProcessStatus($input['parent_id'], 'claimed');
 
         $accData = array(
-            'amount' => $totalAmount - ($totalAmount * (getenv('INTEREST_RATE') / 100)),
+            'amount' => $input['penalty'],
             'accountable_type' => 'Process',
             'accountable_id' => $request->id,
             'type' => 'debit',

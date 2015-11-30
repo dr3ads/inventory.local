@@ -8,8 +8,8 @@ class Customer extends Model
     use SoftDeletes;
 
     protected $table = 'customers';
-    protected $dates = ['deleted_at'];
-    protected $fillable = ['fname', 'lname', 'age', 'phone', 'mobile'];
+    protected $dates = ['deleted_at','valid_until'];
+    protected $fillable = ['fname', 'lname', 'age', 'phone', 'mobile','photo','id_type','id_number','id_issuedby','valid_until'];
 
     public function getFullNameAttribute()
     {

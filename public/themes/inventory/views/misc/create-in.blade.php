@@ -16,7 +16,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('type', 'Type') !!}
-                {!! Form::select('type',array('water' => 'Water', 'electricity' => 'Electricity', 'rent' => 'Rent', 'etc' => 'e.t.c.')) !!}
+                {!! Form::select('type',array('' => 'Select Type','water' => 'Water', 'electricity' => 'Electricity', 'rent' => 'Rent', 'load' => 'Mobile load', 'other' => 'Other')) !!}
             </div>
             <div class="form-group">
                 {!! Form::label('amount', 'Amount') !!}
@@ -27,7 +27,7 @@
                 {!! Form::textarea('description') !!}
             </div>
 
-            {!! Form::submit('Create Misc') !!}
+            {!! Form::submit('Submit') !!}
         </div>
     </div>
     {!! Form::close() !!}

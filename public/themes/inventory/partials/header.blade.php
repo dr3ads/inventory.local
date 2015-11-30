@@ -5,7 +5,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html">Inventory</a>
+    <a class="navbar-brand" href="index.html">FG Gadget Cebu</a>
 </div>
 <!-- /.navbar-header -->
 

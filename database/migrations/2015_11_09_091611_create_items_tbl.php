@@ -15,8 +15,11 @@ class CreateItemsTbl extends Migration
         Schema::create('items', function($table){
             $table->increments('id');
             $table->string('name',50);
+            $table->string('brand');
+            $table->string('serial');
             $table->text('description');
             $table->float('value');
+            $table->float('selling_value');
             $table->boolean('is_onhand')->default(true);
             $table->timestamps();
         });
@@ -29,6 +32,8 @@ class CreateItemsTbl extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::drop('items');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

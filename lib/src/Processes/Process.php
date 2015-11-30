@@ -33,6 +33,12 @@ class Process extends Model
         $query->where('status', '=', 'claimed');
     }
 
+    public function scopeVoid($query)
+    {
+        $query->where('status', '=', 'void');
+    }
+
+
     protected function customer()
     {
         return $this->BelongsTo('Lib\Customers\Customer');
@@ -49,6 +55,11 @@ class Process extends Model
             $process->ctrl_number = getenv('BRANCH_ID').$process->id;
             $process->update();
        });
+    }
+
+    public function alert()
+    {
+        return $this->hasMany('Lib\Alerts\Alert');
     }
 }
 
