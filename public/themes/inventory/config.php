@@ -33,8 +33,7 @@ return array(
         // Before event inherit from package config and the theme that call before,
         // you can use this event to set meta, breadcrumb template or anything
         // you want inheriting.
-        'before' => function($theme)
-        {
+        'before' => function ($theme) {
             // You can remove this line anytime.
             $theme->setTitle('Copyright ©  2013 - Laravel.in.th');
 
@@ -55,8 +54,7 @@ return array(
         // Listen on event before render a theme,
         // this event should call to assign some assets,
         // breadcrumb template.
-        'beforeRenderTheme' => function($theme)
-        {
+        'beforeRenderTheme' => function ($theme) {
             // You may use this event to set up your assets.
             // $theme->asset()->usePath()->add('core', 'core.js');
             // $theme->asset()->add('jquery', 'vendor/jquery/jquery.min.js');
@@ -69,16 +67,21 @@ return array(
             // });
 
             //css
-            $theme->asset()->usePath()->add('bootstrap-css','vendors/bootstrap/css/bootstrap.min.css');
+            $theme->asset()->usePath()->add('bootstrap-css', 'vendors/bootstrap/css/bootstrap.min.css');
             $theme->asset()->usePath()->add('font-awesome-css', 'vendors/font-awesome/css/font-awesome.min.css');
             $theme->asset()->usePath()->add('sb-admin-css', 'vendors/sb-admin/css/sb-admin.css');
-            $theme->asset()->usePath()->add('metismenu-css','vendors/metisMenu/metisMenu.min.css');
+            $theme->asset()->usePath()->add('metismenu-css', 'vendors/metisMenu/metisMenu.min.css');
+            $theme->asset()->usePath()->add('bs-select-css', 'vendors/bootstrap-select/css/bootstrap-select.min.css', array('bootstrap-css'));
 
             //scripts
-            $theme->asset()->container('footer')->usePath()->add('jquery','vendors/jquery/jquery.min.js');
-            $theme->asset()->container('footer')->usePath()->add('bootstrap-js', 'vendors/bootstrap/js/bootstrap.min.js',array('jquery'));
-            $theme->asset()->container('footer')->usePath()->add('metismenu-js','vendors/metisMenu/metisMenu.min.js');
-            $theme->asset()->container('footer')->usePath()->add('sb-admin-js','vendors/sb-admin/js/sb-admin-2.js');
+            $theme->asset()->container('footer')->usePath()->add('jquery', 'vendors/jquery/jquery.min.js');
+            $theme->asset()->container('footer')->usePath()->add('bootstrap-js',
+                'vendors/bootstrap/js/bootstrap.min.js', array('jquery'));
+            $theme->asset()->container('footer')->usePath()->add('metismenu-js', 'vendors/metisMenu/metisMenu.min.js');
+            $theme->asset()->container('footer')->usePath()->add('bs-select-js',
+                'vendors/bootstrap-select/js/bootstrap-select.min.js', array('bootstrap-js'));
+            $theme->asset()->container('footer')->usePath()->add('sb-admin-js', 'vendors/sb-admin/js/sb-admin-2.js');
+            $theme->asset()->container('footer')->usePath()->add('global', 'js/global.js');
 
         },
 
@@ -86,8 +89,7 @@ return array(
         // this should call to assign style, script for a layout.
         'beforeRenderLayout' => array(
 
-            'default' => function($theme)
-            {
+            'default' => function ($theme) {
                 // $theme->asset()->usePath()->add('ipad', 'css/layouts/ipad.css');
             }
 
