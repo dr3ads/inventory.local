@@ -81,7 +81,7 @@ class ProcessRepository extends AbstractRepository
 
             if (Carbon::now()->diffInDays(Carbon::createFromTimestampUTC($expiryDate)) < getenv('ALERT_DAY_COUNT')) {
                 if ($this->alertRepository->checkAlertExisting($parent->id) <= 0) {
-                    $this->alertRepository->create(array('process_id' => $parent->id, 'added_at' => Carbon::now()->toDateString()) );
+                    $this->alertRepository->create(array('process_id' => $parent->id));
                 }
             }
         }

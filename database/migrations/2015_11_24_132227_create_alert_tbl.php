@@ -16,9 +16,8 @@ class CreateAlertTbl extends Migration
             $table->increments('id');
             $table->integer('process_id')->unsigned();
             $table->boolean('seen')->default(0);
-            $table->timestamp('added_at');
             $table->timestamps();
-            $table->unique(['process_id','added_at']);
+            $table->unique(['process_id','created_at']);
         });
     }
 

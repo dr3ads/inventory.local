@@ -9,5 +9,6 @@ class Alert extends Model
 {
     protected $table = 'alerts';
     protected $fillable = ['process_id','added_at'];
-
+    protected $dates = ['added_at'];
+    protected $dateFormat = 'Y-m-d';
 }

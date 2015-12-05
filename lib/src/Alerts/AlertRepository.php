@@ -13,6 +13,11 @@ class AlertRepository extends AbstractRepository
 
     public function checkAlertExisting($id)
     {
-        return $this->model->where('added_at', '=', Carbon::today()->toDateString())->where('id', '=', $id)->count();
+        return $this->model->where('created_at', '=', Carbon::today()->__toString())->where('process_id', '=', $id)->count();
+    }
+
+    public function getCurrentAlerts()
+    {
+        return $this->model->where('crea1ted_at', '=', Carbon::now()->__toString())->where('seen', '=', '0')->get();
     }
 }

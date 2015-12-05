@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Theme;
+use Lib\Alerts\AlertRepository;
 
 class BaseController extends Controller {
 
@@ -13,6 +14,8 @@ class BaseController extends Controller {
     {
         $this->middleware = 'auth';
         setlocale(LC_MONETARY, 'en_PH');
+        $this->alertRepository = $alertRepository;
+
     }
 
     protected function setupLayout()
@@ -26,6 +29,7 @@ class BaseController extends Controller {
         $this->setupLayout();
 
         return call_user_func_array(array($this, $method), $parameters);
-
     }
+
+
 }
