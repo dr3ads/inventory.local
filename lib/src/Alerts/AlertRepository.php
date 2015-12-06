@@ -18,6 +18,6 @@ class AlertRepository extends AbstractRepository
 
     public function getCurrentAlerts()
     {
-        return $this->model->where('crea1ted_at', '=', Carbon::now()->__toString())->where('seen', '=', '0')->get();
+        return $this->model->where('created_at', '=', Carbon::today()->__toString())->where('seen', '=', '0')->get();
     }
 }

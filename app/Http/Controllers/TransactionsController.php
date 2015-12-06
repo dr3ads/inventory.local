@@ -40,7 +40,6 @@ class TransactionsController extends BaseController
         $data = array();
         $status = ($request->status) ? $request->status : 'default';
 
-        dd($this->theme->get('alerts'));
         switch ($status) {
 
             case 'claimed':

@@ -13,11 +13,11 @@ class ExpiryAlertMiddleware
     protected $alertRepository;
     protected $theme;
 
-    public function __construct(ProcessRepository $processRepository, AlertRepository $alertRepository, Theme $theme)
+    public function __construct(ProcessRepository $processRepository, AlertRepository $alertRepository)
     {
         $this->processRepository = $processRepository;
         $this->alertRepository = $alertRepository;
-        $this->theme = $theme;
+        $this->theme = Theme::uses(getenv('THEME'))->layout(getenv('LAYOUT'));
     }
 
     /**
@@ -36,7 +36,6 @@ class ExpiryAlertMiddleware
         $this->processRepository->setProcessVoid();
 
         $this->theme->set('alerts',$this->alertRepository->getCurrentAlerts());
-
         return $next($request);
     }
 

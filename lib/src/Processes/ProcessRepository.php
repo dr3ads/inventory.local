@@ -97,7 +97,7 @@ class ProcessRepository extends AbstractRepository
             $expiryDate = strtotime($processTree['lastChild']->expired_at);
 
             if (Carbon::now()->diffInDays(Carbon::createFromTimestampUTC($expiryDate)) >= getenv('VOID_COUNT')) {
-
+                $this->setProcessStatus($parent->id, 'void');
             }
         }
     }

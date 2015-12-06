@@ -5,17 +5,17 @@ use Lib\Alerts\AlertRepository;
 
 class BaseController extends Controller {
 
-    var $theme = null;
-    var $layout = 'default';
-    var $theme_name = 'inventory';
-    var $data = array();
+    public $theme = null;
+    public $layout = '';
+    public $theme_name = '';
+    public $data = array();
 
     public function __construct()
     {
         $this->middleware = 'auth';
         setlocale(LC_MONETARY, 'en_PH');
-        $this->alertRepository = $alertRepository;
-
+        $this->layout = getenv('LAYOUT');
+        $this->theme_name = getenv('THEME');
     }
 
     protected function setupLayout()
