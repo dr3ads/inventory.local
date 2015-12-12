@@ -3,40 +3,42 @@
     float: right;
     margin-top: 7px;
   }
-  .status-filter{
-    ul{
-      height: 56px;
-      list-style: outside none none;
-      margin: -16px 0 16px;
-      padding: 16px 0 0;
-      text-align: left;
-      li{
-        display: inline-block;
-        &.active{
-          a{
-            border-bottom: 2px solid #1cacfc;
-            color: #4c4e54;
+  .status-filter {
+    .status-filter-wrap {
+      ul {
+        height: 56px;
+        list-style: outside none none;
+        margin: -16px 0 16px;
+        padding: 16px 0 0;
+        text-align: left;
+        li {
+          display: inline-block;
+          &.active {
+            a {
+              border-bottom: 2px solid #1cacfc;
+              color: #4c4e54;
+            }
           }
-        }
-        a{
-          border-bottom: none;
-          color: #7f8fa4;
-          font-size: 17px;
-          line-height: 28px;
-          padding: 14px;
-          .badge{
-            background-color: #eee;
-            color: #78a;
-            font-weight: normal;
-            border-radius: 10px;
-            display: inline-block;
-            font-size: 13px;
-            line-height: 1;
-            min-width: 10px;
-            padding: 3px 7px;
-            text-align: center;
-            vertical-align: middle;
-            white-space: nowrap;
+          a {
+            border-bottom: none;
+            color: #7f8fa4;
+            font-size: 17px;
+            line-height: 28px;
+            padding: 14px;
+            .badge {
+              background-color: #eee;
+              color: #78a;
+              font-weight: normal;
+              border-radius: 10px;
+              display: inline-block;
+              font-size: 13px;
+              line-height: 1;
+              min-width: 10px;
+              padding: 3px 7px;
+              text-align: center;
+              vertical-align: middle;
+              white-space: nowrap;
+            }
           }
         }
       }
@@ -65,6 +67,27 @@
       height: 42px;
       line-height: 1.42857;
       padding: 8px 16px;
+    }
+  }
+}
+
+.list-trans{
+  list-style-type: none;
+  li {
+    padding: 10px 16px;
+    border-bottom: solid 1px #eef0f2;
+    &:last-child{
+      border-bottom: none;
+    }
+  }
+  .trans-info{
+    a{
+      &.trans-ctrlnumber{
+        font-size: 15px;
+        font-weight: bold;
+        color: #333c48;
+        cursor: pointer;
+      }
     }
   }
 }

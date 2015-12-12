@@ -12,7 +12,7 @@ class ProcessRepository extends AbstractRepository
 {
     protected $alertRepository;
 
-    public function __construct(Process $transaction,AlertRepository $alertRepository)
+    public function __construct(Process $transaction, AlertRepository $alertRepository)
     {
         $this->model = $transaction;
         $this->alertRepository = $alertRepository;
@@ -53,20 +53,6 @@ class ProcessRepository extends AbstractRepository
     }
 
     /**
-     * Set the status of the process and its child
-     * @param $processId
-     * @param string $status
-     * @return bool
-     */
-    public function setProcessStatus($processId, $status = 'claimed')
-    {
-        $this->update(array('status' => $status, 'claimed_at' => Carbon::now()), $processId);
-        $this->update(array('status' => $status, 'claimed_at' => Carbon::now()), $processId, 'parent_id');
-
-        return true;
-    }
-
-    /**
      * Check proccesses and create the necessary alerts
      *
      */
@@ -87,6 +73,41 @@ class ProcessRepository extends AbstractRepository
         }
     }
 
+    public function getProcessTree($parentId)
+    {
+
+        $data = array(
+            'parent' => $this->model->find($parentId),
+            'lastChild' => ($this->lastChild('parent_id', $parentId)) ? $this->lastChild('parent_id',
+                $parentId) : $this->model->find($parentId),
+            'totalPawnAmount' => $this->getTotalPawnAmount($parentId),
+            'relatedTransactionCount' => $this->getRelatedTransactionsCount($parentId),
+        );
+
+        return $data;
+    }
+
+    public function lastChild($attribute, $value, $columns = array('*'))
+    {
+        return $this->model->where($attribute, '=', $value)->orderBy('id', 'desc')->first($columns);
+    }
+
+    public function getTotalPawnAmount($parentId)
+    {
+        return $this->model->where('id', '=', $parentId)->orWhere('parent_id', '=', $parentId)->sum('pawn_amount');
+    }
+
+    /**
+     * get the number of related transactions
+     *
+     * @param $id
+     * @return mixed
+     */
+    protected function getRelatedTransactionsCount($id)
+    {
+        return $this->model->where('id', '=', $id)->orWhere('parent_id', '=', $id)->count();
+    }
+
     public function setProcessVoid()
     {
         $allParents = $this->model->initial()->expired()->get();
@@ -102,17 +123,18 @@ class ProcessRepository extends AbstractRepository
         }
     }
 
-    public function getProcessTree($parentId)
+    /**
+     * Set the status of the process and its child
+     * @param $processId
+     * @param string $status
+     * @return bool
+     */
+    public function setProcessStatus($processId, $status = 'claimed')
     {
+        $this->update(array('status' => $status, 'claimed_at' => Carbon::now()), $processId);
+        $this->update(array('status' => $status, 'claimed_at' => Carbon::now()), $processId, 'parent_id');
 
-        $data = array(
-            'parent' => $this->model->find($parentId),
-            'lastChild' => ($this->lastChild('parent_id', $parentId)) ? $this->lastChild('parent_id',
-                $parentId) : $this->model->find($parentId),
-            'totalPawnAmount' => $this->getTotalPawnAmount($parentId),
-        );
-
-        return $data;
+        return true;
     }
 
     public function transactionDetails($id)
@@ -120,19 +142,11 @@ class ProcessRepository extends AbstractRepository
         $data = array(
             'totalPawnAmount' => $this->getTotalPawnAmount($id),
             'totalPrincipal' => $this->getTotalPawnAmount($id) - ($this->getTotalPawnAmount($id) * (getenv('INTEREST_RATE') / 100)),
-            'processPenalty' => ( $this->getAfterExpiryDayCount($id, Carbon::now()) > 0 ) ? $this->calculatePenaltyPercentage($this->getAfterExpiryDayCount($id, Carbon::now())) : 0,
+            'processPenalty' => ($this->getAfterExpiryDayCount($id,
+                    Carbon::now()) > 0) ? $this->calculatePenaltyPercentage($this->getAfterExpiryDayCount($id,
+                Carbon::now())) : 0,
         );
         return $data;
-    }
-
-    public function lastChild($attribute, $value, $columns = array('*'))
-    {
-        return $this->model->where($attribute, '=', $value)->orderBy('id', 'desc')->first($columns);
-    }
-
-    public function getTotalPawnAmount($parentId)
-    {
-        return $this->model->where('id', '=', $parentId)->orWhere('parent_id', '=', $parentId)->sum('pawn_amount');
     }
 
     protected function getAfterExpiryDayCount($id, Carbon $toDate)
@@ -145,12 +159,27 @@ class ProcessRepository extends AbstractRepository
 
     protected function calculatePenaltyPercentage($days = 1)
     {
-        if($days <= 0) return 0;
+        if ($days <= 0) {
+            return 0;
+        }
         $initialPenalty = getenv('INITIAL_PENALTY');
         $initialPenaltyDays = getenv('INITIAL_PENALTY_DAYS');
         $normalPenalty = getenv('NORMAL_PENALTY');
 
         return (($days - $initialPenaltyDays) * $normalPenalty) + ($initialPenalty * $initialPenaltyDays);
+    }
+
+    public function getTransactionStatusCount()
+    {
+        $data = array();
+
+        $data['active'] = $this->model->where('status', '=', 'active')->count();
+        $data['claimed'] = $this->model->where('status', '=', 'claimed')->count();
+        $data['expired'] = $this->model->where('status', '=', 'expired')->count();
+        $data['void'] = $this->model->where('status', '=', 'void')->count();
+        $data['hold'] = $this->model->where('status', '=', 'hold')->count();
+
+        return $data;
     }
 
 }

@@ -35,7 +35,7 @@ return array(
         // you want inheriting.
         'before' => function ($theme) {
             // You can remove this line anytime.
-           // $theme->setTitle('Copyright ©  2013 - Laravel.in.th');
+            // $theme->setTitle('Copyright ©  2013 - Laravel.in.th');
 
             // Breadcrumb template.
             // $theme->breadcrumb()->setTemplate('
@@ -70,15 +70,18 @@ return array(
             $theme->asset()->usePath()->add('bootstrap-css', 'vendors/bootstrap/css/bootstrap.min.css');
 
             $theme->asset()->usePath()->add('font-awesome-css', 'vendors/font-awesome/css/font-awesome.min.css');
-            $theme->asset()->usePath()->add('select2-css', 'vendors/select2/css/select2.min.css', array('bootstrap-css'));
+            $theme->asset()->usePath()->add('chosen-css', 'vendors/chosen/chosen.min.css', array('bootstrap-css'));
             $theme->asset()->usePath()->add('global-css', 'css/global.css', array('bootstrap-css'));
             //scripts
             $theme->asset()->container('footer')->usePath()->add('jquery', 'vendors/jquery/jquery.min.js');
             $theme->asset()->container('footer')->usePath()->add('bootstrap-js',
                 'vendors/bootstrap/js/bootstrap.min.js', array('jquery'));
-            $theme->asset()->container('footer')->usePath()->add('select2-js',
-                'vendors/select2/js/select2.min.js', array('bootstrap-js'));
-            $theme->asset()->container('footer')->usePath()->add('global', 'js/global.js');
+            $theme->asset()->container('footer')->usePath()->add('chosen-js',
+                'vendors/chosen/chosen.jquery.min.js', array('bootstrap-js'));
+            $theme->asset()->container('footer')->usePath()->add('jquery-validation',
+                'vendors/jquery-validate/jquery.validate.min.js', array('jquery'));
+            $theme->asset()->container('footer')->usePath()->add('global', 'js/global.js',
+                array('jquery', 'chosen-js', 'jquery-validation'));
 
         },
 

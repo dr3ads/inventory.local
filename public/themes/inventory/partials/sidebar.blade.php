@@ -29,7 +29,7 @@
     <li class="alerts">
         <a title="Reports" href="{{ url('alerts') }}" data-placement="right"
            class="shortcuts-alerts">
-            <i class="fa fa-exclamation-circle fa-fw"></i><span>Reports</span>
+            <i class="fa fa-exclamation-circle fa-fw"></i><span>Alerts</span>
         </a>
     </li>
     <li class="inventory">

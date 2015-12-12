@@ -66,6 +66,7 @@ class TransactionsController extends BaseController
             $data['transactions'][] = $this->processRepository->getProcessTree($transaction->id);
         }
 
+        $data['transactionsStatusCount'] = $this->processRepository->getTransactionStatusCount();
         $data['paginator'] = $transactions->render();
 
         $data['status'] = $request->status;
@@ -264,11 +265,8 @@ class TransactionsController extends BaseController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param SaveAdditionalTransactionRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function storeRepawn(SaveAdditionalTransactionRequest $request)
     {

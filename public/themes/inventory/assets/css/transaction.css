@@ -2,28 +2,28 @@
   float: right;
   margin-top: 7px;
 }
-.transaction-filter .status-filter ul {
+.transaction-filter .status-filter .status-filter-wrap ul {
   height: 56px;
   list-style: outside none none;
   margin: -16px 0 16px;
   padding: 16px 0 0;
   text-align: left;
 }
-.transaction-filter .status-filter ul li {
+.transaction-filter .status-filter .status-filter-wrap ul li {
   display: inline-block;
 }
-.transaction-filter .status-filter ul li.active a {
+.transaction-filter .status-filter .status-filter-wrap ul li.active a {
   border-bottom: 2px solid #1cacfc;
   color: #4c4e54;
 }
-.transaction-filter .status-filter ul li a {
+.transaction-filter .status-filter .status-filter-wrap ul li a {
   border-bottom: none;
   color: #7f8fa4;
   font-size: 17px;
   line-height: 28px;
   padding: 14px;
 }
-.transaction-filter .status-filter ul li a .badge {
+.transaction-filter .status-filter .status-filter-wrap ul li a .badge {
   background-color: #eee;
   color: #78a;
   font-weight: normal;
@@ -60,4 +60,20 @@
   height: 42px;
   line-height: 1.42857;
   padding: 8px 16px;
+}
+.list-trans {
+  list-style-type: none;
+}
+.list-trans li {
+  padding: 10px 16px;
+  border-bottom: solid 1px #eef0f2;
+}
+.list-trans li:last-child {
+  border-bottom: none;
+}
+.list-trans .trans-info a.trans-ctrlnumber {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333c48;
+  cursor: pointer;
 }
