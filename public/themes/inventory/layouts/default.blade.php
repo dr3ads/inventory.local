@@ -7,23 +7,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="keywords" content="<?php echo Theme::get('keywords'); ?>">
         <meta name="description" content="<?php echo Theme::get('description'); ?>">
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,700,700italic,600,600italic' rel='stylesheet' type='text/css'>
         <?php echo Theme::asset()->styles(); ?>
         <?php echo Theme::asset()->scripts(); ?>
     </head>
     <body>
         <div id="wrapper">
-            <div class="header-wrap container">
-                <nav class="navbar navbar-default navbar-static-top" role="navigation">
-                    <?php echo Theme::partial('header'); ?>
-                </nav>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="sidebar-wrap col-md-3"><?php echo Theme::partial('sidebar'); ?></div>
-                    <div id="main-content" class="col-md-9">
-                        <?php echo Theme::content(); ?>
-                    </div>
+            {!! Theme::partial('header') !!}
+
+            <div class="page-wrap">
+                <div class="sidebar-wrap"><?php echo Theme::partial('sidebar'); ?></div>
+                <div id="main-content">
+                    <?php echo Theme::content(); ?>
                 </div>
+
             </div>
             <div class="container">
                 <?php echo Theme::partial('footer'); ?>

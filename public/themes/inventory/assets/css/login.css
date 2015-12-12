@@ -1,0 +1,55 @@
+.container {
+  max-width: 960px;
+}
+body {
+  background-color: #fff;
+  color: #54565b;
+  font-size: 15px;
+  line-height: 1.42857;
+}
+#main-content {
+  margin-top: 80px;
+  background: #fff;
+}
+.flash-alert {
+  background-color: #e52c5a;
+  border-color: #e52c5a;
+  color: white;
+  border-radius: 0;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+.login-box {
+  background: #fafafa;
+  padding: 15px;
+  border-radius: 15px;
+}
+.login-box h3 {
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0 0 10px;
+}
+.login-box .login-box-content {
+  margin-top: 15px;
+}
+.login-box .form-control {
+  font-size: 14px;
+  height: auto;
+  padding: 10px 8px;
+  width: 100%;
+}
+.login-box .form-control:focus {
+  border-color: #7f8fa4;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(127, 143, 164, 0.6);
+  outline: 0 none;
+}
+.login-box input#username {
+  border-radius: 5px 5px 0 0;
+}
+.login-box input#password {
+  border-radius: 0 0 5px 5px;
+  border-top: 0;
+}
+.login-box .remember-me {
+  margin: 5px 0 ;
+}

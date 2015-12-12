@@ -37,6 +37,9 @@ class AuthController extends BaseController
         $this->layout = 'auth';
         $this->username = 'username';
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
+        $this->theme->asset()->usePath()->add('page-css', 'css/page.css', array('bootstrap-css'));
+        $this->theme->asset()->usePath()->add('login-css', 'css/login.css', array('bootstrap-css'));
+        $this->theme->setTitle('Login');
     }
 
     /**

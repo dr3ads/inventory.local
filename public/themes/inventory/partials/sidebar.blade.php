@@ -1,65 +1,54 @@
-<div class="navbar-default sidebar" role="navigation">
-    <div class="sidebar-nav navbar-collapse">
-        <ul class="nav" id="side-menu">
-            <li>
-                <a href="{!! url('customers') !!}"><i class="fa fa-dashboard fa-fw"></i> Customers</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Transactions</a>
-                <ul class="nav nav-second-level collapse in" aria-expanded="true">
-                    <li>
-                        <a href="{!! url('transactions/create') !!}">New</a>
-                    </li>
-                    <li>
-                        <a href="{!! url('transactions?status=default') !!}">Active</a>
-                    </li>
-                    <li>
-                        <a href="{!! url('transactions?status=claimed') !!}">Claimed</a>
-                    </li>
-                    <li>
-                        <a href="{!! url('transactions?status=expired') !!}">Expired</a>
-                    </li>
-                    <li>
-                        <a href="{!! url('transactions?status=void') !!}">Void</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Inventory</a>
-                <ul class="nav nav-second-level collapse in" aria-expanded="true">
-                    <li>
-                        <a href="{!! url('inventory?on_hand=1') !!}"><i class="fa fa-dashboard fa-fw"></i> On Hand</a>
-                    </li>
-                    <li>
-                        <a href="{!! url('inventory?on_hand=0') !!}"><i class="fa fa-dashboard fa-fw"></i> Track</a>
-                    </li>
-                    <li>
-                        <a href="{!! url('inventory/buy') !!}"><i class="fa fa-dashboard fa-fw"></i> Buy Item</a>
-                    </li>
-                    <li>
-                        <a href="{!! url('inventory/buy') !!}"><i class="fa fa-dashboard fa-fw"></i> Sell Item</a>
-                    </li>
-                </ul>
-            <li>
-                <a href="#"><i class="fa fa-dashboard fa-fw"></i> Miscellaneous</a>
-                <ul class="nav nav-second-level collapse in" aria-expanded="true">
-                    <li>
-                        <a href="{!! url('misc') !!}">List</a>
-                    </li>
-                    <li>
-                        <a href="{!! url('misc/spend') !!}">Cash Out</a>
-                    </li>
-                    <li>
-                        <a href="{!! url('misc/earn') !!}">Cash In</a>
-                    </li>
-                </ul>
-            </li>
-            </li>
-            <li>
-                <a href="{!! url('reports') !!}"><i class="fa fa-dashboard fa-fw"></i> Reports</a>
-            </li>
-        </ul>
-    </div>
-    <!-- /.sidebar-collapse -->
+<div class="header-logo">
+    <a title="" id="js-shortcuts-home" href="/" data-toggle="tooltip" data-placement="bottom" class="home"
+       data-original-title="Dashboard">
+        <img src="{!! Theme::asset()->url('img/logo-full.jpeg') !!}" alt="logo"  />
+        <!--<h3>Cebu GADGET</h3>-->
+    </a>
 </div>
-<!-- /.navbar-static-side -->
+<ul class="nav nav-sidebar">
+    <li>&nbsp;</li>
+    <li class="separate-item"></li>
+    <li class="dashboard">
+        <a title="Dashboard" href="#" data-placement="right"
+           class="shortcuts-dashboard">
+            <i class="fa fa-dashboard fa-fw"></i><span>Dashboard</span>
+        </a>
+    </li>
+    <li class="customers">
+        <a title="Customers" href="{{ url('customers') }}" data-placement="right"
+           class="shortcuts-customers">
+            <i class="fa fa-users fa-fw"></i><span>Customers</span>
+        </a>
+    </li>
+    <li class="transactions">
+        <a title="Transactions" href="{{ url('transactions') }}" data-placement="right"
+           class="shortcuts-transactions">
+            <i class="fa fa-book fa-fw"></i><span>Transactions</span>
+        </a>
+    </li>
+    <li class="alerts">
+        <a title="Reports" href="{{ url('alerts') }}" data-placement="right"
+           class="shortcuts-alerts">
+            <i class="fa fa-exclamation-circle fa-fw"></i><span>Reports</span>
+        </a>
+    </li>
+    <li class="inventory">
+        <a title="Transactions" href="{{ url('inventory') }}" data-placement="right"
+           class="shortcuts-inventory">
+            <i class="fa fa-cubes fa-fw"></i><span>Inventory</span>
+        </a>
+    </li>
+    <li class="misc">
+        <a title="Miscellaneous" href="{{ url('misc') }}" data-placement="right"
+           class="shortcuts-misc">
+            <i class="fa fa-files-o fa-fw"></i><span>Miscellaneous</span>
+        </a>
+    </li>
+    <li class="reports">
+        <a title="Reports" href="{{ url('reports') }}" data-placement="right"
+           class="shortcuts-reports">
+            <i class="fa fa-area-chart fa-fw"></i><span>Reports</span>
+        </a>
+    </li>
+
+</ul>
