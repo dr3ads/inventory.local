@@ -20,22 +20,22 @@ class ProcessRepository extends AbstractRepository
 
     public function allExpired()
     {
-        return $this->model->initial()->expired()->paginate();
+        return $this->model->initial()->expired();
     }
 
     public function allClaimed()
     {
-        return $this->model->initial()->claimed()->paginate();
+        return $this->model->initial()->claimed();
     }
 
     public function allVoid()
     {
-        return $this->model->initial()->void()->paginate();
+        return $this->model->initial()->void();
     }
 
     public function allParents()
     {
-        return $this->model->initial()->active()->paginate();
+        return $this->model->initial()->active();
     }
 
     public function getAllTree($parentId)

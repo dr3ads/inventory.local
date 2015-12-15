@@ -77,7 +77,7 @@ return array(
             $theme->asset()->container('footer')->usePath()->add('bootstrap-js',
                 'vendors/bootstrap/js/bootstrap.min.js', array('jquery'));
             $theme->asset()->container('footer')->usePath()->add('chosen-js',
-                'vendors/chosen/chosen.jquery.min.js', array('bootstrap-js'));
+                'vendors/chosen/chosen.jquery.min.js', array('jquery'));
             $theme->asset()->container('footer')->usePath()->add('jquery-validation',
                 'vendors/jquery-validate/jquery.validate.min.js', array('jquery'));
             $theme->asset()->container('footer')->usePath()->add('global', 'js/global.js',

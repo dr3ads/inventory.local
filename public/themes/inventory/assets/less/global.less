@@ -20,7 +20,7 @@ body{
 }
 
 .btn{
-  border-radius: 0;
+  border-radius: 2px;
   &.btn-new{
     color: #fff;
     background: #7f8fa4;
@@ -85,8 +85,8 @@ body{
     overflow-y: auto;
     max-height: 150px;
     li{
-
       padding: 9px;
+      line-height: 24px;
       &.result-selected, &:hover{
         background: #2d9fd8;
         color: #fff;
@@ -108,4 +108,16 @@ body{
       border-color: #ddd !important;
     }
   }
+}
+
+.form-group{
+  position: relative;
+}
+
+#customer_id{
+  display: block !important;
+  position: absolute;
+  opacity: 0;
+  bottom: 0;
+  left: 30px;
 }

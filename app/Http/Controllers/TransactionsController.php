@@ -41,7 +41,7 @@ class TransactionsController extends BaseController
     public function index(Request $request, CustomerRepository $customersRepository)
     {
         $data = array();
-        $status = ($request->status) ? $request->status : 'default';
+        $status = ($request->status) ?  : 'default';
 
         switch ($status) {
 
@@ -59,8 +59,15 @@ class TransactionsController extends BaseController
                 $transactions = $this->processRepository->allParents();
                 break;
         }
+
+
+       if($request->has('customers') && $request->get('customers') != '') {
+            $transactions->ofCustomer($request->get('customers'));
+        }
+        $transactions = $transactions->paginate();
+       //dd($transactions);
         $data['customers'] = $customersRepository->getValueByKey('full_name');
-        array_unshift($data['customers'], 'Select Customer');
+        //array_unshift($data['customers'], 'Select Customer');
 
         foreach ($transactions as $transaction) {
             $data['transactions'][] = $this->processRepository->getProcessTree($transaction->id);
@@ -71,7 +78,7 @@ class TransactionsController extends BaseController
 
         $data['status'] = $request->status;
 
-        return $this->theme->scope('transactions.' . $status, $data)->render();
+        return $this->theme->scope('transactions.index', $data)->render();
     }
 
     /**
@@ -83,7 +90,7 @@ class TransactionsController extends BaseController
     {
         $data = array();
         $data['customers'] = $customersRepository->getValueByKey('full_name');
-        array_unshift($data['customers'], 'Select Customer');
+        //array_unshift($data['customers'], 'Select Customer');
         return $this->theme->scope('transactions.create', $data)->render();
     }
 

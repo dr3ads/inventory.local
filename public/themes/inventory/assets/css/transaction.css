@@ -77,3 +77,42 @@
   color: #333c48;
   cursor: pointer;
 }
+.transaction-details .controls {
+  float: right;
+  margin-top: 10px;
+}
+.transaction-details .status-filter .status-filter-wrap ul {
+  height: 56px;
+  list-style: outside none none;
+  margin: -16px 0 16px;
+  padding: 16px 0 0;
+  text-align: left;
+}
+.transaction-details .status-filter .status-filter-wrap ul li {
+  display: inline-block;
+}
+.transaction-details .status-filter .status-filter-wrap ul li.active a {
+  border-bottom: 2px solid #1cacfc;
+  color: #4c4e54;
+}
+.transaction-details .status-filter .status-filter-wrap ul li a {
+  border-bottom: none;
+  color: #7f8fa4;
+  font-size: 17px;
+  line-height: 28px;
+  padding: 14px;
+}
+.transaction-details .status-filter .status-filter-wrap ul li a .badge {
+  background-color: #eee;
+  color: #78a;
+  font-weight: normal;
+  border-radius: 10px;
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1;
+  min-width: 10px;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}

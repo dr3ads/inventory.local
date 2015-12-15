@@ -38,11 +38,12 @@
                 </ul>
             </div>
             <div class="trans-details-filter">
-                {!! Form::open(array('method' => 'get', 'url' => '')) !!}
+                {!! Form::open(array('method' => 'get')) !!}
+                    {!! Form::hidden('status', (Input::get('status'))) !!}
                     <div class="issues-other-filters row">
                         <div class="filter-item left col-md-2">
                             <div class="select2-container" id="customer-wrap">
-                                {!! Form::select('customers',$customers,Input::old('customers'), array('class' => 'select2','data-placeholder' => 'Customers')) !!}
+                                {!! Form::select('customers',$customers,Input::get('customers'), array('class' => 'select2','placeholder' => ' ','data-placeholder' => 'Customers')) !!}
                             </div>
 
                         </div>

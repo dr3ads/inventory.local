@@ -15,7 +15,7 @@ class Process extends Model
 
     public function scopeInitial($query)
     {
-        $query->where('parent_id', '==', 0);
+        $query->where('parent_id', '=', 0);
     }
 
     public function scopeActive($query)
@@ -31,6 +31,11 @@ class Process extends Model
     public function scopeClaimed($query)
     {
         $query->where('status', '=', 'claimed');
+    }
+
+    public function scopeOfCustomer($query, $customer_id)
+    {
+        $query->where('customer_id', '=', $customer_id);
     }
 
     public function scopeVoid($query)
