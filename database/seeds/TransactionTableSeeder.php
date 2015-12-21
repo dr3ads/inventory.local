@@ -33,6 +33,8 @@ class TransactionTableSeeder extends Seeder
 
             $item_id = DB::table('items')->insertGetId([
                 'name' => $faker->text(50),
+                'brand' => $faker->text(20),
+                'serial' => $faker->text(10),
                 'description' => $faker->paragraph(3),
                 'value' => $item_amount,
             ]);

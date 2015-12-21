@@ -5,7 +5,7 @@ $(document).ready(function () {
         width: 'auto'
     });
 
-    //$('.link-tooltip').tooltip();
+    $('.link-tooltip').tooltip();
 
     $('.create-transaction').validate({
         //validateNonVisibleFields: true,

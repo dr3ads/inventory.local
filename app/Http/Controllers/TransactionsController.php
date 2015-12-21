@@ -154,7 +154,8 @@ class TransactionsController extends BaseController
     public function show($id)
     {
         $data = array();
-        $data['process'] = $this->processRepository->find($id);
+        $data['processTree'] = $this->processRepository->getProcessTree($id);
+        $data['children'] = $this->processRepository->getAllTree($id);
 
         return $this->theme->scope('transactions.show', $data)->render();
 
