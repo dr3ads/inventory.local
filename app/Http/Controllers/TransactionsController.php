@@ -156,7 +156,8 @@ class TransactionsController extends BaseController
         $data = array();
         $data['processTree'] = $this->processRepository->getProcessTree($id);
         $data['children'] = $this->processRepository->getAllTree($id);
-
+        $data['transactionDetails'] = $this->processRepository->transactionDetails($id);
+        $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
         return $this->theme->scope('transactions.show', $data)->render();
 
     }
@@ -241,6 +242,11 @@ class TransactionsController extends BaseController
         if ($data['transaction']->item->value <= $data['totalAmount']) {
             return redirect('transactions');
         }
+
+        $data['processTree'] = $this->processRepository->getProcessTree($id);
+        $data['children'] = $this->processRepository->getAllTree($id);
+        $data['transactionDetails'] = $this->processRepository->transactionDetails($id);
+        $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
 
         return $this->theme->scope('transactions.repawn', $data)->render();
     }

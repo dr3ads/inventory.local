@@ -29,21 +29,48 @@
             <div class="item-brand">{{ $processTree['parent']->item->description }}</div>
         </div>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="transaction-tree">
                     <ul id="trans-list">
+                        @foreach($children as $child)
                         <li>
                             <div class="row">
-                                <div class="col-md-9">
-                                    Control Number: <span class="ctrl-number">{{ $processTree['parent']->ctrl_number }}</span> &#183;
-                                    <span class="trans-type">{{$pr}}</span>
+                                <div class="col-md-12">
+                                    <div class="trans-details">
+                                        <span class="ctrl-number">#{{ $child->ctrl_number }}</span> &#183;
+                                        <span class="trans-type">{{ ucfirst($child->type) }}</span> &#183;
+                                        <span class="trans-amount">P{{ $child->pawn_amount }}</span>
+                                    </div>
+                                    <div class="trans-timeline">
+                                        <span class="trans-date">{{ date('M d, Y', strtotime($child->pawned_at)) }}</span>
+                                    </div>
+                                    <div class="trans-actions pull-right">
+                                        <a href="#" class="link-tooltip" title="Print Reciept" ><i class="fa fa-print"></i></a>
+                                    </div>
                                 </div>
                             </div>
                         </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
-            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <div class="claim-details">
+                    <h3>Amount Details</h3>
+                    <div class="form-group">
+                        {!! Form::label('pawn_amount', 'Total Amount') !!}
+                        <div class="item">{!! money_format('P %i', $transactionDetails['totalPawnAmount']) !!}</div>
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('principal_amount', 'Principal Payable') !!}
+                        <div class="item">{!! money_format('P %i', $transactionDetails['totalPrincipal']) !!}</div>
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('penalty', 'Penalty Amount') !!}
+                        <div class="item">{!! money_format('P %i', $totalAmount * ($transactionDetails['processPenalty'] / 100)) !!}</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
  </div>

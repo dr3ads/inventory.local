@@ -126,3 +126,43 @@
   padding: 16px;
   margin: 0 -16px;
 }
+.transaction-tree {
+  margin: 0 -16px;
+}
+.transaction-tree ul {
+  list-style: none;
+}
+.transaction-tree ul li {
+  position: relative;
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid #eceef1;
+}
+.trans-actions {
+  position: absolute;
+  right: 10px;
+  bottom: 0px;
+}
+.claim-details,
+.renew-details {
+  padding: 20px;
+}
+.claim-details h3,
+.renew-details h3 {
+  color: #333c48;
+  font-weight: bold;
+  text-align: left;
+  line-height: 1.42857;
+  font-size: 15px;
+  margin-top: 0;
+}
+.repawn-form {
+  padding-left: 15px;
+}
+.repawn-form h3 {
+  color: #333c48;
+  font-weight: bold;
+  text-align: left;
+  line-height: 1.42857;
+  font-size: 15px;
+  margin-top: 0;
+}
