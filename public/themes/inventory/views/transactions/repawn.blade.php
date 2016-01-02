@@ -67,8 +67,8 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="renew-details">
-                    <h3>Renew Details</h3>
+                <div class="repawn-details">
+                    <h3>Repawn Details</h3>
                     <div class="form-group">
                         {!! Form::label('pawn_amount', 'Total Amount') !!}
                         <div class="item">{!! money_format('P %i', $transactionDetails['totalPawnAmount']) !!}</div>

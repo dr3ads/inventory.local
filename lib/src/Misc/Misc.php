@@ -12,5 +12,10 @@ class Misc extends Model
     {
         return $this->morphMany('Lib\Accounting\Accounting','accountable');
     }
+
+    public function scopeOfFlow($query, $flow)
+    {
+        return $query->where('flow', '=', $flow);
+    }
 }
 

@@ -1,0 +1,34 @@
+.customer-header .controls {
+  float: right;
+  margin-top: -5px;
+}
+.customer-header .status-filter .status-filter-wrap {
+  height: 56px;
+}
+.customer-header h3 {
+  margin: 0;
+}
+.customer-details-filter {
+  background-color: #f7f8fa;
+  border-bottom: 1px solid #dce0e6;
+  border-top: 1px solid #dce0e6;
+  color: #7f8fa4;
+  margin: -16px -16px 0;
+  padding: 16px;
+}
+.list-customers {
+  list-style-type: none;
+}
+.list-customers li {
+  padding: 10px 16px;
+  border-bottom: solid 1px #eef0f2;
+}
+.list-customers li:last-child {
+  border-bottom: none;
+}
+.list-customers .customer-info a.customer-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333c48;
+  cursor: pointer;
+}

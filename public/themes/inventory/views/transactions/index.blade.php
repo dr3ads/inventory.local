@@ -9,7 +9,6 @@
 <div class="content-wrapper">
     <div class="container-fluid">
         {!! Theme::widget('transfilter', array('customers' => $customers, 'transactionsStatusCount' => $transactionsStatusCount))->render() !!}
-
         <div class="list-trans-holder row">
             @if(isset($transactions) && count($transactions) > 0)
                 <ul class="list-trans">
@@ -34,25 +33,12 @@
                     </li>
                 @endforeach
                 </ul>
-                {{ $paginator }}
+                <div class="pagination-wrap">
+                    {!! $paginator !!}
+                </div>
             @else
             @endif
 
         </div>
-    {{--@foreach($transactions as $transaction)
-        <tr>
-            <td>{{ $transaction['parent']->ctrl_number }}</td>
-            <td>{{ $transaction['parent']->customer->full_name }}</td>
-            <td>{{ date('Y-m-d', strtotime($transaction['lastChild']->pawned_at)) }}</td>
-            <td>P{{ $transaction['totalPawnAmount'] }}</td>
-            <td>{{ date('Y-m-d', strtotime($transaction['lastChild']->expired_at)) }}</td>
-            <td><a href="{{ url('transactions/show/'.$transaction['parent']->id) }}">View Details</a></td>
-            <td>@if($transaction['parent']->item->value > $transaction['totalPawnAmount'])<a href="{{ url('transactions/repawn/'.$transaction['parent']->id) }}">RePawn</a>@else N/A @endif</td>
-            <td><a href="{{ url('transactions/renew/'.$transaction['parent']->id) }}">Renew</a></td>
-            <td><a href="{{ url('transactions/claim/'.$transaction['parent']->id) }}">Claim</a></td>
-        </tr>
-    @endforeach
-    @else
-        <h3>No transactions found</h3>
-    @endif--}}
+    </div>
 </div>

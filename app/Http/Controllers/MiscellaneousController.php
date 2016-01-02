@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Requests\StoreMiscRequest;
 use Lib\Misc\MiscRepository;
 use Theme;
+use Illuminate\Http\Request;
 
 class MiscellaneousController extends BaseController
 {
@@ -16,11 +17,17 @@ class MiscellaneousController extends BaseController
         $this->miscRepository = $miscRepository;
         $this->middleware('auth');
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
+        $this->theme->asset()->usePath()->add('page-css', 'css/page.css', array('bootstrap-css'));
+        $this->theme->asset()->usePath()->add('misc-css', 'css/misc.css', array('global-css'));
+        $this->theme->set('title','Miscellaneous');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $data['miscs'] = $this->miscRepository->all();
+        $flow = ($request->flow) ?  : 'in';
+        $data['miscs'] = $this->miscRepository->getMiscByFlow($flow)->paginate();
+        $data['count']['earn'] = $this->miscRepository->getMiscByFlow('in')->count();
+        $data['count']['spend'] = $this->miscRepository->getMiscByFlow('out')->count();
 
         return $this->theme->scope('misc.index', $data)->render();
     }

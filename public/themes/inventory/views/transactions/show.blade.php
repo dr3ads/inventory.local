@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="transaction-details">
             <div class="controls">
-                <a class="btn btn-default pull-left margin-left-20 link-tooltip" data-placement="bottom" data-toggle="tooltip" title="Repawn Transaction" href="{{ url('transactions/repawn/'.$processTree['parent']->id) }}" id="repawn_link" title="Repawn">
+                <a class="btn btn-default pull-left margin-left-20 link-tooltip @if( $transactionDetails['totalPawnAmount'] >= $processTree['parent']->item->value  ) disabled @endif" data-placement="bottom" data-toggle="tooltip" title="Repawn Transaction" href="{{ url('transactions/repawn/'.$processTree['parent']->id) }}" id="repawn_link" title="Repawn">
                     <i class="fa fa-refresh"></i>Repawn
                 </a>
                 <a class="btn btn-default pull-left link-tooltip" data-placement="bottom" data-toggle="tooltip" title="Claim Item" href="{{ url('transactions/claim/'.$processTree['parent']->id) }}" id="claim_link" title="Claim">

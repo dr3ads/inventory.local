@@ -18,6 +18,9 @@ class ItemsController extends BaseController
         $this->middleware('auth');
         $this->itemRepository = $itemRepository;
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
+        $this->theme->asset()->usePath()->add('page-css', 'css/page.css', array('bootstrap-css'));
+        $this->theme->asset()->usePath()->add('misc-css', 'css/misc.css', array('global-css'));
+        $this->theme->set('title','Inventory');
     }
 
     /**
@@ -28,6 +31,7 @@ class ItemsController extends BaseController
     public function index(Request $request)
     {
         $data = array();
+
         if($request->get('on_hand')){
             $data['items'] = $this->itemRepository->itemsOnhand();
         }

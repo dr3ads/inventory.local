@@ -7,31 +7,41 @@
     @endforeach
 </div> <!-- end .flash-message -->
 
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Customers</div>
-    <div class="panel-body">
-        <a href="{!! url('customers/create') !!}" >New Customer</a>
-    </div>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="customer-header">
+            <div class="controls">
+                <a title="New Customer" id="new_customer_link" href="{{ url('customers/create') }}" class="btn btn-new pull-left"><i class="fa fa-plus"></i>
+                    New Customer
+                </a>
+            </div>
+            <div class="status-filter">
+                <div class="status-filter-wrap"><h3>Customer List</h3></div>
+                <div class="customer-details-filter">&nbsp;</div>
+            </div>
+        </div>
+        <div class="list-trans-holder row">
+            @if(isset($customers) && count($customers) > 0)
+                <ul class="list-customers">
+                    @foreach($customers as $customer)
+                        <li>
+                            <div class="customer-info">
+                                <a class="customer-name" href="#">
+                                    {!! $customer->full_name !!}
+                                </a>
+                                <div class="pull-right light">
+                                    <span class="issue-no-comments" title="Number of Transactions"><i class="fa fa-book"></i></span>
+                                </div>
+                            </div>
+                            <div class="customer-details">
+                                <div class="customer-address inline">{!! $customer->address !!}</div>
 
-    <!-- Table -->
-    <table class="table table-hover table-striped">
-        <thead>
-            <td>First Name</td>
-            <td>Last Name</td>
-            <td>Age</td>
-            <td>Home Phone</td>
-            <td>Mobile</td>
-        </thead>
-        @foreach($customers as $customer)
-            <tr>
-                <td>{!! $customer->fname !!}</td>
-                <td>{!! $customer->lname !!}</td>
-                <td>{!! $customer->age !!}</td>
-                <td>{!! $customer->phone !!}</td>
-                <td>{!! $customer->mobile !!}</td>
-            </tr>
-        @endforeach
-    </table>
-    {!! $customers->render() !!}
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
+        <div class="pagination-wrap">{!! $customers->render() !!}</div>
+    </div>
 </div>

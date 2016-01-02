@@ -30,6 +30,7 @@
         <a title="Reports" href="{{ url('alerts') }}" data-placement="right"
            class="shortcuts-alerts">
             <i class="fa fa-exclamation-circle fa-fw"></i><span>Alerts</span>
+            @if(count(Theme::get('alerts')) > 0)<span class="badge">{!! count(Theme::get('alerts'))!!}</span>@endif
         </a>
     </li>
     <li class="inventory">

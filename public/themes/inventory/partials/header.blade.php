@@ -4,7 +4,7 @@
             <div class="header-controls navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right">
                     <li>
-                        <a class="link-tooltip" title="New Transaction" href="{{ url('transaction/create') }}"
+                        <a class="link-tooltip" title="New Transaction" href="{{ url('transactions/create') }}"
                            data-toggle="tooltip" data-placement="bottom"><i class="fa fa-plus fa-fw"></i>
                         </a>
                     </li>

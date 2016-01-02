@@ -143,11 +143,13 @@
   bottom: 0px;
 }
 .claim-details,
-.renew-details {
+.renew-details,
+.repawn-details {
   padding: 20px;
 }
 .claim-details h3,
-.renew-details h3 {
+.renew-details h3,
+.repawn-details h3 {
   color: #333c48;
   font-weight: bold;
   text-align: left;

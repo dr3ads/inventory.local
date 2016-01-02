@@ -17,6 +17,8 @@ Route::resource('customers', 'CustomersController');
 Route::resource('transactions', 'TransactionsController');
 Route::resource('inventory', 'ItemsController');
 
+
+Route::get('alerts', 'AlertsController@index');
 Route::get('transactions/repawn/{id}', 'TransactionsController@repawn');
 Route::post('transactions/repawn', 'TransactionsController@storeRepawn');
 Route::get('transactions/renew/{id}', 'TransactionsController@reNew');

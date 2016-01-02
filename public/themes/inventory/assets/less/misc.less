@@ -1,7 +1,10 @@
-.transaction-filter{
+.misc-filter{
   .controls{
     float: right;
     margin-top: 7px;
+    a{
+      margin-left: 10px;
+    }
   }
   .status-filter {
     .status-filter-wrap {
@@ -53,6 +56,17 @@
   color: #7f8fa4;
   margin: -16px -16px 0;
   padding: 16px;
+}
+
+
+
+.trans-details-filter{
+  background-color: #f7f8fa;
+  border-bottom: 1px solid #dce0e6;
+  border-top: 1px solid #dce0e6;
+  color: #7f8fa4;
+  margin: -16px -16px 0;
+  padding: 16px;
   .filter-item{
     margin-right: 15px;
   }
@@ -71,7 +85,7 @@
   }
 }
 
-.list-trans{
+.list-miscs{
   list-style-type: none;
   li {
     padding: 10px 16px;
@@ -80,9 +94,9 @@
       border-bottom: none;
     }
   }
-  .trans-info{
+  .misc-info-wrap{
     a{
-      &.trans-ctrlnumber{
+      &.misc-info {
         font-size: 15px;
         font-weight: bold;
         color: #333c48;
@@ -92,106 +106,3 @@
   }
 }
 
-
-
-.transaction-details{
-  .controls{
-    float: right;
-    margin-top: 10px;
-    .btn{
-      margin-left: 10px;
-      .fa{
-        margin-right: 5px;
-      }
-    }
-  }
-  .page-title {
-    color: #5c5d5e;
-    font-size: 16px;
-    margin-bottom: 0;
-    margin-top: -15px;
-    padding: 10px 0;
-    font-weight: 600;
-    line-height: 1.3;
-    .trans-status{
-      cursor: text;
-      margin-right: 10px;
-    }
-    .primary-details{
-
-    }
-  }
-}
-
-
-.item-details{
-  background-color: #f7f8fa;
-  border-bottom: 1px solid #dce0e6;
-  border-top: 1px solid #dce0e6;
-  color: #7f8fa4;
-  margin: 0 -16px 0;
-  padding: 16px;
-  h2{
-    &.item-name{
-      font-weight: 500;
-      color: #313236;
-      font-size: 23px;
-      margin: 0;
-    }
-  }
-  .item-value{
-    font-size: 15px;
-    margin-top: 15px;
-    color: #444;
-  }
-}
-
-.item-additional-info{
-  background-color: #f7f8fa;
-  border-bottom: 1px solid #dce0e6;
-  color: #7f8fa4;
-  padding: 16px;
-  margin: 0 -16px;
-}
-
-.transaction-tree{
-  margin: 0 -16px;
-  ul{
-    list-style: none;
-    li{
-      position: relative;
-      padding: 10px 0 10px 30px;
-      border-bottom: 1px solid #eceef1;
-    }
-  }
-}
-
-.trans-actions{
-  position: absolute;
-  right: 10px;
-  bottom: 0px;
-}
-
-.claim-details, .renew-details, .repawn-details{
-  padding: 20px;
-  h3{
-    color: #333c48;
-    font-weight: bold;
-    text-align: left;
-    line-height: 1.42857;
-    font-size: 15px;
-    margin-top: 0;
-  }
-}
-
-.repawn-form{
-  padding-left: 15px;
-  h3{
-    color: #333c48;
-    font-weight: bold;
-    text-align: left;
-    line-height: 1.42857;
-    font-size: 15px;
-    margin-top: 0;
-  }
-}

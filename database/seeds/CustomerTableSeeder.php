@@ -22,6 +22,7 @@ class CustomerTableSeeder extends Seeder
             DB::table('customers')->insert([
                 'fname' => $faker->firstName,
                 'lname' => $faker->firstName,
+                'address' => $faker->text(),
                 'age' => $faker->numberBetween(18,50),
                 'phone' => $faker->phoneNumber,
                 'mobile' => $faker->phoneNumber,

@@ -13,7 +13,7 @@ class AlterProcessAddType extends Migration
     public function up()
     {
         Schema::table('processes', function(Blueprint $table){
-            $table->enum('type', array('pawn','renew', 'claim'))->after('ctrl_number');
+            $table->enum('type', array('pawn','repawn','renew', 'claim'))->after('ctrl_number');
         });
     }
 

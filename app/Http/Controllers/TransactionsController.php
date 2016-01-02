@@ -30,7 +30,7 @@ class TransactionsController extends BaseController
         $this->theme->asset()->usePath()->add('trans-css', 'css/transaction.css', array('bootstrap-css'));
         $this->theme->asset()->container('footer')->usePath()->add('transactions', 'js/transactions.js',
             array('jquery'));
-        $this->theme->set('title','Transactions');
+        $this->theme->set('title', 'Transactions');
     }
 
     /**
@@ -41,7 +41,7 @@ class TransactionsController extends BaseController
     public function index(Request $request, CustomerRepository $customersRepository)
     {
         $data = array();
-        $status = ($request->status) ?  : 'default';
+        $status = ($request->status) ?: 'default';
 
         switch ($status) {
 
@@ -60,12 +60,11 @@ class TransactionsController extends BaseController
                 break;
         }
 
-
-       if($request->has('customers') && $request->get('customers') != '') {
+        if ($request->has('customers') && $request->get('customers') != '') {
             $transactions->ofCustomer($request->get('customers'));
         }
         $transactions = $transactions->paginate();
-       //dd($transactions);
+
         $data['customers'] = $customersRepository->getValueByKey('full_name');
         //array_unshift($data['customers'], 'Select Customer');
 
@@ -189,6 +188,8 @@ class TransactionsController extends BaseController
         $data = array();
         $data['transaction'] = $this->processRepository->find($id);
         $data['processTree'] = $this->processRepository->getProcessTree($id);
+        $data['children'] = $this->processRepository->getAllTree($id);
+        $data['transactionDetails'] = $this->processRepository->transactionDetails($id);
         $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
 
         return $this->theme->scope('transactions.renew', $data)->render();
@@ -198,8 +199,10 @@ class TransactionsController extends BaseController
     {
         $data = array();
         $data['transaction'] = $this->processRepository->find($id);
-        $data['processTree'] = $this->processRepository->getAllTree($id);
+        $data['processTree'] = $this->processRepository->getProcessTree($id);
+        $data['children'] = $this->processRepository->getAllTree($id);
         $data['transactionDetails'] = $this->processRepository->transactionDetails($id);
+
         $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
 
         return $this->theme->scope('transactions.claim', $data)->render();
@@ -289,12 +292,14 @@ class TransactionsController extends BaseController
             'customer_id' => $request->customer_id,
             'item_id' => $request->item_id,
             'pawn_amount' => $request->pawn_amount,
+            'type' => 'repawn',
             'expired_at' => Carbon::now()->addDays(getenv('EXPIRY_COUNT')),
         );
 
         $process = $this->processRepository->create($data);
         $this->storeProcessAccountable($process, $request->pawn_amount);
-        return redirect('transactions')->with('success_msg', 'Additional Transaction Saved');
+        return redirect('transactions/show/' . $request->parent_id)->with('success_msg',
+            'Additional Transaction Saved');
     }
 
     public function storeRenew(SaveRenewTransactionRequest $request)
@@ -304,6 +309,7 @@ class TransactionsController extends BaseController
             'parent_id' => $request->parent_id,
             'customer_id' => $request->customer_id,
             'item_id' => $request->item_id,
+            'type' => 'renew',
             'expired_at' => Carbon::createFromTimestamp(strtotime($processTree['lastChild']->expired_at))
                 ->addDays(getenv('RENEW_COUNT')),
         );
@@ -321,7 +327,7 @@ class TransactionsController extends BaseController
 
         $process->accounting()->create($accData);
 
-        return redirect('transactions')->with('success_msg', 'Renew Transaction Saved');
+        return redirect('transactions/show/' . $request->parent_id)->with('success_msg', 'Renew Transaction Saved');
     }
 
     public function storeClaim(Request $request)

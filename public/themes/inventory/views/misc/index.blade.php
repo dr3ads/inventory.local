@@ -1,25 +1,40 @@
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Items</div>
-    <div class="panel-body">
+<div class="flash-message">
+    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+        @if(Session::has('alert-' . $msg))
+            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+        @endif
+    @endforeach
+</div> <!-- end .flash-message -->
 
+<div class="content-wrapper">
+    <div class="container-fluid">
+        {!! Theme::widget('miscfilter', array('miscs' => $miscs, 'count' => $count))->render() !!}
+        <div class="list-misc-holder row">
+            @if(isset($miscs) && count($miscs) > 0)
+                <ul class="list-miscs">
+                    @foreach($miscs as $misc)
+                        <li>
+                            <div class="misc-info-wrap">
+                                <a class="misc-info" href="#">
+                                    {{ $misc->type }} &#183;
+                                    {{ $misc->amount }} &#183;
+                                    {{ date('M d, Y', strtotime($misc->created_at))  }}
+                                </a>
+                            </div>
+                            <div class="misc-details">
+                                <div class="misc-description">{!! $misc->description !!}</div>
+
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+                <div class="pagination-wrap">
+                    {!! $miscs->render() !!}
+                </div>
+            @else
+            @endif
+
+        </div>
     </div>
-
-    <!-- Table -->
-    <table class="table table-hover table-striped">
-        <thead>
-        <td>Type</td>
-        <td>Flow</td>
-        <td>Description</td>
-        <td>Date</td>
-        </thead>
-        @foreach($miscs as $misc)
-            <tr>
-                <td>{!! $misc->type !!}</td>
-                <td>{!! $misc->flow !!}</td>
-                <td>{!! $misc->description !!}</td>
-                <td>{!! date('M d, Y', strtotime($misc->created_at)) !!}</td>
-            </tr>
-        @endforeach
-    </table>
 </div>
+

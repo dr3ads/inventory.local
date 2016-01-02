@@ -118,3 +118,34 @@ body {
   bottom: 0;
   left: 30px;
 }
+.pagination-wrap {
+  background-color: #f7f8fa;
+  border-top: solid 1px #dce0e6;
+  margin: 0;
+  padding: 0 16px;
+  max-height: 48px;
+  line-height: 1.42857;
+}
+.pagination-wrap ul.pagination {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+.pagination-wrap ul.pagination li span,
+.pagination-wrap ul.pagination li a {
+  color: #7f8fa4;
+  margin: 0;
+  padding: 13px 19px;
+  border: none;
+  background-color: #f7f8fa;
+  border-radius: 0;
+  border-right: solid 1px #dce0e6;
+}
+.pagination-wrap ul.pagination li.active span,
+.pagination-wrap ul.pagination li:hover span,
+.pagination-wrap ul.pagination li.active a,
+.pagination-wrap ul.pagination li:hover a {
+  background-color: #337ab7;
+  border-color: #337ab7;
+  color: #fff;
+}
