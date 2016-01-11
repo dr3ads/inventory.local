@@ -25,9 +25,11 @@ class TransactionTableSeeder extends Seeder
             2 => 'claimed',
             3 => 'expired',
         ];
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             $stat_random = rand(1, 3);
             $cust_random = rand(1, 100);
+
+            $pawn_date = \Carbon\Carbon::instance($faker->dateTimeThisMonth());
 
             $item_amount = $faker->randomFloat(2, 500, 20000);
 
@@ -40,12 +42,13 @@ class TransactionTableSeeder extends Seeder
             ]);
 
             DB::table('processes')->insert([
-                'status' => $status[$stat_random],
+                'status' => 'active',
                 'ctrl_number' => getenv('BRANCH_ID') . $i,
                 'customer_id' => $cust_random,
                 'item_id' => $item_id,
                 'pawn_amount' => $faker->randomFloat(2, 500, $item_amount),
-                'expired_at' => \Carbon\Carbon::now()->addDays(14),
+                'pawned_at' => $pawn_date,
+                'expired_at' => \Carbon\Carbon::parse($pawn_date)->addDays(14),
             ]);
         }
     }

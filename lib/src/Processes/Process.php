@@ -43,6 +43,11 @@ class Process extends Model
         $query->where('status', '=', 'void');
     }
 
+    public function scopeHold($query)
+    {
+        $query->where('status', '=', 'hold');
+    }
+
 
     protected function customer()
     {

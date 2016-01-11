@@ -144,12 +144,14 @@
 }
 .claim-details,
 .renew-details,
-.repawn-details {
+.repawn-details,
+.hold-details {
   padding: 20px;
 }
 .claim-details h3,
 .renew-details h3,
-.repawn-details h3 {
+.repawn-details h3,
+.hold-details h3 {
   color: #333c48;
   font-weight: bold;
   text-align: left;
@@ -157,10 +159,12 @@
   font-size: 15px;
   margin-top: 0;
 }
-.repawn-form {
+.repawn-form,
+.hold-form {
   padding-left: 15px;
 }
-.repawn-form h3 {
+.repawn-form h3,
+.hold-form h3 {
   color: #333c48;
   font-weight: bold;
   text-align: left;

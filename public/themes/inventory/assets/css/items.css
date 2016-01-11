@@ -1,0 +1,132 @@
+.misc-filter .controls {
+  float: right;
+  margin-top: 7px;
+}
+.misc-filter .controls a {
+  margin-left: 10px;
+}
+.misc-filter .status-filter .status-filter-wrap ul {
+  height: 56px;
+  list-style: outside none none;
+  margin: -16px 0 16px;
+  padding: 16px 0 0;
+  text-align: left;
+}
+.misc-filter .status-filter .status-filter-wrap ul li {
+  display: inline-block;
+}
+.misc-filter .status-filter .status-filter-wrap ul li.active a {
+  border-bottom: 2px solid #1cacfc;
+  color: #4c4e54;
+}
+.misc-filter .status-filter .status-filter-wrap ul li a {
+  border-bottom: none;
+  color: #7f8fa4;
+  font-size: 17px;
+  line-height: 28px;
+  padding: 14px;
+}
+.misc-filter .status-filter .status-filter-wrap ul li a .badge {
+  background-color: #eee;
+  color: #78a;
+  font-weight: normal;
+  border-radius: 10px;
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1;
+  min-width: 10px;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.trans-details-filter {
+  background-color: #f7f8fa;
+  border-bottom: 1px solid #dce0e6;
+  border-top: 1px solid #dce0e6;
+  color: #7f8fa4;
+  margin: -16px -16px 0;
+  padding: 16px;
+}
+.trans-details-filter {
+  background-color: #f7f8fa;
+  border-bottom: 1px solid #dce0e6;
+  border-top: 1px solid #dce0e6;
+  color: #7f8fa4;
+  margin: -16px -16px 0;
+  padding: 16px;
+}
+.trans-details-filter .filter-item {
+  margin-right: 15px;
+}
+.trans-details-filter .select2-container {
+  width: 150px;
+}
+.trans-details-filter .select2-container .select-choice {
+  border: 1px solid #e7e9ed;
+  color: #444;
+  background: #fff none repeat scroll 0 0;
+  border-radius: 2px;
+  font-size: 15px;
+  height: 42px;
+  line-height: 1.42857;
+  padding: 8px 16px;
+}
+.list-miscs {
+  list-style-type: none;
+}
+.list-miscs li {
+  padding: 10px 16px;
+  border-bottom: solid 1px #eef0f2;
+}
+.list-miscs li:last-child {
+  border-bottom: none;
+}
+.list-miscs .misc-info-wrap a.misc-info {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333c48;
+  cursor: pointer;
+}
+.transaction-details .controls {
+  float: right;
+  margin-top: 10px;
+}
+.transaction-details .controls .btn {
+  margin-left: 10px;
+}
+.transaction-details .controls .btn .fa {
+  margin-right: 5px;
+}
+.transaction-details .page-title {
+  color: #5c5d5e;
+  font-size: 16px;
+  margin-bottom: 0;
+  margin-top: -15px;
+  padding: 10px 0;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.transaction-details .page-title .trans-status {
+  cursor: text;
+  margin-right: 10px;
+}
+.item-details {
+  background-color: #f7f8fa;
+  border-bottom: 1px solid #dce0e6;
+  border-top: 1px solid #dce0e6;
+  color: #7f8fa4;
+  margin: 15px -16px;
+  padding: 16px;
+}
+.item-details h2.item-name {
+  font-weight: 500;
+  color: #313236;
+  font-size: 23px;
+  margin: 0;
+}
+.item-details .item-value {
+  font-size: 15px;
+  margin-top: 15px;
+  color: #444;
+}

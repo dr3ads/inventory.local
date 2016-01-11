@@ -33,6 +33,11 @@ class ProcessRepository extends AbstractRepository
         return $this->model->initial()->void();
     }
 
+    public function allHold()
+    {
+        return $this->model->initial()->hold();
+    }
+
     public function allParents()
     {
         return $this->model->initial()->active();
@@ -108,6 +113,21 @@ class ProcessRepository extends AbstractRepository
         return $this->model->where('id', '=', $id)->orWhere('parent_id', '=', $id)->count();
     }
 
+    public function setProcessExpired()
+    {
+        $allParents = $this->model->initial()->active()->get();
+
+        foreach ($allParents as $parent) {
+            $processTree = $this->getProcessTree($parent->id);
+
+            $expiryDate = strtotime($processTree['lastChild']->expired_at);
+
+            if (Carbon::now()->diffInDays(Carbon::createFromTimestampUTC($expiryDate), false) < 0) {
+                $this->setProcessStatus($parent->id, 'expired');
+            }
+        }
+    }
+
     public function setProcessVoid()
     {
         $allParents = $this->model->initial()->expired()->get();
@@ -117,8 +137,15 @@ class ProcessRepository extends AbstractRepository
 
             $expiryDate = strtotime($processTree['lastChild']->expired_at);
 
-            if (Carbon::now()->diffInDays(Carbon::createFromTimestampUTC($expiryDate)) >= getenv('VOID_COUNT')) {
-                $this->setProcessStatus($parent->id, 'void');
+            if(!$processTree['parent']->void_at) {
+                if (Carbon::now()->diffInDays(Carbon::createFromTimestampUTC($expiryDate)) >= getenv('VOID_COUNT')) {
+                    $this->setProcessStatus($parent->id, 'void');
+                }
+            }
+            else{
+                if (Carbon::now()->diffInDays(Carbon::parse($processTree['parent']->void_at), false) < 0 ) {
+                    $this->setProcessStatus($parent->id, 'void');
+                }
             }
         }
     }
@@ -133,6 +160,14 @@ class ProcessRepository extends AbstractRepository
     {
         $this->update(array('status' => $status, 'claimed_at' => Carbon::now()), $processId);
         $this->update(array('status' => $status, 'claimed_at' => Carbon::now()), $processId, 'parent_id');
+
+        return true;
+    }
+
+    public function setProcessHoldDate($processId, $hold_date)
+    {
+        $this->update(array('void_at' => $hold_date), $processId);
+        $this->update(array('void_at' => $hold_date), $processId, 'parent_id');
 
         return true;
     }
@@ -183,3 +218,6 @@ class ProcessRepository extends AbstractRepository
     }
 
 }
+
+
+

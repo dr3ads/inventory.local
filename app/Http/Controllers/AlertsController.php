@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Lib\Alerts\AlertRepository;
 use Theme;
 use App\Http\Controllers\BaseController;
+use Carbon;
 
 class AlertsController extends BaseController
 {

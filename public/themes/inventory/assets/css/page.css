@@ -157,6 +157,9 @@ body {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(127, 143, 164, 0.6);
   outline: 0 none;
 }
+.form-horizontal .form-control.disabled {
+  background: #eee;
+}
 .form-horizontal .form-actions {
   background-color: #f7f8fa;
   border-top: 1px solid #dce0e6;

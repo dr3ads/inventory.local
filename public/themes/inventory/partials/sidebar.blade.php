@@ -9,7 +9,7 @@
     <li>&nbsp;</li>
     <li class="separate-item"></li>
     <li class="dashboard">
-        <a title="Dashboard" href="#" data-placement="right"
+        <a title="Dashboard" href="{{url('dashboard')}}" data-placement="right"
            class="shortcuts-dashboard">
             <i class="fa fa-dashboard fa-fw"></i><span>Dashboard</span>
         </a>
@@ -30,7 +30,7 @@
         <a title="Reports" href="{{ url('alerts') }}" data-placement="right"
            class="shortcuts-alerts">
             <i class="fa fa-exclamation-circle fa-fw"></i><span>Alerts</span>
-            @if(count(Theme::get('alerts')) > 0)<span class="badge">{!! count(Theme::get('alerts'))!!}</span>@endif
+            @if(count(Theme::get('alerts')) > 0)<span class="badge">{!! Theme::get('alerts')!!}</span>@endif
         </a>
     </li>
     <li class="inventory">

@@ -54,6 +54,9 @@ class TransactionsController extends BaseController
             case 'void':
                 $transactions = $this->processRepository->allVoid();
                 break;
+            case 'hold':
+                $transactions = $this->processRepository->allHold();
+                break;
             case 'default':
             default:
                 $transactions = $this->processRepository->allParents();
@@ -208,6 +211,19 @@ class TransactionsController extends BaseController
         return $this->theme->scope('transactions.claim', $data)->render();
     }
 
+    public function hold($id)
+    {
+        $data = array();
+        $data['transaction'] = $this->processRepository->find($id);
+        $data['processTree'] = $this->processRepository->getProcessTree($id);
+        $data['children'] = $this->processRepository->getAllTree($id);
+        $data['transactionDetails'] = $this->processRepository->transactionDetails($id);
+
+        $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
+
+        return $this->theme->scope('transactions.hold', $data)->render();
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -349,6 +365,20 @@ class TransactionsController extends BaseController
         return redirect('transactions')->with('success_msg', 'Transaction Claimed');
     }
 
+    public function storeHold(Request $request)
+    {
+        $input = $request->all();
+
+        //$process = $this->processRepository->find($input['parent_id']);
+        $this->processRepository->setProcessStatus($input['parent_id'], 'hold');
+
+        $hold_date = ($request->has('hold-unli')) ? Carbon::now()->addYears(20)->format('Y-m-d h:i:s') : Carbon::parse($input['void_at'])->format('Y-m-d h:i:s');
+
+        $this->processRepository->setProcessHoldDate($input['parent_id'], $hold_date);
+
+        return redirect('transactions/show/'.$input['parent_id'])->with('success_msg', 'Transaction Hold');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -360,3 +390,5 @@ class TransactionsController extends BaseController
         //
     }
 }
+
+

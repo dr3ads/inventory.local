@@ -32,10 +32,13 @@ class ExpiryAlertMiddleware
         //loop through all parent process and check the expiry date
         $this->processRepository->setExpirableAlerts();
 
+        //loop through all parent process and set expired status
+        $this->processRepository->setProcessExpired();
+
         //loop through all parent process and set void status if necessary
         $this->processRepository->setProcessVoid();
 
-        $this->theme->set('alerts',$this->alertRepository->getCurrentAlerts());
+        $this->theme->set('alerts',$this->alertRepository->getCurrentAlerts()->count());
         return $next($request);
     }
 

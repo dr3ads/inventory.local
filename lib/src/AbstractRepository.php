@@ -118,4 +118,35 @@ abstract class AbstractRepository implements RepositoryInterface
         return $return;
     }
 
+    /**
+     * @return $this
+     */
+    public function newQuery()
+    {
+        $this->model = $this->model->newQuery();
+        return $this;
+    }
+
+    /**
+     * @param $relations
+     * @return $this
+     */
+    public function with($relations) {
+        if (is_string($relations)) $relations = func_get_args();
+
+        $this->with = $relations;
+
+        return $this;
+    }
+
+    protected function eagerLoadRelations() {
+        if(!is_null($this->with)) {
+            foreach ($this->with as $relation) {
+                $this->model->with($relation);
+            }
+
+            //$this->model->with(implode(',',$this->with));
+        }
+        return $this;
+    }
 }
