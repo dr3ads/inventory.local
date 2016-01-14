@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BuyItemRequest;
+use App\Http\Requests\PullItemRequest;
 use App\Http\Requests\SellItemRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -101,6 +102,24 @@ class ItemsController extends BaseController
 
         return redirect('inventory')->with('success_msg', 'Item Sold');
     }
+
+    public function pullItem($id, CustomerRepository $customerRepository)
+    {
+        $data = array();
+        $data['customers'] = $customerRepository->getValueByKey('full_name');
+        $data['item'] = $this->itemRepository->with('process')->find($id);
+
+        return $this->theme->scope('items.pull', $data)->render();
+    }
+
+    public function doPullItem(PullItemRequest $request)
+    {
+
+        $item = $this->itemRepository->softDelete($request->get('item_id'));
+        //dd($item);
+        return redirect('inventory')->with('success_msg', 'Item Pulled Out');
+    }
+
     public function itemDetails($id)
     {
         $data['item'] = $this->itemRepository->with('process')->find($id);

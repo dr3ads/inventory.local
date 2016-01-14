@@ -39,6 +39,12 @@
             <i class="fa fa-cubes fa-fw"></i><span>Inventory</span>
         </a>
     </li>
+    <li class="accessories">
+        <a title="Accessories" href="{{ url('accessories') }}" data-placement="right"
+           class="shortcuts-inventory">
+            <i class="fa fa-headphones fa-fw"></i><span>Accessories</span>
+        </a>
+    </li>
     <li class="misc">
         <a title="Miscellaneous" href="{{ url('misc') }}" data-placement="right"
            class="shortcuts-misc">

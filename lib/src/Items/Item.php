@@ -12,6 +12,7 @@ class Item extends Model
 
     protected $table = 'items';
     protected $fillable = ['name','description','value','is_onhold','serial','brand'];
+    protected $dates = ['deleted_at'];
 
     public function process()
     {
@@ -33,9 +34,9 @@ class Item extends Model
         $query->where('is_onhand', '!=', '1');
     }
 
-    /*public function scopeHasProcess($query)
+    public function accounting()
     {
-        $query->where('process');
-    }*/
+        return $this->morphMany('Lib\Accounting\Accounting','accountable');
+    }
 
 }

@@ -139,6 +139,9 @@ body {
   margin-bottom: 0;
   line-height: 41px;
 }
+.form-horizontal label.left-align {
+  text-align: left;
+}
 .form-horizontal .form-control {
   background: #fff;
   border: 1px solid #e7e9ed;

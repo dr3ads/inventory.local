@@ -6,6 +6,7 @@
         <a title="Sell Item" id="buy_item_link" href="{{ url('inventory/sell') }}" class="btn btn-new pull-left">
             <i class="fa fa-plus"></i> Sell Item
         </a>
+
     </div>
     <div class="status-filter">
         <div class="status-filter-wrap">

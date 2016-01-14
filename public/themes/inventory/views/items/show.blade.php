@@ -5,6 +5,9 @@
                 <a class="btn btn-default pull-left margin-left-20 link-tooltip"  data-placement="bottom" data-toggle="tooltip" title="Sell Item" href="{{ url('inventory/sell/'.$item->id) }}" id="sell_link" title="Sell">
                     <i class="fa fa-refresh"></i>Sell
                 </a>
+                <a class="btn btn-default pull-left margin-left-20 link-tooltip"  data-placement="bottom" data-toggle="tooltip" title="Sell Item" href="{{ url('inventory/pull/'.$item->id) }}" id="sell_link" title="Pull Out">
+                    <i class="fa fa-refresh"></i>Pull
+                </a>
                 @if($item->process)
                     <a class="btn btn-default pull-left margin-left-20 link-tooltip" target="_blank"  data-placement="bottom" data-toggle="tooltip" title="View Transaction" href="{{ url('transactions/show/'.$item->process->id) }}" id="sell_link" title="Sell">
                         <i class="fa fa-refresh"></i>View Transaction

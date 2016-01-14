@@ -217,6 +217,15 @@ class ProcessRepository extends AbstractRepository
         return $data;
     }
 
+    public function getTodayClaims()
+    {
+        return $this->model->initial()->claimed()->whereRaw('DATE(claimed_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
+    }
+
+    public function getTodayPawns()
+    {
+        return $this->model->initial()->active()->whereRaw('DATE(created_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
+    }
 }
 
 

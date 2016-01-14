@@ -21,6 +21,7 @@ Route::get('inventory', 'ItemsController@index');
 Route::get('inventory/buy', 'ItemsController@buyItem');
 Route::get('inventory/sell/{id}', 'ItemsController@sellItem');
 Route::get('inventory/show/{id}', 'ItemsController@itemDetails');
+Route::get('inventory/pull/{id}', 'ItemsController@pullItem');
 Route::post('inventory/buy', array(
     'uses' => 'ItemsController@doBuyItem',
     'as' => 'item.buy'
@@ -29,6 +30,17 @@ Route::post('inventory/sell', array(
     'uses' => 'ItemsController@doSellItem',
     'as' => 'item.sell'
 ));
+
+Route::get('accessories', 'AccessoriesController@index');
+
+Route::post('inventory/pull', array(
+    'uses' => 'ItemsController@doPullItem',
+    'as' => 'item.pull'
+));
+
+Route::get('reports', 'ReportsController@daily');
+Route::get('reports/daily', 'ReportsController@daily');
+Route::get('reports/daily/{timestamp}', 'ReportsController@daily');
 
 
 Route::get('alerts', 'AlertsController@index');

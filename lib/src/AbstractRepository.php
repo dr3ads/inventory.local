@@ -59,7 +59,14 @@ abstract class AbstractRepository implements RepositoryInterface
      */
     public function delete($id)
     {
-        return $this->model->destroy($id);
+        return $this->model->delete($id);
+    }
+
+    public function softDelete($id)
+    {
+        $item = $this->find($id);
+
+        return $item->delete();
     }
 
     /**
