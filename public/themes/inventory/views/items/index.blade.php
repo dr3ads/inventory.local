@@ -1,6 +1,6 @@
 <div class="content-wrapper">
     <div class="container-fluid">
-        {!! Theme::widget('itemfilter', array('items' => $items))->render() !!}
+        {!! Theme::widget('itemfilter', array('items' => $items, 'count' => $count))->render() !!}
         <div class="list-misc-holder row">
             @if(isset($items) && count($items) > 0)
                 <ul class="list-miscs">

@@ -17,6 +17,7 @@ class CreateAccessoriesTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->integer('quantity')->default(0)->unsigned();
+            $table->integer('unit_price')->unsigned();
             $table->timestamps();
         });
     }

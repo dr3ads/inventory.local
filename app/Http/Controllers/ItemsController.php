@@ -52,6 +52,8 @@ class ItemsController extends BaseController
                 $items = $this->itemRepository->getActive();
                 break;
         }
+
+        $data['count'] = $this->itemRepository->itemCount();
         //dd($items);
         $data['items'] = $items;
         //dd($data['items'][0]->process);

@@ -2,6 +2,7 @@
 
 use Lib\AbstractRepository;
 use Lib\Items\Item;
+use Carbon\Carbon;
 
 class ItemRepository extends AbstractRepository
 {
@@ -57,5 +58,31 @@ class ItemRepository extends AbstractRepository
         return $data;
     }
 
+    public function itemCount()
+    {
+        $data = array(
+            'active' => $this->model->whereHas('process', function($query){
+                $query->whereNotIn('status', ['void','hold'])->where('parent_id', '=', '0');
+            })->count(),
+            'void' => $this->model->whereHas('process', function($query){
+                $query->whereIn('status', ['void','hold'])->where('parent_id', '=', '0');
+            })->count(),
+            'bought' => $this->model->doesntHave('process')->count(),
+            'archive' => $this->model->onlyTrashed()->count(),
+        );
+
+        return $data;
+
+    }
+
+    public function getTodaySoldUnits()
+    {
+        return $this->model->sold()->whereRaw('DATE(sold_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
+    }
+
+    public function getTodayBoughtUnits()
+    {
+        return $this->model->doesntHave('process')->whereRaw('DATE(created_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
+    }
 }
 

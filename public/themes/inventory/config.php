@@ -72,6 +72,7 @@ return array(
             $theme->asset()->usePath()->add('font-awesome-css', 'vendors/font-awesome/css/font-awesome.min.css');
             $theme->asset()->usePath()->add('chosen-css', 'vendors/chosen/chosen.min.css', array('bootstrap-css'));
             $theme->asset()->usePath()->add('global-css', 'css/global.css', array('bootstrap-css'));
+            $theme->asset()->container('print')->usePath()->add('print-css', 'css/print.css');
             $theme->asset()->usePath()->add('jquery-ui-css', 'vendors/jquery-ui/jquery-ui.min.css');
             $theme->asset()->usePath()->add('jquery-ui-theme', 'vendors/jquery-ui/jquery-ui.theme.min.css');
             //scripts
@@ -85,6 +86,8 @@ return array(
             $theme->asset()->container('footer')->usePath()->add('global', 'js/global.js',
                 array('jquery', 'chosen-js', 'jquery-validation'));
             $theme->asset()->container('footer')->usePath()->add('jquery-ui-js', 'vendors/jquery-ui/jquery-ui.min.js',
+                array('jquery'));
+            $theme->asset()->container('footer')->usePath()->add('print-js', 'js/print.js',
                 array('jquery'));
         },
 

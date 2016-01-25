@@ -1,6 +1,6 @@
 <div class="transaction-filter">
         <div class="controls">
-            {{--<div class="pull-left">
+            <div class="pull-left">
                 <form method="get" id="issue_search_form" class="pull-left issue-search-form" action="/bridal-gallery/bridal-gallery/issues" accept-charset="UTF-8"><div style="display:none"><input type="hidden" value="✓" name="utf8"></div>
                     <div class="append-right-10 hidden-xs hidden-sm">
                         <input type="search" spellcheck="false" placeholder="Filter by title or description" name="issue_search" id="issue_search" class="form-control issue_search search-text-input">
@@ -12,7 +12,7 @@
                         <input type="hidden" name="label_id" id="label_id">
                     </div>
                 </form>
-            </div>--}}
+            </div>
             <a title="New Transactions" id="new_trans_link" href="{{ url('transactions/create') }}" class="btn btn-new pull-left"><i class="fa fa-plus"></i>
                 New Transaction
             </a>

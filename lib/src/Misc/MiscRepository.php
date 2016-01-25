@@ -4,6 +4,7 @@ namespace Lib\Misc;
 
 use Lib\AbstractRepository;
 use Lib\Misc\Misc;
+use Carbon\Carbon;
 
 class MiscRepository extends AbstractRepository
 {
@@ -17,18 +18,14 @@ class MiscRepository extends AbstractRepository
         return $this->model->ofFlow($flow);
     }
 
-    /*public function getTransactionStatusCount()
+    public function getTodayCashIn()
     {
-        $data = array();
-
-        $data['active'] = $this->model->where('status', '=', 'active')->count();
-        $data['claimed'] = $this->model->where('status', '=', 'claimed')->count();
-        $data['expired'] = $this->model->where('status', '=', 'expired')->count();
-        $data['void'] = $this->model->where('status', '=', 'void')->count();
-        $data['hold'] = $this->model->where('status', '=', 'hold')->count();
-
-        return $data;
-    }*/
+        return $this->model->ofFlow('in')->whereRaw('DATE(created_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
+    }
+    public function getTodayCashOut()
+    {
+        return $this->model->ofFlow('out')->whereRaw('DATE(created_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
+    }
 
 
 }

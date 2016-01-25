@@ -32,6 +32,28 @@ Route::post('inventory/sell', array(
 ));
 
 Route::get('accessories', 'AccessoriesController@index');
+Route::get('accessories/new', 'AccessoriesController@create');
+Route::post('accessories/new', array(
+    'uses' => 'AccessoriesController@doCreate',
+    'as' => 'accessories.new'
+));
+Route::get('accessories/bulk-in', 'AccessoriesController@bulkIn');
+Route::post('accessories/bulk-in', array(
+    'uses' => 'AccessoriesController@doBulkIn',
+    'as' => 'accessories.bulk-in'
+));
+Route::get('accessories/bulk-out', 'AccessoriesController@bulkOut');
+Route::post('accessories/bulk-out', array(
+    'uses' => 'AccessoriesController@doBulkOut',
+    'as' => 'accessories.bulk-out'
+));
+Route::get('accessories/sell/{id}', 'AccessoriesController@sell');
+Route::post('accessories/sell', array(
+    'uses' => 'AccessoriesController@doSell',
+    'as' => 'accessories.sell'
+));
+
+Route::get('accessories/show/{id}', 'AccessoriesController@show');
 
 Route::post('inventory/pull', array(
     'uses' => 'ItemsController@doPullItem',

@@ -12,4 +12,8 @@ class AccessoryRepository extends AbstractRepository
         $this->model = $accessory;
     }
 
+    /* public function getTodaySoldAcessories()
+     {
+         return $this->model->where()
+     }*/
 }

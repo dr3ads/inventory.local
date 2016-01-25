@@ -50,6 +50,9 @@ body {
 .strong {
   font-weight: bold;
 }
+.underline {
+  text-decoration: underline;
+}
 /* overrides */
 .chosen-container {
   border: 1px solid #e7e9ed;
@@ -151,4 +154,23 @@ body {
   background-color: #337ab7;
   border-color: #337ab7;
   color: #fff;
+}
+@media screen {
+  #printSection {
+    display: none;
+  }
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printSection,
+  #printSection * {
+    visibility: visible;
+  }
+  #printSection {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 }

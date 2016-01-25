@@ -34,6 +34,11 @@ class Item extends Model
         $query->where('is_onhand', '!=', '1');
     }
 
+    public function scopeSold($query)
+    {
+        $query->whereNotNull('sold_at');
+    }
+
     public function accounting()
     {
         return $this->morphMany('Lib\Accounting\Accounting','accountable');

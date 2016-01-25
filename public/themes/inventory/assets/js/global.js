@@ -1,5 +1,7 @@
 //$.validator.setDefaults({ ignore: ":hidden:not(.chosen)" });
 
+
+
 $(document).ready(function () {
     $('.filter-item select, .chosen').chosen({
         width: 'auto'
@@ -20,6 +22,12 @@ $(document).ready(function () {
         }
     });
 
+    $('.go-print').click(function(){
+        var ctrl = $(this).attr('data-id');
+        printElement(document.getElementById('print-receipt-'+ctrl));
+        window.print();
+    });
+
     $('.create-transaction').validate({
         //validateNonVisibleFields: true,
         rules:{
@@ -38,3 +46,4 @@ $(document).ready(function () {
         }
     });
 });
+
