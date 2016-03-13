@@ -13,6 +13,7 @@ abstract class AbstractRepository implements RepositoryInterface
      * @var
      */
     protected $model;
+    public $with = array();
 
     /**
      * @param array $columns
@@ -138,10 +139,13 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param $relations
      * @return $this
      */
-    public function with($relations) {
-        if (is_string($relations)) $relations = func_get_args();
+    public function with($relations)
+    {
+        if (is_string($relations)) {
+            $relations = func_get_args();
+        }
 
-        $this->with = $relations;
+        array_push($this->with, $relations);
 
         return $this;
     }

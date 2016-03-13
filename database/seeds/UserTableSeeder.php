@@ -19,7 +19,15 @@ class UserTableSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $userId = DB::table('users')->insertGetId(
-            ['username' => 'staff','email' => 'staff@cebugadgetshop.com', 'password' => bcrypt('p@ssw0rd')]
+            ['username' => 'arnz','email' => 'staff@cebugadgetshop.com', 'password' => bcrypt('1552')]
+        );
+
+        //add staff role
+        $user = User::find($userId);
+        $user->attachRole(1);
+
+        $userId = DB::table('users')->insertGetId(
+            ['username' => 'cgStaff','email' => 'staff@cebugadgetshop.com', 'password' => bcrypt('jiqytz3k1')]
         );
 
         //add staff role

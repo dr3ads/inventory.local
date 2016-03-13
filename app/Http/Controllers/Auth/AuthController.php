@@ -34,6 +34,12 @@ class AuthController extends BaseController
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'getLogout']);
+
+
+    }
+
+    public function addAssets()
+    {
         $this->layout = 'auth';
         $this->username = 'username';
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);

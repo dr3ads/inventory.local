@@ -5,12 +5,22 @@ use Illuminate\Database\Eloquent\Model;
 class Process extends Model
 {
     protected $table = 'processes';
-    protected $dates = ['renewed_at','expired_at','pawned_at','claimed_at'];
-    protected $fillable = ['customer_id','item_id','pawn_amount','pawned_at', 'parent_id','expired_at'];
+    protected $dates = ['renewed_at', 'expired_at', 'pawned_at', 'claimed_at'];
+    protected $fillable = ['customer_id', 'item_id', 'pawn_amount', 'pawned_at', 'parent_id', 'expired_at'];
+    protected $with = array('children', 'customer', 'item');
+
+    static public function boot()
+    {
+        static::created(function ($process) {
+            //$meal->meal_image_id = DB::table('media')->insertGetId(array());
+            $process->ctrl_number = getenv('BRANCH_ID') . $process->id;
+            $process->update();
+        });
+    }
 
     public function accounting()
     {
-        return $this->morphMany('Lib\Accounting\Accounting','accountable');
+        return $this->morphMany('Lib\Accounting\Accounting', 'accountable');
     }
 
     public function scopeInitial($query)
@@ -20,7 +30,7 @@ class Process extends Model
 
     public function scopeActive($query)
     {
-        $query->where('status','=','active');
+        $query->where('status', '=', 'active');
     }
 
     public function scopeExpired($query)
@@ -48,8 +58,12 @@ class Process extends Model
         $query->where('status', '=', 'hold');
     }
 
+    public function children()
+    {
+        return $this->hasMany('Lib\Processes\Process', 'parent_id', 'id');
+    }
 
-    protected function customer()
+    public function customer()
     {
         return $this->BelongsTo('Lib\Customers\Customer');
     }
@@ -57,14 +71,6 @@ class Process extends Model
     public function item()
     {
         return $this->BelongsTo('Lib\Items\Item');
-    }
-
-    static public function boot(){
-        static::created(function( $process ){
-            //$meal->meal_image_id = DB::table('media')->insertGetId(array());
-            $process->ctrl_number = getenv('BRANCH_ID').$process->id;
-            $process->update();
-       });
     }
 
     public function alert()

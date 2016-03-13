@@ -12,8 +12,8 @@ use Lib\Items\ItemRepository;
 use Lib\Processes\ProcessRepository;
 use Lib\Customers\CustomerRepository;
 use App\Http\Controllers\BaseController;
-use Theme;
 use Validator;
+use Theme;
 
 class TransactionsController extends BaseController
 {
@@ -24,13 +24,16 @@ class TransactionsController extends BaseController
     {
         $this->middleware('auth');
         $this->processRepository = $processRepository;
-        $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
 
-        $this->theme->asset()->usePath()->add('page-css', 'css/page.css', array('bootstrap-css'));
-        $this->theme->asset()->usePath()->add('trans-css', 'css/transaction.css', array('bootstrap-css'));
-        $this->theme->asset()->container('footer')->usePath()->add('transactions', 'js/transactions.js',
+    }
+
+    public function addAssets()
+    {
+        Theme::asset()->usePath()->add('page-css', 'css/page.css', array('bootstrap-css'));
+        Theme::asset()->usePath()->add('trans-css    ', 'css/transaction.css', array('bootstrap-css'));
+        Theme::asset()->container('footer')->usePath()->add('transactions', 'js/transactions.js',
             array('jquery'));
-        $this->theme->set('title', 'Transactions');
+        Theme::set('title', 'Transactions');
     }
 
     /**
@@ -52,7 +55,7 @@ class TransactionsController extends BaseController
                 $transactions = $this->processRepository->allExpired();
                 break;
             case 'void':
-                $transactions = $this->processRepository->allVoid();
+                $transactions = $this->procesesRepository->allVoid();
                 break;
             case 'hold':
                 $transactions = $this->processRepository->allHold();
@@ -63,20 +66,21 @@ class TransactionsController extends BaseController
                 break;
         }
 
+
         if ($request->has('customers') && $request->get('customers') != '') {
             $transactions->ofCustomer($request->get('customers'));
         }
-        $transactions = $transactions->paginate();
-
+        $data['transactions'] = $transactions->paginate();
+        //dd($data['transactions']);
         $data['customers'] = $customersRepository->getValueByKey('full_name');
         //array_unshift($data['customers'], 'Select Customer');
 
-        foreach ($transactions as $transaction) {
+        /*foreach ($transactions as $transaction) {
             $data['transactions'][] = $this->processRepository->getProcessTree($transaction->id);
-        }
+        }*/
 
         $data['transactionsStatusCount'] = $this->processRepository->getTransactionStatusCount();
-        $data['paginator'] = $transactions->render();
+        $data['paginator'] = $data['transactions']->render();
 
         $data['status'] = $request->status;
 
@@ -362,7 +366,7 @@ class TransactionsController extends BaseController
 
         $process->accounting()->create($accData);
 
-        return redirect('transactions')->with('success_msg', 'Transaction Claimed');
+        return redirect('transactions')->with('success', 'Transaction Claimed');
     }
 
     public function storeHold(Request $request)
@@ -376,7 +380,7 @@ class TransactionsController extends BaseController
 
         $this->processRepository->setProcessHoldDate($input['parent_id'], $hold_date);
 
-        return redirect('transactions/show/'.$input['parent_id'])->with('success_msg', 'Transaction Hold');
+        return redirect('transactions/show/' . $input['parent_id'])->with('success_msg', 'Transaction Hold');
     }
 
     /**

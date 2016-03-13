@@ -21,6 +21,12 @@ class AccessoriesController extends BaseController
     public function __construct(AccessoryRepository $accessoryRepository)
     {
         $this->accessoryRepository = $accessoryRepository;
+
+    }
+
+
+    public function addAssets()
+    {
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
         $this->theme->asset()->usePath()->add('page-css', 'css/page.css', array('bootstrap-css'));
         $this->theme->asset()->usePath()->add('misc-css', 'css/misc.css', array('global-css'));

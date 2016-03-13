@@ -33,10 +33,16 @@
             @if(count(Theme::get('alerts')) > 0)<span class="badge">{!! Theme::get('alerts')!!}</span>@endif
         </a>
     </li>
-    <li class="inventory">
-        <a title="Transactions" href="{{ url('inventory') }}" data-placement="right"
+    <li class="vault-inventory">
+        <a title="Vault Inventory" href="{{ url('inventory') }}" data-placement="right"
            class="shortcuts-inventory">
-            <i class="fa fa-cubes fa-fw"></i><span>Inventory</span>
+            <i class="fa fa-cubes fa-fw"></i><span>Vault Inventory</span>
+        </a>
+    </li>
+    <li class="display-inventory">
+        <a title="Display Inventory" href="{{ url('display-inventory') }}" data-placement="right"
+           class="shortcuts-inventory">
+            <i class="fa fa-cubes fa-fw"></i><span>Display Inventory</span>
         </a>
     </li>
     <li class="accessories">

@@ -22,6 +22,9 @@ Route::get('inventory/buy', 'ItemsController@buyItem');
 Route::get('inventory/sell/{id}', 'ItemsController@sellItem');
 Route::get('inventory/show/{id}', 'ItemsController@itemDetails');
 Route::get('inventory/pull/{id}', 'ItemsController@pullItem');
+
+Route::get('display', 'ItemsController@displayInventory');
+
 Route::post('inventory/buy', array(
     'uses' => 'ItemsController@doBuyItem',
     'as' => 'item.buy'

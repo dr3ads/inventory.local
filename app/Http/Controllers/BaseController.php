@@ -5,25 +5,31 @@ use Lib\Alerts\AlertRepository;
 
 class BaseController extends Controller {
 
-    public $theme = null;
-    public $layout = '';
-    public $theme_name = '';
-    public $data = array();
+    protected $theme = null;
+    protected $layout = '';
+    protected $theme_name = '';
+    protected $data = array();
 
     public function __construct()
     {
         $this->middleware = 'auth';
         setlocale(LC_MONETARY, 'en_PH');
-        $this->layout = getenv('LAYOUT');
-        $this->theme_name = getenv('THEME');
+
     }
 
     protected function setupLayout()
     {
+        $this->layout = getenv('LAYOUT');
+        $this->theme_name = getenv('THEME');
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
-
+        $this->addAssets();
     }
 
+
+    public function addAssets()
+    {
+        return;
+    }
 
     public function callAction($method, $parameters)
     {

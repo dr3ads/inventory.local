@@ -25,7 +25,7 @@ return array(
 	|
 	*/
 
-	'themeDefault' => 'default',
+	'themeDefault' => 'inventory',
 
 	/*
 	|--------------------------------------------------------------------------

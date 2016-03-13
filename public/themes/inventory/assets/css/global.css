@@ -32,6 +32,9 @@ body {
   border-radius: 2px;
   color: #313236;
 }
+.alert {
+  margin: 20px;
+}
 .inline {
   display: inline;
 }
@@ -44,6 +47,9 @@ body {
 .left-align {
   text-align: left;
 }
+.center-align {
+  text-align: center;
+}
 .right {
   float: right;
 }
@@ -52,6 +58,9 @@ body {
 }
 .underline {
   text-decoration: underline;
+}
+.margin-top-30 {
+  margin-top: 30px;
 }
 /* overrides */
 .chosen-container {
@@ -173,4 +182,7 @@ body {
     left: 0;
     top: 0;
   }
+}
+.receipt-body {
+  line-height: 1.5;
 }

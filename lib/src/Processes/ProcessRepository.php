@@ -20,26 +20,41 @@ class ProcessRepository extends AbstractRepository
 
     public function allExpired()
     {
+        if (count($this->with) > 0) {
+            $this->newQuery()->eagerLoadRelations();
+        }
         return $this->model->initial()->expired();
     }
 
     public function allClaimed()
     {
+        if (count($this->with) > 0) {
+            $this->newQuery()->eagerLoadRelations();
+        }
         return $this->model->initial()->claimed();
     }
 
     public function allVoid()
     {
+        if (count($this->with) > 0) {
+            $this->newQuery()->eagerLoadRelations();
+        }
         return $this->model->initial()->void();
     }
 
     public function allHold()
     {
+        if (count($this->with) > 0) {
+            $this->newQuery()->eagerLoadRelations();
+        }
         return $this->model->initial()->hold();
     }
 
     public function allParents()
     {
+        if (count($this->with) > 0) {
+            $this->newQuery()->eagerLoadRelations();
+        }
         return $this->model->initial()->active();
     }
 
@@ -207,12 +222,14 @@ class ProcessRepository extends AbstractRepository
     public function getTransactionStatusCount()
     {
         $data = array();
-
-        $data['active'] = $this->model->where('status', '=', 'active')->count();
-        $data['claimed'] = $this->model->where('status', '=', 'claimed')->count();
-        $data['expired'] = $this->model->where('status', '=', 'expired')->count();
-        $data['void'] = $this->model->where('status', '=', 'void')->count();
-        $data['hold'] = $this->model->where('status', '=', 'hold')->count();
+        if (count($this->with) > 0) {
+            $this->newQuery()->eagerLoadRelations();
+        }
+        $data['active'] = $this->model->where('status', 'active')->count();
+        $data['claimed'] = $this->model->where('status', 'claimed')->count();
+        $data['expired'] = $this->model->where('status', 'expired')->count();
+        $data['void'] = $this->model->where('status', 'void')->count();
+        $data['hold'] = $this->model->where('status', 'hold')->count();
 
         return $data;
     }

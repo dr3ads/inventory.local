@@ -26,5 +26,10 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('inspire')
                  ->hourly();
+
     }
+
+    /**
+     * TODO::create scheduler for expired alerts
+     */
 }

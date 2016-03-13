@@ -5,6 +5,11 @@
         @endif
     @endforeach
 </div> <!-- end .flash-message -->
+@if(Session::has('success'))
+    <div class="alert alert-success">
+        {{ Session::get('success') }}
+    </div>
+@endif
 
 <div class="content-wrapper">
     <div class="container-fluid">
@@ -15,19 +20,19 @@
                 @foreach($transactions as $transaction)
                     <li>
                         <div class="trans-info">
-                            <a class="trans-ctrlnumber" href="{{ url('transactions/show/'.$transaction['parent']->id) }}">
-                                {!! $transaction['parent']->ctrl_number !!} -
-                                {!! $transaction['parent']->item->name  !!}
+                            <a class="trans-ctrlnumber" href="{{ url('transactions/show/'.$transaction->id) }}">
+                                {!! $transaction->ctrl_number !!} -
+                                {!! $transaction->item->name  !!}
                             </a>
                             <div class="pull-right light">
-                                <span class="issue-no-comments" title="Number of Transactions"><i class="fa fa-book"></i>{!! $transaction['relatedTransactionCount'] !!}</span>
+                                <span class="issue-no-comments" title="Number of Transactions"><i class="fa fa-book"></i>{!! $transaction->children->count() !!}</span>
                             </div>
                         </div>
                         <div class="trans-details">
-                            <div class="trans-date inline">{!! date('M d, Y', strtotime($transaction['lastChild']->pawned_at)) !!}</div>
-                            <div class="customer inline">by: {!! $transaction['parent']->customer->full_name !!}</div>
+                            <div class="trans-date inline">{!! date('M d, Y', strtotime($transaction->pawned_at)) !!}</div>
+                            <div class="customer inline">by: {!! $transaction->customer->full_name !!}</div>
                             <div class="pull-right light">
-                                <div class="expiry-date">Expiry Date: {!! date('M d, Y', strtotime($transaction['lastChild']->expired_at)) !!}</div>
+                                <div class="expiry-date">Expiry Date: {!! date('M d, Y', strtotime($transaction->expired_at)) !!}</div>
                             </div>
                         </div>
                     </li>

@@ -64,7 +64,7 @@
 
                             <div class="form-group">
                                 {!! Form::label('principal_amount', 'Principal Payable', array('class' => 'col-md-5')) !!}
-                                <div class="col-md-7">{!! Form::number('principal_amount',  number_format($transactionDetails['totalPrincipal'], 2, '.',''), array('class' => 'form-control', 'readonly' => 'readonly')) !!}</div>
+                                <div class="col-md-7">{!! Form::number('principal_amount',  number_format($transactionDetails['totalPawnAmount'], 2, '.',''), array('class' => 'form-control', 'readonly' => 'readonly')) !!}</div>
 
                             </div>
 

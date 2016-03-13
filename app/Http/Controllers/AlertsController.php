@@ -18,6 +18,11 @@ class AlertsController extends BaseController
     public function __construct(AlertRepository $alertRepository)
     {
         $this->alertsRepository = $alertRepository;
+
+    }
+
+    public function addAssets()
+    {
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
         $this->theme->asset()->usePath()->add('page-css', 'css/page.css', array('bootstrap-css'));
         $this->theme->asset()->usePath()->add('alerts-css', 'css/alerts.css', array('global-css'));
