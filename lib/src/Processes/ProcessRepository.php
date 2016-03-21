@@ -243,6 +243,11 @@ class ProcessRepository extends AbstractRepository
     {
         return $this->model->initial()->active()->whereRaw('DATE(created_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
     }
+
+    public function deleteTree($id)
+    {
+        return $this->model->where('id', $id)->orWhere('parent_id', $id)->delete();
+    }
 }
 
 

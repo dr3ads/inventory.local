@@ -8,6 +8,7 @@ use App\Http\Requests\SaveTransactionRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Lib\Items\Item;
 use Lib\Items\ItemRepository;
 use Lib\Processes\ProcessRepository;
 use Lib\Customers\CustomerRepository;
@@ -55,7 +56,7 @@ class TransactionsController extends BaseController
                 $transactions = $this->processRepository->allExpired();
                 break;
             case 'void':
-                $transactions = $this->procesesRepository->allVoid();
+                $transactions = $this->processRepository->allVoid();
                 break;
             case 'hold':
                 $transactions = $this->processRepository->allHold();
@@ -65,7 +66,6 @@ class TransactionsController extends BaseController
                 $transactions = $this->processRepository->allParents();
                 break;
         }
-
 
         if ($request->has('customers') && $request->get('customers') != '') {
             $transactions->ofCustomer($request->get('customers'));
@@ -392,6 +392,34 @@ class TransactionsController extends BaseController
     public function destroy($id)
     {
         //
+    }
+
+    public function getDisplay($id)
+    {
+        $data = array();
+        $data['transaction'] = $this->processRepository->find($id);
+        $data['processTree'] = $this->processRepository->getProcessTree($id);
+        $data['children'] = $this->processRepository->getAllTree($id);
+        $data['transactionDetails'] = $this->processRepository->transactionDetails($id);
+        $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
+        $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
+
+        return $this->theme->scope('transactions.display', $data)->render();
+    }
+
+    public function postDisplay(Request $request, ItemRepository $itemRepository)
+    {
+        $process = $this->processRepository->find($request->parent_id);
+        $this->processRepository->deleteTree($request->parent_id);
+        $item = $itemRepository->find($process->item_id);
+        $item->acquire_price = $request->get('acquire_price');
+        $item->selling_value = $request->get('selling_price');
+        $item->displayed_at = Carbon::now();
+
+        $item->save();
+
+
+        return redirect('transactions')->with('success_msg', 'Transaction Item placed to Display Inventory');
     }
 }
 

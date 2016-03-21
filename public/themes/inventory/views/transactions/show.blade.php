@@ -30,6 +30,13 @@
                         <i class="fa fa-clone"></i>Hold
                     </a>
                 @endif
+                @if($processTree['parent']->status == 'void')
+                    <a class="btn btn-info pull-left link-tooltip" data-placement="bottom" data-toggle="tooltip"
+                       title="Hold Transaction" href="{{ url('transactions/display/'.$processTree['parent']->id) }}"
+                       id="hold_link" title="Hold">
+                        <i class="fa fa-clone"></i>Display
+                    </a>
+                @endif
             </div>
             <div class="page-title">
                 <a class="trans-status btn btn-primary"

@@ -27,6 +27,16 @@ class ItemRepository extends AbstractRepository
         })->paginate();
     }
 
+    public function getActiveDisplay()
+    {
+        return $this->model->whereNotNull('displayed_at')->whereNull('sold_at')->paginate();
+    }
+
+    public function getSold()
+    {
+        return $this->model->whereNotNull('sold_at')->paginate();
+    }
+
     public function getVoid()
     {
         return $this->model->whereHas('process', function($query){
@@ -72,7 +82,16 @@ class ItemRepository extends AbstractRepository
         );
 
         return $data;
+    }
 
+    public function displayItemCount()
+    {
+        $data = array(
+            'active' => $this->model->whereNotNull('displayed_at')->whereNull('sold_at')->count(),
+            'sold' => $this->model->whereNotNull('sold_at')->count(),
+        );
+
+        return $data;
     }
 
     public function getTodaySoldUnits()
@@ -83,6 +102,16 @@ class ItemRepository extends AbstractRepository
     public function getTodayBoughtUnits()
     {
         return $this->model->doesntHave('process')->whereRaw('DATE(created_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
+    }
+
+    public function getDisplayItems()
+    {
+        /*return $this->model->whereHas('process', function($query){
+            $query->whereNotIn('status', ['void','hold'])->where('parent_id', '=', '0');
+        })->paginate();*/
+
+
+        return $this->model->whereNotNull('displayed_at')->paginate();
     }
 }
 

@@ -11,8 +11,20 @@ class Item extends Model
     use SoftDeletes;
 
     protected $table = 'items';
-    protected $fillable = ['name','description','value','is_onhold','serial','brand'];
-    protected $dates = ['deleted_at'];
+    protected $fillable = [
+        'name',
+        'description',
+        'value',
+        'is_onhold',
+        'serial',
+        'brand',
+        'sold_at',
+        'displayed_at',
+        'delivered_at',
+        'acquire_price',
+        'selling_value',
+    ];
+    protected $dates = ['deleted_at', 'sold_at', 'displayed_at', 'delivered_at'];
 
     public function process()
     {
@@ -41,7 +53,7 @@ class Item extends Model
 
     public function accounting()
     {
-        return $this->morphMany('Lib\Accounting\Accounting','accountable');
+        return $this->morphMany('Lib\Accounting\Accounting', 'accountable');
     }
 
 }

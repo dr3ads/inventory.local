@@ -2,8 +2,8 @@
     <div class="container-fluid">
         <div class="transaction-details">
             <div class="controls">
-                <a class="btn btn-default pull-left margin-left-20 link-tooltip"  data-placement="bottom" data-toggle="tooltip" title="Sell Item" href="{{ url('accessories/sell/'.$accessory->id) }}" id="sell_link" title="Sell">
-                    <i class="fa fa-refresh"></i>Sell
+                <a class="btn btn-default pull-right margin-left-20 link-tooltip"  data-placement="bottom" data-toggle="tooltip" title="Sell Item" href="{{ url('accessories/sell/'.$accessory->id) }}" id="sell_link" title="Sell">
+                    <i class="fa fa-refresh"></i> Sell
                 </a>
             </div>
             <div class="page-title">

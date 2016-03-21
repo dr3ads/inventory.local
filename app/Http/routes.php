@@ -23,7 +23,12 @@ Route::get('inventory/sell/{id}', 'ItemsController@sellItem');
 Route::get('inventory/show/{id}', 'ItemsController@itemDetails');
 Route::get('inventory/pull/{id}', 'ItemsController@pullItem');
 
-Route::get('display', 'ItemsController@displayInventory');
+
+Route::get('display', 'DisplayController@index');
+Route::get('display/buy', 'DisplayController@buyItem');
+Route::get('display/sell/{id}', 'DisplayController@sellItem');
+Route::get('display/show/{id}', 'DisplayController@itemDetails');
+Route::get('display/pull/{id}', 'DisplayController@pullItem');
 
 Route::post('inventory/buy', array(
     'uses' => 'ItemsController@doBuyItem',
@@ -32,6 +37,15 @@ Route::post('inventory/buy', array(
 Route::post('inventory/sell', array(
     'uses' => 'ItemsController@doSellItem',
     'as' => 'item.sell'
+));
+
+Route::post('display/buy', array(
+    'uses' => 'DisplayController@doBuyItem',
+    'as' => 'display.buy'
+));
+Route::post('display/sell', array(
+    'uses' => 'DisplayController@doSellItem',
+    'as' => 'display.sell'
 ));
 
 Route::get('accessories', 'AccessoriesController@index');
@@ -80,6 +94,8 @@ Route::get('transactions/hold/{id}', 'TransactionsController@hold');
 Route::post('transactions/hold', 'TransactionsController@storeHold');
 Route::get('transactions/show_all/{id}', 'TransactionsController@showAll');
 Route::get('transactions/show/{id}', 'TransactionsController@show');
+Route::get('transactions/display/{id}', 'TransactionsController@getDisplay');
+Route::post('transactions/display', 'TransactionsController@postDisplay');
 
 Route::get('misc', 'MiscellaneousController@index');
 Route::get('misc/earn', 'MiscellaneousController@createIn');

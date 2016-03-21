@@ -1,22 +1,25 @@
 <?php namespace Lib\Processes;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Process extends Model
 {
     protected $table = 'processes';
-    protected $dates = ['renewed_at', 'expired_at', 'pawned_at', 'claimed_at'];
+    protected $dates = ['renewed_at', 'expired_at', 'pawned_at', 'claimed_at', 'deleted_at'];
     protected $fillable = ['customer_id', 'item_id', 'pawn_amount', 'pawned_at', 'parent_id', 'expired_at'];
     protected $with = array('children', 'customer', 'item');
 
-    static public function boot()
+    use SoftDeletes;
+
+    /*static public function boot()
     {
         static::created(function ($process) {
             //$meal->meal_image_id = DB::table('media')->insertGetId(array());
             $process->ctrl_number = getenv('BRANCH_ID') . $process->id;
             $process->update();
         });
-    }
+    }*/
 
     public function accounting()
     {

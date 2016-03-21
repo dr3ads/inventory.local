@@ -7,14 +7,13 @@ use App\Http\Requests\PullItemRequest;
 use App\Http\Requests\SellItemRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use Lib\Customers\CustomerRepository;
 use Lib\Items\ItemRepository;
 use Theme;
 use App\Http\Controllers\BaseController;
 
-class ItemsController extends BaseController
+class DisplayController extends BaseController
 {
     protected $itemRepository;
 
@@ -30,7 +29,7 @@ class ItemsController extends BaseController
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
         $this->theme->asset()->usePath()->add('page-css', 'css/page.css', array('bootstrap-css'));
         $this->theme->asset()->usePath()->add('items-css', 'css/items.css', array('global-css'));
-        $this->theme->set('title','Inventory');
+        $this->theme->set('title','Display Inventory');
     }
 
     /**
@@ -41,28 +40,21 @@ class ItemsController extends BaseController
     {
         $data = array();
         $itemType = $request->has('type') ? $request->get('type') : 'active';
-        $items = array();
+
         switch($itemType){
-            case 'void':
-                $items = $this->itemRepository->getVoid();
+            case 'sold':
+                $items = $this->itemRepository->getSold();
                 break;
-            case 'bought':
-                $items = $this->itemRepository->getBought();
-                break;
-            case 'archive':
-                $items = $this->itemRepository->getArchive();
-                break;
+
             case 'active':
             default:
-                $items = $this->itemRepository->getActive();
+                $items = $this->itemRepository->getActiveDisplay();
                 break;
         }
 
-        $data['count'] = $this->itemRepository->itemCount();
-        //dd($items);
+        $data['count'] = $this->itemRepository->displayItemCount();
         $data['items'] = $items;
-        //dd($data['items'][0]->process);
-        return $this->theme->scope('items.index', $data)->render();
+        return $this->theme->scope('display.index', $data)->render();
 
     }
 
@@ -93,7 +85,7 @@ class ItemsController extends BaseController
         $data['customers'] = $customerRepository->getValueByKey('full_name');
         $data['item'] = $this->itemRepository->with('process')->find($id);
 
-        return $this->theme->scope('items.sell', $data)->render();
+        return $this->theme->scope('display.sell', $data)->render();
     }
 
     public function doSellItem(SellItemRequest $request)
@@ -102,12 +94,12 @@ class ItemsController extends BaseController
         $data = array(
             'sold_at' => Carbon::now(),
             'customer_id' => $request->get('customer_id'),
-            'selling_value' => $request->get('item_sell_price'),
+            'sold_price' => $request->get('item_sell_price'),
         );
 
         $this->itemRepository->update($data, $request->get('item_id'));
 
-        return redirect('inventory')->with('success_msg', 'Item Sold');
+        return redirect('display')->with('success_msg', 'Item Sold');
     }
 
     public function pullItem($id, CustomerRepository $customerRepository)
@@ -116,22 +108,21 @@ class ItemsController extends BaseController
         $data['customers'] = $customerRepository->getValueByKey('full_name');
         $data['item'] = $this->itemRepository->with('process')->find($id);
 
-        return $this->theme->scope('items.pull', $data)->render();
+        return $this->theme->scope('display.pull', $data)->render();
     }
 
     public function doPullItem(PullItemRequest $request)
     {
 
-        $item = $this->itemRepository->softDelete($request->get('item_id'));
-        //dd($item);
-        return redirect('inventory')->with('success_msg', 'Item Pulled Out');
+        $this->itemRepository->softDelete($request->get('item_id'));
+        return redirect('display')->with('success_msg', 'Item Pulled Out');
     }
 
     public function itemDetails($id)
     {
         $data['item'] = $this->itemRepository->with('process')->find($id);
 
-        return $this->theme->scope('items.show', $data)->render();
+        return $this->theme->scope('display.show', $data)->render();
     }
 
 

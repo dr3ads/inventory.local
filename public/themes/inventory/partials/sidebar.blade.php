@@ -8,12 +8,12 @@
 <ul class="nav nav-sidebar">
     <li>&nbsp;</li>
     <li class="separate-item"></li>
-    <li class="dashboard">
+    {{--<li class="dashboard">
         <a title="Dashboard" href="{{url('dashboard')}}" data-placement="right"
            class="shortcuts-dashboard">
             <i class="fa fa-dashboard fa-fw"></i><span>Dashboard</span>
         </a>
-    </li>
+    </li>--}}
     <li class="customers">
         <a title="Customers" href="{{ url('customers') }}" data-placement="right"
            class="shortcuts-customers">
@@ -40,7 +40,7 @@
         </a>
     </li>
     <li class="display-inventory">
-        <a title="Display Inventory" href="{{ url('display-inventory') }}" data-placement="right"
+        <a title="Display Inventory" href="{{ url('display') }}" data-placement="right"
            class="shortcuts-inventory">
             <i class="fa fa-cubes fa-fw"></i><span>Display Inventory</span>
         </a>

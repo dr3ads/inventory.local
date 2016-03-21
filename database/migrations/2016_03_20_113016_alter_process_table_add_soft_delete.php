@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableDisplay extends Migration
+class AlterProcessTableAddSoftDelete extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,8 @@ class CreateTableDisplay extends Migration
      */
     public function up()
     {
-        Schema::create('displays', function (Blueprint $table) {
-            $table->increments('id');
-            $table->
-            $table->timestamps();
+        Schema::table('processes', function(Blueprint $table){
+           $table->softDeletes();
         });
     }
 
@@ -26,6 +24,8 @@ class CreateTableDisplay extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('processes', function(Blueprint $table){
+            $table->dropColumn('deleted_at');
+        });
     }
 }

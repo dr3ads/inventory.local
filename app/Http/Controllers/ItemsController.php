@@ -79,12 +79,14 @@ class ItemsController extends BaseController
             'brand' => $request->get('item_brand'),
             'serial' => $request->get('item_serial'),
             'description' => $request->get('item_desc'),
-            'value' => $request->get('item_value'),
+            'acquire_price' => $request->get('acquire_price'),
+            'selling_value' => $request->get('acquire_price'),
+            'displayed_at' => Carbon::now(),
         );
 
         $this->itemRepository->create($data);
 
-        return redirect('inventory')->with('success_msg', 'Item Bought');
+        return redirect('display')->with('success', 'Item Bought');
     }
 
     public function sellItem($id, CustomerRepository $customerRepository)

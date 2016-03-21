@@ -70,11 +70,13 @@ return array(
             $theme->asset()->usePath()->add('bootstrap-css', 'vendors/bootstrap/css/bootstrap.min.css');
 
             $theme->asset()->usePath()->add('font-awesome-css', 'vendors/font-awesome/css/font-awesome.min.css');
+            $theme->asset()->add('ion-css', 'http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
             $theme->asset()->usePath()->add('chosen-css', 'vendors/chosen/chosen.min.css', array('bootstrap-css'));
             $theme->asset()->usePath()->add('global-css', 'css/global.css', array('bootstrap-css'));
             $theme->asset()->container('print')->usePath()->add('print-css', 'css/print.css');
             $theme->asset()->usePath()->add('jquery-ui-css', 'vendors/jquery-ui/jquery-ui.min.css');
             $theme->asset()->usePath()->add('jquery-ui-theme', 'vendors/jquery-ui/jquery-ui.theme.min.css');
+
             //scripts
             $theme->asset()->container('footer')->usePath()->add('jquery', 'vendors/jquery/jquery.min.js');
             $theme->asset()->container('footer')->usePath()->add('bootstrap-js',

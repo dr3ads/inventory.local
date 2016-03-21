@@ -14,9 +14,9 @@
                 <li @if(Input::get('type') == 'void') class="active" @endif>
                     <a href="{{ url('inventory?type=void') }}"><span>Void</span> <span class="badge">{{ $count['void'] }}</span></a>
                 </li>
-                <li @if(Input::get('type') == 'bought') class="active" @endif>
+                {{--<li @if(Input::get('type') == 'bought') class="active" @endif>
                     <a href="{{ url('inventory?type=bought') }}"><span>Bought</span> <span class="badge">{{ $count['bought'] }}</span></a>
-                </li>
+                </li>--}}
                 <li @if(Input::get('type') == 'archive') class="active" @endif>
                     <a href="{{ url('inventory?type=archive') }}"><span>Pulled Out</span> <span class="badge">{{ $count['archive'] }}</span></a>
                 </li>

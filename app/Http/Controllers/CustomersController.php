@@ -19,13 +19,17 @@ class CustomersController extends BaseController
     public function __construct(CustomerRepository $customerRepository)
     {
         $this->customerRepository = $customerRepository;
+
+    }
+
+    public function addAssets()
+    {
         $this->theme = Theme::uses($this->theme_name)->layout($this->layout);
 
         $this->theme->asset()->usePath()->add('page-css', 'css/page.css', array('bootstrap-css'));
         $this->theme->asset()->usePath()->add('customer-css', 'css/customer.css', array('global-css'));
         $this->theme->set('title','Customers');
     }
-
 
     /**
      * Display a listing of the resource.

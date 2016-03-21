@@ -26,7 +26,8 @@ class BuyItemRequest extends Request
     {
         return [
             'item_name' => 'required',
-            'item_value' => 'required|numeric'
+            'acquire_price' => 'required|numeric',
+            'selling_value' => 'required|numeric'
         ];
     }
 }

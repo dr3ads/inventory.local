@@ -18,12 +18,8 @@
             <div class="col-md-10">{!! Form::text('item_name', '', array('class' => 'form-control', 'required' => 'required')) !!}</div>
         </div>
         <div class="form-group">
-            {!! Form::label('item_value','Acquire Price *', array('class' => 'strong col-md-2')) !!}
-            <div class="col-md-10">{!! Form::number('acquire_price',0,array('min' => 1, 'step' => 'any', 'class' => 'form-control', 'required' => 'required')) !!}</div>
-        </div>
-        <div class="form-group">
-            {!! Form::label('selling_value','Selling Value *', array('class' => 'strong col-md-2')) !!}
-            <div class="col-md-10">{!! Form::number('selling_value',0,array('min' => 1, 'step' => 'any', 'class' => 'form-control', 'required' => 'required')) !!}</div>
+            {!! Form::label('item_value','Item Value *', array('class' => 'strong col-md-2')) !!}
+            <div class="col-md-10">{!! Form::number('item_value',0,array('min' => 1, 'step' => 'any', 'class' => 'form-control', 'required' => 'required')) !!}</div>
         </div>
         <div class="form-group">
             {!! Form::label('item_brand','Item Brand/Model', array('class' => 'col-md-2')) !!}

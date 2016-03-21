@@ -13,26 +13,31 @@
 
 <div class="content-wrapper">
     <div class="container-fluid">
-        {!! Theme::widget('accessoryfilter')->render() !!}
+        {!! Theme::widget('displayfilter', array('items' => $items, 'count' => $count))->render() !!}
         <div class="list-misc-holder row">
-            @if(isset($accessories) && count($accessories) > 0)
+            @if(isset($items) && count($items) > 0)
                 <ul class="list-miscs">
-                    @foreach($accessories as $accessory)
+                    @foreach($items as $item)
                         <li>
                             <div class="misc-info-wrap">
-                                <a class="misc-info" href="{{url('accessories/show/'.$accessory->id)}}">
-                                    {{ $accessory->name }}
+                                <a class="misc-info inline" href="{{url('display/show/'.$item->id)}}">
+                                    {{ $item->name }} &#183;
+                                    {{ $item->brand }} &#183;
+                                    {{ $item->serial }}
+                                    @if($item->process) &#183;{{ $item->process->ctrl_number }} @endif
                                 </a>
                             </div>
                             <div class="misc-details">
-                                <div class="misc-description">{!! $accessory->description !!}</div>
-                                <div class="misc-description">Unit Price: P{!! $accessory->unit_price !!}</div>
+                                <div class="misc-description inline">{!! $item->description !!}</div>
+                                <div class="pull-right light">
+                                    <div class="expiry-date">Display Price: P{{  $item->selling_value }}</div>
+                                </div>
                             </div>
                         </li>
                     @endforeach
                 </ul>
                 <div class="pagination-wrap">
-                    {!! $accessories->render() !!}
+                    {!! $items->render() !!}
                 </div>
             @endif
 
