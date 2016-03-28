@@ -241,7 +241,12 @@ class ProcessRepository extends AbstractRepository
 
     public function getTodayPawns()
     {
-        return $this->model->initial()->active()->whereRaw('DATE(created_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
+        return $this->model->active()->where('type', 'pawn')->whereRaw('DATE(created_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
+    }
+
+    public function getTodayRenew()
+    {
+        return $this->model->active()->where('type', 'renew')->whereRaw('DATE(created_at) = ?', [Carbon::now()->format('Y-m-d')] )->get();
     }
 
     public function deleteTree($id)

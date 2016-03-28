@@ -62,6 +62,12 @@ class ReportsController extends BaseController
 
         $data['total_claim'] = $sum_claim;
         $data['pawns'] = $this->processRepository->getTodayPawns();
+        $data['renews'] = $this->processRepository->getTodayRenew();
+
+        $data['total_renew'] = 0;
+        foreach($data['renews'] as $renew){
+            $data['total_renew'] += $renew->pawn_amount;
+        }
 
         //calculate total pawns
         $sum = 0;

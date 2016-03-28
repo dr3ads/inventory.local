@@ -63,15 +63,17 @@
                                 <tr>
                                     <th>Transaction Id</th>
                                     <th>Item</th>
+                                    <th>Principal</th>
                                     <th>Amount</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($pawns as $pawn)
                                         <tr>
-                                            <td>{{ $pawn->ctrl_number }}</td>
+                                            <td>{{ ($pawn->ctrl_number) ?: $pawn->parent->ctrl_number }}</td>
                                             <td>{{ $pawn->item->name }}</td>
                                             <td>{{ $pawn->pawn_amount }}</td>
+                                            <td>{{ $pawn->pawn_amount - ( $pawn->pawn_amount * env('INTEREST_RATE') / 100 ) }}</td>
                                         </tr>
                                     @endforeach
 
@@ -80,7 +82,7 @@
                         </div><!-- /.table-responsive -->
                     </div><!-- /.box-body -->
                     <div class="box-footer clearfix">
-                        <div class="pull-right">TOTAL: <strong>P{{ $total_pawn }}</strong></div>
+                        <div class="pull-right">TOTAL: <strong>P{{ $total_pawn - ( $total_pawn * env('INTEREST_RATE') / 100 )  }}</strong></div>
                     </div><!-- /.box-footer -->
                 </div>
             </div>
@@ -120,7 +122,40 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Renew</h3>
+
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Transaction Id</th>
+                                    <th>Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($renews as $renew)
+                                    <tr>
+                                        <td>{{ $renew->ctrl_number }}</td>
+                                        <td>{{ $renew->item->name }}</td>
+                                        <td>{{ $renew->pawn_amount }}</td>
+                                    </tr>
+                                @endforeach
+
+                                </tbody>
+                            </table>
+                        </div><!-- /.table-responsive -->
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <div class="pull-right">TOTAL: <strong>P{{ $total_renew }}</strong></div>
+                    </div><!-- /.box-footer -->
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Sold Accessories</h3>

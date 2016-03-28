@@ -24,12 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
-
+        /*$schedule->command('inspire')
+                 ->hourly();*/
+        $schedule->command('expire:process')
+                 ->daily();
     }
 
-    /**
-     * TODO::create scheduler for expired alerts
-     */
 }

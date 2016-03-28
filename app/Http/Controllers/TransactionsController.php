@@ -332,7 +332,12 @@ class TransactionsController extends BaseController
             'type' => 'renew',
             'expired_at' => Carbon::createFromTimestamp(strtotime($processTree['lastChild']->expired_at))
                 ->addDays(getenv('RENEW_COUNT')),
+            'pawn_amount' => $request->pawn_amount,
+            'renewed_at' => Carbon::now(),
+            'status' => 'active',
         );
+
+        $this->processRepository->setProcessStatus($request->parent_id, 'active');
 
         $process = $this->processRepository->create($data);
 

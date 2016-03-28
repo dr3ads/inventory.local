@@ -17,11 +17,13 @@
                        id="claim_link" title="Claim">
                         <i class="fa fa-mail-forward"></i>Claim
                     </a>
-                    <a class="btn btn-info pull-left link-tooltip" data-placement="bottom" data-toggle="tooltip"
-                       title="Renew Transaction" href="{{ url('transactions/renew/'.$processTree['parent']->id) }}"
-                       id="renew_link" title="Renew">
-                        <i class="fa fa-clone"></i>Renew
-                    </a>
+
+                        <a class="btn btn-info pull-left link-tooltip" data-placement="bottom" data-toggle="tooltip"
+                           title="Renew Transaction" href="{{ url('transactions/renew/'.$processTree['parent']->id) }}"
+                           id="renew_link" title="Renew">
+                            <i class="fa fa-clone"></i>Renew
+                        </a>
+
                 @endif
                 @if($processTree['parent']->status == 'expired')
                     <a class="btn btn-info pull-left link-tooltip" data-placement="bottom" data-toggle="tooltip"
