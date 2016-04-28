@@ -16,14 +16,13 @@ class Process extends Model
         'parent_id',
         'expired_at'
     ];
-    protected $with = array('children', 'customer', 'item');
+    protected $with = array('customer', 'item');
 
     use SoftDeletes;
 
     static public function boot()
     {
         static::created(function ($process) {
-            //$meal->meal_image_id = DB::table('media')->insertGetId(array());
             $process->ctrl_number = getenv('BRANCH_ID') . $process->id;
             $process->update();
         });

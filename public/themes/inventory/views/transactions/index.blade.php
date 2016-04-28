@@ -24,9 +24,9 @@
                                 {!! $transaction->ctrl_number !!} -
                                 {!! $transaction->item->name  !!}
                             </a>
-                            <div class="pull-right light">
+                            {{--<div class="pull-right light">
                                 <span class="issue-no-comments" title="Number of Transactions"><i class="fa fa-book"></i>{!! $transaction->children->count() !!}</span>
-                            </div>
+                            </div>--}}
                         </div>
                         <div class="trans-details">
                             <div class="trans-date inline">{!! date('M d, Y', strtotime($transaction->pawned_at)) !!}</div>

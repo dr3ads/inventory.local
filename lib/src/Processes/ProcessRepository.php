@@ -23,7 +23,7 @@ class ProcessRepository extends AbstractRepository
         if (count($this->with) > 0) {
             $this->newQuery()->eagerLoadRelations();
         }
-        return $this->model->initial()->expired();
+        return $this->model->expired();
     }
 
     public function allClaimed()
@@ -31,7 +31,7 @@ class ProcessRepository extends AbstractRepository
         if (count($this->with) > 0) {
             $this->newQuery()->eagerLoadRelations();
         }
-        return $this->model->initial()->claimed();
+        return $this->model->claimed()->orderBy('created_at', 'desc');
     }
 
     public function allVoid()
@@ -39,7 +39,7 @@ class ProcessRepository extends AbstractRepository
         if (count($this->with) > 0) {
             $this->newQuery()->eagerLoadRelations();
         }
-        return $this->model->initial()->void();
+        return $this->model->void()->orderBy('created_at', 'desc');
     }
 
     public function allHold()
@@ -47,7 +47,7 @@ class ProcessRepository extends AbstractRepository
         if (count($this->with) > 0) {
             $this->newQuery()->eagerLoadRelations();
         }
-        return $this->model->initial()->hold();
+        return $this->model->hold()->orderBy('created_at', 'desc');
     }
 
     public function allParents()
@@ -55,7 +55,15 @@ class ProcessRepository extends AbstractRepository
         if (count($this->with) > 0) {
             $this->newQuery()->eagerLoadRelations();
         }
-        return $this->model->initial()->active();
+        return $this->model->active()->orderBy('created_at', 'desc');
+    }
+
+    public function allActive()
+    {
+        if (count($this->with) > 0) {
+            $this->newQuery()->eagerLoadRelations();
+        }
+        return $this->model->active()->orderBy('created_at', 'desc');
     }
 
     public function getAllTree($parentId)
@@ -253,6 +261,8 @@ class ProcessRepository extends AbstractRepository
     {
         return $this->model->where('id', $id)->orWhere('parent_id', $id)->delete();
     }
+
+
 }
 
 

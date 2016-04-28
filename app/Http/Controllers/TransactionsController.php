@@ -63,7 +63,7 @@ class TransactionsController extends BaseController
                 break;
             case 'default':
             default:
-                $transactions = $this->processRepository->allParents();
+                $transactions = $this->processRepository->allActive();
                 break;
         }
 
@@ -160,8 +160,7 @@ class TransactionsController extends BaseController
     public function show($id)
     {
         $data = array();
-        $data['processTree'] = $this->processRepository->getProcessTree($id);
-        $data['children'] = $this->processRepository->getAllTree($id);
+        $data['transaction'] = $this->processRepository->find($id);
         $data['transactionDetails'] = $this->processRepository->transactionDetails($id);
         $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
         return $this->theme->scope('transactions.show', $data)->render();
@@ -193,11 +192,9 @@ class TransactionsController extends BaseController
     public function renew($id)
     {
         $data = array();
-        $data['transaction'] = $this->processRepository->find($id);
-        $data['processTree'] = $this->processRepository->getProcessTree($id);
-        $data['children'] = $this->processRepository->getAllTree($id);
-        $data['transactionDetails'] = $this->processRepository->transactionDetails($id);
-        $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
+        $data['transaction'] = $this->processRepository->with('customer')
+            ->with('items')
+            ->find($id);
 
         return $this->theme->scope('transactions.renew', $data)->render();
     }
@@ -205,12 +202,12 @@ class TransactionsController extends BaseController
     public function claim($id)
     {
         $data = array();
-        $data['transaction'] = $this->processRepository->find($id);
-        $data['processTree'] = $this->processRepository->getProcessTree($id);
-        $data['children'] = $this->processRepository->getAllTree($id);
+        $data['transaction'] = $this->processRepository->with('customer')
+            ->with('items')
+            ->find($id);
+
         $data['transactionDetails'] = $this->processRepository->transactionDetails($id);
 
-        $data['totalAmount'] = $this->processRepository->getTotalPawnAmount($id);
 
         return $this->theme->scope('transactions.claim', $data)->render();
     }
@@ -324,35 +321,26 @@ class TransactionsController extends BaseController
 
     public function storeRenew(SaveRenewTransactionRequest $request)
     {
-        $processTree = $this->processRepository->getProcessTree($request->parent_id);
+        $parent = $this->processRepository->find($request->parent_id);
+        $parent->status = 'claimed';
+        $parent->claimed_at = Carbon::now();
+        $parent->save();
+
         $data = array(
             'parent_id' => $request->parent_id,
             'customer_id' => $request->customer_id,
             'item_id' => $request->item_id,
-            'type' => 'renew',
-            'expired_at' => Carbon::createFromTimestamp(strtotime($processTree['lastChild']->expired_at))
+            'type' => 'pawn',
+            'expired_at' => Carbon::createFromTimestamp(strtotime($parent->expired_at))
                 ->addDays(getenv('RENEW_COUNT')),
-            'pawn_amount' => $request->pawn_amount,
+            'pawn_amount' => $parent->pawn_amount,
             'renewed_at' => Carbon::now(),
             'status' => 'active',
         );
-
-        $this->processRepository->setProcessStatus($request->parent_id, 'active');
-
         $process = $this->processRepository->create($data);
 
-        $totalAmount = $this->processRepository->getTotalPawnAmount($request->parent_id);
 
-        $accData = array(
-            'amount' => ($totalAmount * (getenv('INTEREST_RATE') / 100)),
-            'accountable_type' => 'Process',
-            'accountable_id' => $process->id,
-            'type' => 'debit',
-        );
-
-        $process->accounting()->create($accData);
-
-        return redirect('transactions/show/' . $request->parent_id)->with('success_msg', 'Renew Transaction Saved');
+        return redirect('transactions/show/' . $process->id)->with('success_msg', 'Renew Transaction Saved');
     }
 
     public function storeClaim(Request $request)
@@ -360,16 +348,10 @@ class TransactionsController extends BaseController
         $input = $request->all();
 
         $process = $this->processRepository->find($input['parent_id']);
-        $this->processRepository->setProcessStatus($input['parent_id'], 'claimed');
-
-        $accData = array(
-            'amount' => $input['penalty'],
-            'accountable_type' => 'Process',
-            'accountable_id' => $request->id,
-            'type' => 'debit',
-        );
-
-        $process->accounting()->create($accData);
+        //$this->processRepository->setProcessStatus($input['parent_id'], 'claimed');
+        $process->status = 'claimed';
+        $process->claimed_at = Carbon::now();
+        $process->save();
 
         return redirect('transactions')->with('success', 'Transaction Claimed');
     }
